@@ -25,8 +25,8 @@ public class AdapterTest {
         account.email = "test@hqv.com";
         account.disabled = false;
 
-        String url = "https://app.datadoghq.com/api/v1/user?api_key=41c14834bf1243205b83846e98be8a64A&application_key=8d3de17fa2755953a8e733553e418ddfcca5571e";
-        ResultDTO result = client.accountAdd(account, "xxx", url, "4", "3");
+        String url = "https://app.datadoghqaaa.com/api/v1/user?api_key=41c14834bf1243205b83846e98be8a64&application_key=8d3de17fa2755953a8e733553e418ddfcca5571e";
+        ResultDTO result = client.addAccount(account, "xxx", url, "4", "3");
         System.out.println("add result=" + result.getResultcode());
         ResponseDTO respobj = (ResponseDTO) result.getResponseDTO();
         System.out.println("new handle=" + respobj.handle);

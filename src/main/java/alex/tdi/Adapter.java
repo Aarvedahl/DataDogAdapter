@@ -23,13 +23,17 @@ public class Adapter {
         logger.info("Is this log showing to you!?");
         logger.debug("Testing DEBUG level");
     }
+
+    // Eventuellt getter och setter för api och app key, om de är tomma så kan vi skriva ut det i loggen
+    // Eller så skickar man med det i varje metod anrop
+
     // User
 
 
     // User add
-    public ResultDTO accountAdd(AccountDTO account, String authorizationHeader, String url, String reconnectAttemptsStr, String reconnectTimeStr) {
-        ResultDTO result = new ResultDTO();
+    public ResultDTO addAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr) {
 
+        ResultDTO result = new ResultDTO();
 
         int reconnectAttempts = 1;
         int reconnectTime = 1;
@@ -46,26 +50,23 @@ public class Adapter {
         JsonAdapter<ResponseDTO> jsonAdapter2 = moshi.adapter(ResponseDTO.class);
 
         String jsonBody = jsonAdapter.toJson(account);
-        logger.debug("AccountAdd JSON To Datadog=" + jsonBody);
+        logger.debug("AddAccount JSON To Datadog=" + jsonBody);
 
         Request request = new Request.Builder()
                 .url(url)
-                .post(RequestBody.create(JSON, jsonBody))
+                .get()
+              //  .post(RequestBody.create(JSON, jsonBody))
               //  .addHeader("Authorization", authorizationHeader)
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .addHeader("Cache-Control", "no-cache")
+             //   .addHeader("Content-Type", "application/json")
+            //    .addHeader("Accept", "application/json")
+            //    .addHeader("Cache-Control", "no-cache")
                 .build();
 
         while (keep_going) {
-
             // REST call
-
             try  {
                 Response response = client.newCall(request).execute();
                 String responseJSON = response.body().string();
-                logger.debug("New account response code=" + response.code());
-                logger.debug("New account response isSuccessful()=" + response.isSuccessful());
                 if (!response.isSuccessful()) {
                     String c = Integer.toString(response.code());
                     if (!c.equals("429"))
@@ -73,10 +74,12 @@ public class Adapter {
                     result.setSuccessful(false);
                     result.setResultJSON(responseJSON);
                     result.setResultcode(Integer.toString(response.code()));
-                    logger.error("Failed Request Response Code=" + Integer.toString(response.code()));
-                    logger.error("Failed Request JSON Response = " + responseJSON);
+                    logger.error("New Account:Failed Request Response Code=" + Integer.toString(response.code()));
+                    logger.error("New Account:Failed Request JSON Response = " + responseJSON);
                 } else {
                     // Get new id from response JSON
+                    logger.debug("New account response code=" + response.code());
+                    logger.debug("New account response isSuccessful()=" + response.isSuccessful());
                     ResponseDTO respobj = jsonAdapter2.fromJson(responseJSON);
                     logger.debug("New account handle=" + respobj.handle);
                     logger.debug("New account response code=" + response.code());
@@ -112,7 +115,7 @@ public class Adapter {
     }
 
 
-/*    public ResultDTO getAccount(AccountDTO account, String authorizationHeader, String url, String reconnectAttemptsStr, String reconnectTimeStr) {
+    public ResultDTO getAccount(String email, String authorizationHeader, String url, String reconnectAttemptsStr, String reconnectTimeStr) {
         ResultDTO result = new ResultDTO();
 
         int reconnectAttempts = 1;
@@ -135,17 +138,14 @@ public class Adapter {
                 .url(url)
                 .get()
                 //  .addHeader("Authorization", authorizationHeader)
-                .addHeader("Accept", "application/json")
-                .addHeader("Cache-Control", "no-cache")
+             //   .addHeader("Accept", "application/json")
+              //  .addHeader("Cache-Control", "no-cache")
                 .build();
 
         while (keep_going) {
-
             // REST call
-            try (Response response = client
-                    .newCall(request)
-                    .execute())
-            {
+            try {
+                Response response = client.newCall(request).execute();
                 String responseJSON = response.body().string();
                 logger.debug("Get Account response code=" + response.code());
                 logger.debug("Get Account response isSuccessful()=" + response.isSuccessful());
@@ -156,8 +156,8 @@ public class Adapter {
                     result.setSuccessful(false);
                     result.setResultJSON(responseJSON);
                     result.setResultcode(Integer.toString(response.code()));
-                    logger.error("Get account response code=" + Integer.toString(response.code()));
-                    logger.error("Get account response responseJSON=" + responseJSON);
+                    logger.error("Get Account:Failed Request response code=" + Integer.toString(response.code()));
+                    logger.error("Get Account:Failed Request responseJSON=" + responseJSON);
                 } else {
                     // Get new id from response JSON
                     ResponseDTO respobj = jsonAdapter2.fromJson(responseJSON);
@@ -194,5 +194,5 @@ public class Adapter {
 
         return result;
     }
- */
+
 }
