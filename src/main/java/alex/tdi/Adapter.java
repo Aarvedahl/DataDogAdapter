@@ -8,10 +8,6 @@ import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import okhttp3.*;
 import org.apache.log4j.Logger;
-import test.dto.AccountDTO;
-import test.dto.ResponseDTO;
-import test.dto.ResultDTO;
-import test.utils.OkHttpHelper;
 
 public class Adapter {
 
@@ -65,7 +61,8 @@ public class Adapter {
 
             // REST call
 
-            try (Response response = client.newCall(request).execute()) {
+            try  {
+                Response response = client.newCall(request).execute();
                 String responseJSON = response.body().string();
                 logger.debug("New account response code=" + response.code());
                 logger.debug("New account response isSuccessful()=" + response.isSuccessful());
@@ -76,11 +73,10 @@ public class Adapter {
                     result.setSuccessful(false);
                     result.setResultJSON(responseJSON);
                     result.setResultcode(Integer.toString(response.code()));
-                    logger.error("New account response code=" + Integer.toString(response.code()));
-                    logger.error("New account response responseJSON=" + responseJSON);
+                    logger.error("Failed Request Response Code=" + Integer.toString(response.code()));
+                    logger.error("Failed Request JSON Response = " + responseJSON);
                 } else {
                     // Get new id from response JSON
-                    // Eventuellt en metod för att sätta result attributes
                     ResponseDTO respobj = jsonAdapter2.fromJson(responseJSON);
                     logger.debug("New account handle=" + respobj.handle);
                     logger.debug("New account response code=" + response.code());
