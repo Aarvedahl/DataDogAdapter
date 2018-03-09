@@ -26,9 +26,9 @@ public class Adapter {
 
     // Eventuellt getter och setter för api och app key, om de är tomma så kan vi skriva ut det i loggen
     // Eller så skickar man med det i varje metod anrop
+    // Se om vi kan bryta ut det i while loopen till en egen metod
 
     // User
-
 
     // User add
     public ResultDTO addAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr) {
@@ -54,12 +54,11 @@ public class Adapter {
 
         Request request = new Request.Builder()
                 .url(url)
-                .get()
-              //  .post(RequestBody.create(JSON, jsonBody))
-              //  .addHeader("Authorization", authorizationHeader)
-             //   .addHeader("Content-Type", "application/json")
-            //    .addHeader("Accept", "application/json")
-            //    .addHeader("Cache-Control", "no-cache")
+                .post(RequestBody.create(JSON, jsonBody))
+            //    .addHeader("Authorization", authorizationHeader)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .addHeader("Cache-Control", "no-cache")
                 .build();
 
         while (keep_going) {
@@ -115,18 +114,11 @@ public class Adapter {
     }
 
 
-
+    // Eventuellt att vi behöver inkludera authorizationheader för vidare authorization
     public ResultDTO getAccount(String email, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
-/*          https://app.datadoghq.com/api/v1/user/
-            ${user}?
-            api_key=${api_key}&
-            application_key=${app_key} */
-
         url += email + "?";
         url += "api_key=" + api_key;
         url += "&application_key=" + app_key;
-
-        // https://app.datadoghq.com/api/v1/user/jason.tran@datadog.org?api_key=9e4f84af430650a9780421d1841b8d8f&application_key=8d3de17fa2755953a8e733553e418ddfcca5571e
 
         ResultDTO result = new ResultDTO();
 
@@ -201,8 +193,95 @@ public class Adapter {
                 }
             }
         }
-
         return result;
     }
+
+    // User modify
+    public ResultDTO modifyAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
+        ResultDTO result = new ResultDTO();
+
+        url += account.email + "?";
+        url += "api_key=" + api_key;
+        url += "&application_key=" + app_key;
+
+        int reconnectAttempts = 1;
+        int reconnectTime = 1;
+        if (reconnectAttemptsStr != null && !reconnectAttemptsStr.equals(""))
+            reconnectAttempts = Integer.parseInt(reconnectAttemptsStr);
+        if (reconnectTimeStr != null && !reconnectTimeStr.equals(""))
+            reconnectTime = Integer.parseInt(reconnectTimeStr);
+
+        boolean keep_going = true;
+        int try_count = 1;
+
+        Moshi moshi = new Moshi.Builder().build();
+        JsonAdapter<AccountDTO> jsonAdapter = moshi.adapter(AccountDTO.class);
+        JsonAdapter<ResponseDTO> jsonAdapter2 = moshi.adapter(ResponseDTO.class);
+
+        String jsonBody = jsonAdapter.toJson(account);
+        logger.debug("Modify Account JSON To Datadog=" + jsonBody);
+
+        Request request = new Request.Builder()
+                .url(url)
+                .put(RequestBody.create(JSON, jsonBody))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .addHeader("Cache-Control", "no-cache")
+                .build();
+
+        while (keep_going) {
+            // REST call
+            try  {
+                Response response = client.newCall(request).execute();
+                String responseJSON = response.body().string();
+                if (!response.isSuccessful()) {
+                    String c = Integer.toString(response.code());
+                    if (!c.equals("429"))
+                        keep_going = false;
+                    result.setSuccessful(false);
+                    result.setResultJSON(responseJSON);
+                    result.setResultcode(Integer.toString(response.code()));
+                    logger.error("Modify Account:Failed Request Response Code=" + Integer.toString(response.code()));
+                    logger.error("Modify Account:Failed Request JSON Response = " + responseJSON);
+                } else {
+                    // Get new id from response JSON
+                    logger.debug("Modify account response code=" + response.code());
+                    logger.debug("Modify account response isSuccessful()=" + response.isSuccessful());
+                    ResponseDTO respobj = jsonAdapter2.fromJson(responseJSON);
+                    logger.debug("Modify account handle=" + respobj.user.handle);
+                    logger.debug("Modify account response code=" + response.code());
+                    result.setSuccessful(true);
+                    result.setResultcode(Integer.toString(response.code()));
+                    result.setResponseDTO(respobj);
+                    result.setResultJSON(responseJSON);
+                    keep_going = false;
+                }
+            } catch (Exception e) {
+                logger.error("Modify account exception=" + e);
+                result.setSuccessful(false);
+                result.setResultcode(e.getMessage().toString());
+                result.setResultJSON(e.getLocalizedMessage());
+                keep_going = false;
+            }
+
+            try_count++;
+            if (keep_going && try_count > reconnectAttempts) {
+                keep_going = false;
+            }
+            if (keep_going) {
+                try {
+                    logger.warn("Modify account HTTP 429, wait and retry");
+                    // wait for reconnectTime seconds
+                    Thread.sleep(reconnectTime * 1000); // sleep for reconnectTime seconds
+                } catch (InterruptedException e) {
+                    logger.warn("Modify account HTTP 429, wait, got interrupted!");
+                }
+            }
+        }
+        return result;
+    }
+
+
+
 
 }

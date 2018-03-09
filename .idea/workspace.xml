@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1cdcbb39-72ad-41df-bbb7-2fa9224207de" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/alex/tdi/dto/User.java" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/src/main/java/alex/tdi/Adapter.java" afterPath="$PROJECT_DIR$/src/main/java/alex/tdi/Adapter.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/alex/tdi/dto/ResponseDTO.java" afterPath="$PROJECT_DIR$/src/main/java/alex/tdi/dto/ResponseDTO.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/alex/tdi/test/AdapterTest.java" afterPath="$PROJECT_DIR$/src/main/java/alex/tdi/test/AdapterTest.java" />
-      <change beforePath="$PROJECT_DIR$/target/classes/alex/tdi/Adapter.class" afterPath="$PROJECT_DIR$/target/classes/alex/tdi/Adapter.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/alex/tdi/dto/ResponseDTO.class" afterPath="$PROJECT_DIR$/target/classes/alex/tdi/dto/ResponseDTO.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/alex/tdi/test/AdapterTest.class" afterPath="$PROJECT_DIR$/target/classes/alex/tdi/test/AdapterTest.class" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -25,18 +19,8 @@
       <file leaf-file-name="AdapterTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/test/AdapterTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="16" column="31" lean-forward="true" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/dto/User.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="17" lean-forward="false" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+            <state relative-caret-position="509">
+              <caret line="58" column="38" lean-forward="true" selection-start-line="58" selection-start-column="38" selection-end-line="58" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -45,11 +29,21 @@
       <file leaf-file-name="Adapter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/Adapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1415">
-              <caret line="185" column="41" lean-forward="true" selection-start-line="185" selection-start-column="41" selection-end-line="185" selection-end-column="41" />
+            <state relative-caret-position="616">
+              <caret line="220" column="34" lean-forward="true" selection-start-line="220" selection-start-column="34" selection-end-line="220" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AccountDTO.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/dto/AccountDTO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="23" lean-forward="true" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -107,10 +101,10 @@
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/alex/tdi/dto/AccountDTO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/alex/tdi/Adapter.java" />
         <option value="$PROJECT_DIR$/src/main/java/alex/tdi/dto/UserDTO.java" />
         <option value="$PROJECT_DIR$/src/main/java/alex/tdi/dto/User.java" />
         <option value="$PROJECT_DIR$/src/main/java/alex/tdi/dto/ResponseDTO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/alex/tdi/Adapter.java" />
         <option value="$PROJECT_DIR$/src/main/java/alex/tdi/test/AdapterTest.java" />
       </list>
     </option>
@@ -159,11 +153,6 @@
             <path>
               <item name="TDIAdapter" type="b2602c69:ProjectViewProjectNode" />
               <item name="TDIAdapter" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TDIAdapter" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TDIAdapter" type="462c0819:PsiDirectoryNode" />
-              <item name="libraries" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TDIAdapter" type="b2602c69:ProjectViewProjectNode" />
@@ -356,12 +345,12 @@
       <option name="presentableId" value="Default" />
       <updated>1520511919749</updated>
       <workItem from="1520511928277" duration="10683000" />
-      <workItem from="1520579565738" duration="1376000" />
+      <workItem from="1520579565738" duration="8565000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12059000" />
+    <option name="totallyTimeSpent" value="19248000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -376,7 +365,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32979852" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32979852" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -449,14 +438,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/dto/AccountDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="23" lean-forward="true" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/utils/OkHttpHelper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -496,13 +477,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/Adapter.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/dto/AccountDTO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1415">
-          <caret line="185" column="41" lean-forward="true" selection-start-line="185" selection-start-column="41" selection-end-line="185" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="85">
+          <caret line="5" column="23" lean-forward="true" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -514,10 +493,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/Adapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="616">
+          <caret line="220" column="34" lean-forward="true" selection-start-line="220" selection-start-column="34" selection-end-line="220" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/test/AdapterTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="16" column="31" lean-forward="true" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
+        <state relative-caret-position="509">
+          <caret line="58" column="38" lean-forward="true" selection-start-line="58" selection-start-column="38" selection-end-line="58" selection-end-column="38" />
           <folding />
         </state>
       </provider>
