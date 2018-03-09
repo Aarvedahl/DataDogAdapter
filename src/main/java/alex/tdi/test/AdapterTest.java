@@ -17,8 +17,9 @@ public class AdapterTest {
         Adapter client = new Adapter();
 
         //testAddAccount(client);
-        testGetAccount(client);
-       // testModifyAccount(client);
+       // testGetAccount(client);
+      //  testModifyAccount(client);
+        testDisableAccount(client);
     }
 
 
@@ -64,7 +65,24 @@ public class AdapterTest {
         ResponseDTO respobj = (ResponseDTO) resultDTO.getResponseDTO();
         System.out.println("handle of the user=" + respobj.user.handle);
         System.out.println("Name of the user =" + respobj.user.name);
-        System.out.println( "Result JSON=" + resultDTO.getResultJSON());
+        System.out.println("Result JSON=" + resultDTO.getResultJSON());
+    }
+
+
+    private static void testDisableAccount(Adapter client) {
+        AccountDTO accountDTO = new AccountDTO();
+        accountDTO.handle="test@test.com";
+        accountDTO.name = "Testie Test";
+        accountDTO.email = "test@test.com";
+        accountDTO.disabled = true;
+        accountDTO.access_role = "ro";
+
+        String url = "https://app.datadoghq.com/api/v1/user/";
+        ResultDTO resultDTO = client.disableAccount(accountDTO, url, "4", "3" ,api_key, app_key);
+        System.out.println("Disable user result=" + resultDTO.getResultcode());
+        ResponseDTO responseDTO = (ResponseDTO) resultDTO.getResponseDTO();
+        System.out.println("Response Message=" + responseDTO.message);
+        System.out.println("Result JSON=" + resultDTO.getResultJSON());
     }
 
 

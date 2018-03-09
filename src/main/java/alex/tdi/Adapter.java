@@ -24,8 +24,7 @@ public class Adapter {
         logger.debug("Testing DEBUG level");
     }
 
-    // Eventuellt getter och setter för api och app key, om de är tomma så kan vi skriva ut det i loggen
-    // Eller så skickar man med det i varje metod anrop
+    // Eventuellt att vi behöver inkludera authorizationheader för vidare authorization
     // Se om vi kan bryta ut det i while loopen till en egen metod
 
     // User
@@ -114,9 +113,8 @@ public class Adapter {
     }
 
 
-    // Eventuellt att vi behöver inkludera authorizationheader för vidare authorization
-    public ResultDTO getAccount(String email, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
-        url += email + "?";
+    public ResultDTO getAccount(String handle, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
+        url += handle + "?";
         url += "api_key=" + api_key;
         url += "&application_key=" + app_key;
 
@@ -162,7 +160,6 @@ public class Adapter {
                 } else {
                     // Get user info from user property within response JSON
                     ResponseDTO respobj = jsonAdapter2.fromJson(responseJSON);
-                    System.out.println("Name from respobj " + respobj.user.name);
                     logger.debug("Get account handle=" + respobj.user.handle);
                     logger.debug("Get account response code=" + response.code());
                     result.setSuccessful(true);
@@ -200,7 +197,7 @@ public class Adapter {
     public ResultDTO modifyAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
         ResultDTO result = new ResultDTO();
 
-        url += account.email + "?";
+        url += account.handle + "?";
         url += "api_key=" + api_key;
         url += "&application_key=" + app_key;
 
@@ -235,8 +232,8 @@ public class Adapter {
                 Response response = client.newCall(request).execute();
                 String responseJSON = response.body().string();
                 if (!response.isSuccessful()) {
-                    String c = Integer.toString(response.code());
-                    if (!c.equals("429"))
+                    String code = Integer.toString(response.code());
+                    if (!code.equals("429"))
                         keep_going = false;
                     result.setSuccessful(false);
                     result.setResultJSON(responseJSON);
@@ -244,7 +241,7 @@ public class Adapter {
                     logger.error("Modify Account:Failed Request Response Code=" + Integer.toString(response.code()));
                     logger.error("Modify Account:Failed Request JSON Response = " + responseJSON);
                 } else {
-                    // Get new id from response JSON
+                    // Get user info from user property within response JSON
                     logger.debug("Modify account response code=" + response.code());
                     logger.debug("Modify account response isSuccessful()=" + response.isSuccessful());
                     ResponseDTO respobj = jsonAdapter2.fromJson(responseJSON);
@@ -283,5 +280,86 @@ public class Adapter {
 
 
 
+    // User Disable
+    public ResultDTO disableAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
+        ResultDTO result = new ResultDTO();
+
+        url += account.handle + "?";
+        url += "api_key=" + api_key;
+        url += "&application_key=" + app_key;
+
+        int reconnectAttempts = 1;
+        int reconnectTime = 1;
+        if (reconnectAttemptsStr != null && !reconnectAttemptsStr.equals(""))
+            reconnectAttempts = Integer.parseInt(reconnectAttemptsStr);
+        if (reconnectTimeStr != null && !reconnectTimeStr.equals(""))
+            reconnectTime = Integer.parseInt(reconnectTimeStr);
+
+        boolean keep_going = true;
+        int try_count = 1;
+
+        Moshi moshi = new Moshi.Builder().build();
+        JsonAdapter<ResponseDTO> jsonAdapter2 = moshi.adapter(ResponseDTO.class);
+
+        logger.debug("Disable Account Handle To Datadog=" + account.handle);
+
+        Request request = new Request.Builder()
+                .url(url)
+                .delete()
+                .addHeader("Accept", "application/json")
+                .addHeader("Cache-Control", "no-cache")
+                .build();
+
+        while (keep_going) {
+            // REST call
+            try  {
+                Response response = client.newCall(request).execute();
+                String responseJSON = response.body().string();
+                if (!response.isSuccessful()) {
+                    String code = Integer.toString(response.code());
+                    if (!code.equals("429"))
+                        keep_going = false;
+                    result.setSuccessful(false);
+                    result.setResultJSON(responseJSON);
+                    result.setResultcode(Integer.toString(response.code()));
+                    logger.error("Disable Account:Failed Request Response Code=" + Integer.toString(response.code()));
+                    logger.error("Disable Account:Failed Request JSON Response = " + responseJSON);
+                } else {
+                    // Get message from response JSON
+                    logger.debug("Disable account response code=" + response.code());
+                    logger.debug("Disable account response isSuccessful()=" + response.isSuccessful());
+                    ResponseDTO respobj = jsonAdapter2.fromJson(responseJSON);
+                    logger.debug("Disable account message=" + respobj.message);
+                    logger.debug("Disable account response code=" + response.code());
+                    result.setSuccessful(true);
+                    result.setResultcode(Integer.toString(response.code()));
+                    result.setResponseDTO(respobj);
+                    result.setResultJSON(responseJSON);
+                    keep_going = false;
+                }
+            } catch (Exception e) {
+                logger.error("Disable account exception=" + e);
+                result.setSuccessful(false);
+                result.setResultcode(e.getMessage().toString());
+                result.setResultJSON(e.getLocalizedMessage());
+                keep_going = false;
+            }
+
+            try_count++;
+            if (keep_going && try_count > reconnectAttempts) {
+                keep_going = false;
+            }
+            if (keep_going) {
+                try {
+                    logger.warn("Disable account HTTP 429, wait and retry");
+                    // wait for reconnectTime seconds
+                    Thread.sleep(reconnectTime * 1000); // sleep for reconnectTime seconds
+                } catch (InterruptedException e) {
+                    logger.warn("Disable account HTTP 429, wait, got interrupted!");
+                }
+            }
+        }
+        return result;
+    }
 
 }
