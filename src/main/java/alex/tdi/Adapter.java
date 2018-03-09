@@ -277,8 +277,7 @@ public class Adapter {
         return result;
     }
 
-
-
+    
     // User Disable
     public ResultDTO disableAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
         ResultDTO result = new ResultDTO();
