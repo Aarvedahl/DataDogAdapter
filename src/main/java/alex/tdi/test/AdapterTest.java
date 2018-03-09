@@ -17,9 +17,9 @@ public class AdapterTest {
         Adapter client = new Adapter();
 
         //testAddAccount(client);
-       // testGetAccount(client);
+        testGetAccount(client);
       //  testModifyAccount(client);
-        testDisableAccount(client);
+      //  testDisableAccount(client);
     }
 
 
@@ -42,7 +42,14 @@ public class AdapterTest {
 
 
     private static void testGetAccount(Adapter client) {
-        ResultDTO resultDTO = client.getAccount("test@test.com", "https://app.datadoghq.com/api/v1/user/", "4" , "3", api_key, app_key);
+        AccountDTO accountDTO = new AccountDTO();
+        accountDTO.handle="test@test.com";
+        accountDTO.name = "Testie Test";
+        accountDTO.email = "test@test.com";
+        accountDTO.disabled = true;
+        accountDTO.access_role = "ro";
+
+        ResultDTO resultDTO = client.getAccount(accountDTO, "https://app.datadoghq.com/api/v1/user/", "4" , "3", api_key, app_key);
         System.out.println("get user result=" + resultDTO.getResultcode());
         ResponseDTO respobj = (ResponseDTO) resultDTO.getResponseDTO();
         System.out.println("handle of the user=" + respobj.user.handle);

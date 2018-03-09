@@ -113,8 +113,8 @@ public class Adapter {
     }
 
 
-    public ResultDTO getAccount(String handle, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
-        url += handle + "?";
+    public ResultDTO getAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
+        url += account.handle + "?";
         url += "api_key=" + api_key;
         url += "&application_key=" + app_key;
 
@@ -134,8 +134,6 @@ public class Adapter {
 
         JsonAdapter<ResponseDTO> jsonAdapter2 = moshi.adapter(ResponseDTO.class);
 
-        logger.debug("Get Account Request To Datadog");
-
         Request request = new Request.Builder()
                 .url(url)
                 .get()
@@ -143,6 +141,7 @@ public class Adapter {
 
         while (keep_going) {
             // REST call
+            logger.debug("Get Account Request To Datadog");
             try {
                 Response response = client.newCall(request).execute();
                 String responseJSON = response.body().string();
@@ -301,8 +300,6 @@ public class Adapter {
         Moshi moshi = new Moshi.Builder().build();
         JsonAdapter<ResponseDTO> jsonAdapter2 = moshi.adapter(ResponseDTO.class);
 
-        logger.debug("Disable Account Handle To Datadog=" + account.handle);
-
         Request request = new Request.Builder()
                 .url(url)
                 .delete()
@@ -312,6 +309,7 @@ public class Adapter {
 
         while (keep_going) {
             // REST call
+            logger.debug("Disable Account Handle To Datadog=" + account.handle);
             try  {
                 Response response = client.newCall(request).execute();
                 String responseJSON = response.body().string();
