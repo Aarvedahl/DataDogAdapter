@@ -81,7 +81,7 @@ public class Adapter {
                     logger.debug("New account response code=" + response.code());
                     logger.debug("New account response isSuccessful()=" + response.isSuccessful());
                     ResponseDTO respobj = jsonAdapter2.fromJson(responseJSON);
-                    logger.debug("New account handle=" + respobj.handle);
+                    logger.debug("New account handle=" + respobj.user.handle);
                     logger.debug("New account response code=" + response.code());
                     result.setSuccessful(true);
                     result.setResultcode(Integer.toString(response.code()));
@@ -115,7 +115,19 @@ public class Adapter {
     }
 
 
-    public ResultDTO getAccount(String email, String authorizationHeader, String url, String reconnectAttemptsStr, String reconnectTimeStr) {
+
+    public ResultDTO getAccount(String email, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
+/*          https://app.datadoghq.com/api/v1/user/
+            ${user}?
+            api_key=${api_key}&
+            application_key=${app_key} */
+
+        url += email + "?";
+        url += "api_key=" + api_key;
+        url += "&application_key=" + app_key;
+
+        // https://app.datadoghq.com/api/v1/user/jason.tran@datadog.org?api_key=9e4f84af430650a9780421d1841b8d8f&application_key=8d3de17fa2755953a8e733553e418ddfcca5571e
+
         ResultDTO result = new ResultDTO();
 
         int reconnectAttempts = 1;
@@ -137,9 +149,6 @@ public class Adapter {
         Request request = new Request.Builder()
                 .url(url)
                 .get()
-                //  .addHeader("Authorization", authorizationHeader)
-             //   .addHeader("Accept", "application/json")
-              //  .addHeader("Cache-Control", "no-cache")
                 .build();
 
         while (keep_going) {
@@ -159,9 +168,10 @@ public class Adapter {
                     logger.error("Get Account:Failed Request response code=" + Integer.toString(response.code()));
                     logger.error("Get Account:Failed Request responseJSON=" + responseJSON);
                 } else {
-                    // Get new id from response JSON
+                    // Get user info from user property within response JSON
                     ResponseDTO respobj = jsonAdapter2.fromJson(responseJSON);
-                    logger.debug("Get account handle=" + respobj.handle);
+                    System.out.println("Name from respobj " + respobj.user.name);
+                    logger.debug("Get account handle=" + respobj.user.handle);
                     logger.debug("Get account response code=" + response.code());
                     result.setSuccessful(true);
                     result.setResultcode(Integer.toString(response.code()));
