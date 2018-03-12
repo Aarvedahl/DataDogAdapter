@@ -9,20 +9,15 @@ import com.squareup.moshi.Moshi;
 import okhttp3.*;
 import org.apache.log4j.Logger;
 
+import javax.xml.transform.Result;
+import java.io.IOException;
+
 public class Adapter {
 
     OkHttpClient client = OkHttpHelper.getSSLClient();
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     final static Logger logger = Logger.getLogger(Adapter.class);
-
-
-    public void testLogger() {
-        logger.info("Is this log showing to you!?");
-        logger.info("Is this log showing to you!?");
-        logger.info("Is this log showing to you!?");
-        logger.debug("Testing DEBUG level");
-    }
 
     // Eventuellt att vi behöver inkludera authorizationheader för vidare authorization
     // Se om vi kan bryta ut det i while loopen till en egen metod
@@ -112,7 +107,108 @@ public class Adapter {
         return result;
     }
 
+    public ResultDTO getAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
+        url += account.handle + "?";
+        url += "api_key=" + api_key;
+        url += "&application_key=" + app_key;
 
+        ResultDTO result = new ResultDTO();
+        int reconnectAttempts = reconnectAttempts(reconnectAttemptsStr);
+        int reconnectTime = reconnectTime(reconnectTimeStr);
+
+        boolean keep_going = true; // Byt namn på denna variabeln, denna är sann sålänge som vi inte får http 429,  "Reached Rate limit"
+        int try_count = 1;
+
+        Moshi moshi = new Moshi.Builder().build();
+        JsonAdapter<ResponseDTO> jsonAdapter = moshi.adapter(ResponseDTO.class);
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+
+        while (keep_going) {
+            // Man kanske kan bara kolla om det är en request code = 429, om det är det så fortsätter vi annars anropar vi metoderna
+            // Calling REST Service
+            logger.debug("Get Account Request To Datadog");
+            try {
+                Response response = client.newCall(request).execute();
+                if(!Integer.toString(response.code()).equals("429")) {
+                    keep_going = false;
+                }
+                result = handleResponse(response, result, jsonAdapter);
+            } catch (Exception e) {
+                logger.error("Get account exception=" + e);
+                result.setSuccessful(false);
+                result.setResultcode(e.getMessage().toString());
+                result.setResultJSON(e.getLocalizedMessage());
+                keep_going = false;
+            }
+
+            try_count++;
+            if (keep_going && try_count > reconnectAttempts) {
+                keep_going = false;
+            }
+            if (keep_going) {
+                try {
+                    logger.warn("Get account HTTP 429, wait and retry");
+                    // wait for reconnectTime seconds
+                    Thread.sleep(reconnectTime * 1000); // sleep for reconnectTime seconds
+                } catch (InterruptedException e) {
+                    logger.warn("Get account HTTP 429, wait, got interrupted!");
+                }
+            }
+        }
+        return result;
+    }
+
+    private ResultDTO handleResponse(Response response, ResultDTO result, JsonAdapter jsonAdapter) throws IOException {
+        String responseJSON = null;
+        responseJSON = response.body().string();
+        logger.debug("Get Account response code=" + response.code());
+        logger.debug("Get Account response isSuccessful()=" + response.isSuccessful());
+        if (!response.isSuccessful()) {
+          return failedReq("Get", result, response, responseJSON);
+        } else {
+            // Get user info from user property within response JSON
+            ResponseDTO respobj = null;
+            respobj = (ResponseDTO) jsonAdapter.fromJson(responseJSON);
+            return succReq("Get", result, response, respobj, responseJSON);
+        }
+
+    }
+    private int reconnectTime(String reconnectTimeStr) {
+        int reconnectTime = 1;
+        if (reconnectTimeStr != null && !reconnectTimeStr.equals(""))
+            reconnectTime = Integer.parseInt(reconnectTimeStr);
+        return reconnectTime;
+    }
+
+    private int reconnectAttempts(String reconnectAttemptsStr) {
+        int reconnectAttempts = 1;
+        if (reconnectAttemptsStr != null && !reconnectAttemptsStr.equals(""))
+            reconnectAttempts = Integer.parseInt(reconnectAttemptsStr);
+        return reconnectAttempts;
+    }
+    // TODO Kanske bättre att slå ihop dessa metoder
+    private ResultDTO succReq(String method, ResultDTO result, Response response, ResponseDTO respobj, String responseJSON) {
+        logger.debug(method + " account handle=" + respobj.user.handle);
+        logger.debug(method + " account response code=" + response.code());
+        result.setSuccessful(true);
+        result.setResultcode(Integer.toString(response.code()));
+        result.setResponseDTO(respobj);
+        result.setResultJSON(responseJSON);
+        return result;
+    }
+
+    private ResultDTO failedReq(String method, ResultDTO result, Response response, String responseJSON) {
+        result.setSuccessful(false);
+        result.setResultJSON(responseJSON);
+        result.setResultcode(Integer.toString(response.code()));
+        logger.error(method + " Account:Failed Request response code=" + Integer.toString(response.code()));
+        logger.error(method + "Get Account:Failed Request responseJSON=" + responseJSON);
+        return result;
+    }
+/*
     public ResultDTO getAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
         url += account.handle + "?";
         url += "api_key=" + api_key;
@@ -191,6 +287,7 @@ public class Adapter {
         }
         return result;
     }
+*/
 
     // User modify
     public ResultDTO modifyAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
@@ -277,7 +374,7 @@ public class Adapter {
         return result;
     }
 
-    
+
     // User Disable
     public ResultDTO disableAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
         ResultDTO result = new ResultDTO();
