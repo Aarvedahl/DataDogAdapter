@@ -9,7 +9,6 @@ import com.squareup.moshi.Moshi;
 import okhttp3.*;
 import org.apache.log4j.Logger;
 
-import javax.xml.transform.Result;
 import java.io.IOException;
 
 public class Adapter {
@@ -19,8 +18,8 @@ public class Adapter {
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     final static Logger logger = Logger.getLogger(Adapter.class);
 
+    // TODO En klass för ISIM Användaren
     // Eventuellt att vi behöver inkludera authorizationheader för vidare authorization
-    // Se om vi kan bryta ut det i while loopen till en egen metod
 
     // User
 
@@ -49,7 +48,7 @@ public class Adapter {
         Request request = new Request.Builder()
                 .url(url)
                 .post(RequestBody.create(JSON, jsonBody))
-            //    .addHeader("Authorization", authorizationHeader)
+                //    .addHeader("Authorization", authorizationHeader)
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")
                 .addHeader("Cache-Control", "no-cache")
@@ -57,7 +56,7 @@ public class Adapter {
 
         while (keep_going) {
             // REST call
-            try  {
+            try {
                 Response response = client.newCall(request).execute();
                 String responseJSON = response.body().string();
                 if (!response.isSuccessful()) {
@@ -113,69 +112,32 @@ public class Adapter {
         url += "&application_key=" + app_key;
 
         ResultDTO result = new ResultDTO();
-        int reconnectAttempts = reconnectAttempts(reconnectAttemptsStr);
-        int reconnectTime = reconnectTime(reconnectTimeStr);
 
-        boolean keep_going = true; // Byt namn på denna variabeln, denna är sann sålänge som vi inte får http 429,  "Reached Rate limit"
-        int try_count = 1;
-
-        Moshi moshi = new Moshi.Builder().build();
-        JsonAdapter<ResponseDTO> jsonAdapter = moshi.adapter(ResponseDTO.class);
         Request request = new Request.Builder()
                 .url(url)
                 .get()
                 .build();
 
-        while (keep_going) {
-            // Man kanske kan bara kolla om det är en request code = 429, om det är det så fortsätter vi annars anropar vi metoderna
-            // Calling REST Service
-            logger.debug("Get Account Request To Datadog");
-            try {
-                Response response = client.newCall(request).execute();
-                if(!Integer.toString(response.code()).equals("429")) {
-                    keep_going = false;
-                }
-                result = handleResponse(response, result, jsonAdapter);
-            } catch (Exception e) {
-                logger.error("Get account exception=" + e);
-                result.setSuccessful(false);
-                result.setResultcode(e.getMessage().toString());
-                result.setResultJSON(e.getLocalizedMessage());
-                keep_going = false;
-            }
+        result = makeRequest("Get", request, result, reconnectAttemptsStr, reconnectTimeStr);
 
-            try_count++;
-            if (keep_going && try_count > reconnectAttempts) {
-                keep_going = false;
-            }
-            if (keep_going) {
-                try {
-                    logger.warn("Get account HTTP 429, wait and retry");
-                    // wait for reconnectTime seconds
-                    Thread.sleep(reconnectTime * 1000); // sleep for reconnectTime seconds
-                } catch (InterruptedException e) {
-                    logger.warn("Get account HTTP 429, wait, got interrupted!");
-                }
-            }
-        }
         return result;
     }
 
-    private ResultDTO handleResponse(Response response, ResultDTO result, JsonAdapter jsonAdapter) throws IOException {
+    private ResultDTO handleResponse(String method, Response response, ResultDTO result, JsonAdapter jsonAdapter) throws IOException {
         String responseJSON = null;
         responseJSON = response.body().string();
-        logger.debug("Get Account response code=" + response.code());
-        logger.debug("Get Account response isSuccessful()=" + response.isSuccessful());
+        logger.debug(method + " Account response code=" + response.code());
+        logger.debug(method + " Account response isSuccessful()=" + response.isSuccessful());
         if (!response.isSuccessful()) {
-          return failedReq("Get", result, response, responseJSON);
+            return failedReq(method, result, response, responseJSON);
         } else {
             // Get user info from user property within response JSON
             ResponseDTO respobj = null;
             respobj = (ResponseDTO) jsonAdapter.fromJson(responseJSON);
-            return succReq("Get", result, response, respobj, responseJSON);
+            return successReq(method, result, response, respobj, responseJSON);
         }
-
     }
+
     private int reconnectTime(String reconnectTimeStr) {
         int reconnectTime = 1;
         if (reconnectTimeStr != null && !reconnectTimeStr.equals(""))
@@ -189,8 +151,8 @@ public class Adapter {
             reconnectAttempts = Integer.parseInt(reconnectAttemptsStr);
         return reconnectAttempts;
     }
-    // TODO Kanske bättre att slå ihop dessa metoder
-    private ResultDTO succReq(String method, ResultDTO result, Response response, ResponseDTO respobj, String responseJSON) {
+
+    private ResultDTO successReq(String method, ResultDTO result, Response response, ResponseDTO respobj, String responseJSON) {
         logger.debug(method + " account handle=" + respobj.user.handle);
         logger.debug(method + " account response code=" + response.code());
         result.setSuccessful(true);
@@ -205,9 +167,54 @@ public class Adapter {
         result.setResultJSON(responseJSON);
         result.setResultcode(Integer.toString(response.code()));
         logger.error(method + " Account:Failed Request response code=" + Integer.toString(response.code()));
-        logger.error(method + "Get Account:Failed Request responseJSON=" + responseJSON);
+        logger.error(method + " Account:Failed Request responseJSON=" + responseJSON);
         return result;
     }
+
+    private ResultDTO makeRequest(String method, Request request, ResultDTO result, String reconnectAttemptsStr, String reconnectTimeStr) {
+        boolean http_429 = true;
+        int try_count = 1;
+        int reconnectAttempts = reconnectAttempts(reconnectAttemptsStr);
+        int reconnectTime = reconnectTime(reconnectTimeStr);
+        Moshi moshi = new Moshi.Builder().build();
+        JsonAdapter<ResponseDTO> jsonAdapter = moshi.adapter(ResponseDTO.class);
+
+        while (http_429) {
+            // Calling REST Service
+            logger.debug(method + " Account Request To Datadog");
+            try {
+                Response response = client.newCall(request).execute();
+                if (!Integer.toString(response.code()).equals("429")) {
+                    http_429 = false;
+                }
+                result = handleResponse(method, response, result, jsonAdapter);
+            } catch (Exception e) {
+                // Handle Exception method ?
+                logger.error(method + " account exception=" + e);
+                result.setSuccessful(false);
+                result.setResultcode(e.getMessage().toString());
+                result.setResultJSON(e.getLocalizedMessage());
+                http_429 = false;
+            }
+
+            try_count++;
+            if (http_429 && try_count > reconnectAttempts) {
+                http_429 = false;
+            }
+            if (http_429) {
+                try {
+                    logger.warn(method + " account HTTP 429, wait and retry");
+                    // wait for reconnectTime seconds
+                    Thread.sleep(reconnectTime * 1000); // sleep for reconnectTime seconds
+                } catch (InterruptedException e) {
+                    logger.warn(method + " account HTTP 429, wait, got interrupted!");
+                }
+            }
+        }
+        return result;
+    }
+
+
 /*
     public ResultDTO getAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
         url += account.handle + "?";
@@ -324,7 +331,7 @@ public class Adapter {
 
         while (keep_going) {
             // REST call
-            try  {
+            try {
                 Response response = client.newCall(request).execute();
                 String responseJSON = response.body().string();
                 if (!response.isSuccessful()) {
@@ -378,7 +385,7 @@ public class Adapter {
     // User Disable
     public ResultDTO disableAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
         ResultDTO result = new ResultDTO();
-
+        account.disabled = true;
         url += account.handle + "?";
         url += "api_key=" + api_key;
         url += "&application_key=" + app_key;
@@ -406,7 +413,7 @@ public class Adapter {
         while (keep_going) {
             // REST call
             logger.debug("Disable Account Handle To Datadog=" + account.handle);
-            try  {
+            try {
                 Response response = client.newCall(request).execute();
                 String responseJSON = response.body().string();
                 if (!response.isSuccessful()) {
