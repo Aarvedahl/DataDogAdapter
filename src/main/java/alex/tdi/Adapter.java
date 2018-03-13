@@ -19,13 +19,13 @@ public class Adapter {
     final static Logger logger = Logger.getLogger(Adapter.class);
 
     // TODO En klass för ISIM Användaren
+    // TODO Ev. att vi behöver en metod för att kunna restorea en användare
+    // TODO Behöver vi en metod för att kunna tolka strängar och ta bort "" från varje argument?
     // Eventuellt att vi behöver inkludera authorizationheader för vidare authorization
 
     // User
 
     // User add
-
-
     public ResultDTO addAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
         // Base url = https://app.datadoghq.com/api/v1/user
         url += "?api_key=" + api_key;
@@ -47,7 +47,6 @@ public class Adapter {
         result = makeRequest("Add", request, result, reconnectAttemptsStr, reconnectTimeStr);
         return result;
     }
-
 
     public ResultDTO getAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
         url += account.handle + "?";
@@ -116,8 +115,6 @@ public class Adapter {
     private ResultDTO makeRequest(String method, Request request, ResultDTO result, String reconnectAttemptsStr, String reconnectTimeStr) {
         boolean http_429 = true;
         int try_count = 1;
-        int reconnectAttempts = reconnectAttempts(reconnectAttemptsStr);
-        int reconnectTime = reconnectTime(reconnectTimeStr);
         Moshi moshi = new Moshi.Builder().build();
         JsonAdapter<ResponseDTO> jsonAdapter = moshi.adapter(ResponseDTO.class);
 
@@ -139,14 +136,14 @@ public class Adapter {
             }
 
             try_count++;
-            if (http_429 && try_count > reconnectAttempts) {
+            if (http_429 && try_count > reconnectAttempts(reconnectAttemptsStr)) {
                 http_429 = false;
             }
             if (http_429) {
                 try {
                     logger.warn(method + " account HTTP 429, wait and retry");
                     // wait for reconnectTime seconds
-                    Thread.sleep(reconnectTime * 1000); // sleep for reconnectTime seconds
+                    Thread.sleep(reconnectTime(reconnectTimeStr) * 1000); // sleep for reconnectTime seconds
                 } catch (InterruptedException e) {
                     logger.warn(method + " account HTTP 429, wait, got interrupted!");
                 }
@@ -155,6 +152,15 @@ public class Adapter {
         return result;
     }
 
+    public ResultDTO changeAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
+        url += account.handle + "?";
+        url += "api_key=" + api_key;
+        url += "&application_key=" + app_key;
+
+        ResultDTO result = new ResultDTO();
+        // Request request = new Request.Builder();
+        return result;
+    }
 
     // User modify
     public ResultDTO modifyAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {

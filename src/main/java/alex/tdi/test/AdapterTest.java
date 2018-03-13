@@ -41,6 +41,8 @@ public class AdapterTest {
     }
 
 
+    // TODO Testa att Skapa ett AccountDTO som liknar det nedan i TDI och se om vi kan hämta det med hjälp av denna metoden
+    // Alltså skapa samma test som detta fast i TDI
     private static void testGetAccount(Adapter client) {
         AccountDTO account = new AccountDTO();
         account.handle = "alex.a1@enfo.org";
