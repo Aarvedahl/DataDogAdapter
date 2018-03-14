@@ -4,7 +4,6 @@ import alex.tdi.Adapter;
 import alex.tdi.dto.AccountDTO;
 import alex.tdi.dto.ResponseDTO;
 import alex.tdi.dto.ResultDTO;
-import org.apache.log4j.BasicConfigurator;
 
 public class AdapterTest {
 
@@ -13,7 +12,7 @@ public class AdapterTest {
     private static String app_key = "8d3de17fa2755953a8e733553e418ddfcca5571e";
 
     public static void main(String[] args) {
-        BasicConfigurator.configure();
+   //     BasicConfigurator.configure();
         Adapter client = new Adapter();
 
         //  testAddAccount(client);
@@ -22,7 +21,7 @@ public class AdapterTest {
         //  testDisableAccount(client);
     }
 
-
+/*
     private static void testAddAccount(Adapter client) {
         AccountDTO account = new AccountDTO();
         account.handle = "alex.a1@enfo.org";
@@ -31,18 +30,35 @@ public class AdapterTest {
         account.email = "alex.a1@enfo.org";
         account.disabled = false;
 
-        String url = "https://app.datadoghq.com/api/v1/user?api_key=41c14834bf1243205b83846e98be8a64&application_key=8d3de17fa2755953a8e733553e418ddfcca5571e";
+        String url = "https://app.datadoghq.com/api/v1/user";
         ResultDTO result = client.addAccount(account, url, "4", "3", api_key, app_key);
         System.out.println("add result=" + result.getResultcode());
         ResponseDTO respobj = (ResponseDTO) result.getResponseDTO();
         System.out.println("new handle=" + respobj.user.handle);
         System.out.println("Name of the user =" + respobj.user.name);
         System.out.println("result JSON=" + result.getResultJSON());
+    } */
+
+
+    // TODO Får UnsupportedClassVersionError från biblioteken, kolla efter versioner som stödjer Java 1.6 alt uppdatera JRE i TDI
+    // Alltså skapa samma test som detta fast i TDI
+
+    // TODO Hitta Jackson som stödjer Java 1.6
+    private static void testGetAccount(Adapter client) {
+        AccountDTO account = new AccountDTO();
+        account.handle = "alex.a1@enfo.org";
+        account.name = "Alex A1";
+        account.access_role = "st";
+        account.email = "alex.a1@enfo.org";
+        account.disabled = false;
+
+        ResultDTO resultDTO = client.getAccount(account, "https://app.datadoghq.com/api/v1/user/", api_key, app_key);
+        ResponseDTO respobj = (ResponseDTO) resultDTO.getResponseDTO();
+        System.out.println("handle of the user=" + respobj.user.handle);
+        System.out.println("Email of the user=" + respobj.user.email);
     }
 
-
-    // TODO Testa att Skapa ett AccountDTO som liknar det nedan i TDI och se om vi kan hämta det med hjälp av denna metoden
-    // Alltså skapa samma test som detta fast i TDI
+ /*
     private static void testGetAccount(Adapter client) {
         AccountDTO account = new AccountDTO();
         account.handle = "alex.a1@enfo.org";
@@ -69,7 +85,7 @@ public class AdapterTest {
         accountDTO.access_role = "ro";
 
         String url = "https://app.datadoghq.com/api/v1/user/";
-        ResultDTO resultDTO = client.modifyAccount(accountDTO, url, "4", "3", api_key, app_key);
+        ResultDTO resultDTO = client.changeAccount(accountDTO, url, "4", "3", api_key, app_key);
         System.out.println("Modify user result=" + resultDTO.getResultcode());
         ResponseDTO respobj = (ResponseDTO) resultDTO.getResponseDTO();
         System.out.println("handle of the user=" + respobj.user.handle);
@@ -93,6 +109,6 @@ public class AdapterTest {
         System.out.println("Response Message=" + responseDTO.message);
         System.out.println("Result JSON=" + resultDTO.getResultJSON());
     }
-
+ */
 
 }

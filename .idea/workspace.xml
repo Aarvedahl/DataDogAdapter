@@ -7,9 +7,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1cdcbb39-72ad-41df-bbb7-2fa9224207de" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/jackson_core_2_0_0.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/jackson_core_2_9_4.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/alex/tdi/DataDogUrl.java" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/TDIAdapter.iml" afterPath="$PROJECT_DIR$/TDIAdapter.iml" />
+      <change beforePath="$PROJECT_DIR$/libraries/log4j-1.2.17.jar" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/libraries/moshi-1.5.0.jar" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/libraries/okhttp-3.9.1.jar" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/libraries/okio-1.13.0.jar" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/TDIAdapter_jar/TDIAdapter.jar" afterPath="$PROJECT_DIR$/out/artifacts/TDIAdapter_jar/TDIAdapter.jar" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
       <change beforePath="$PROJECT_DIR$/src/main/java/alex/tdi/Adapter.java" afterPath="$PROJECT_DIR$/src/main/java/alex/tdi/Adapter.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/alex/tdi/dto/AccountDTO.java" afterPath="$PROJECT_DIR$/src/main/java/alex/tdi/dto/AccountDTO.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/alex/tdi/dto/ResponseDTO.java" afterPath="$PROJECT_DIR$/src/main/java/alex/tdi/dto/ResponseDTO.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/alex/tdi/dto/User.java" afterPath="$PROJECT_DIR$/src/main/java/alex/tdi/dto/User.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/alex/tdi/test/AdapterTest.java" afterPath="$PROJECT_DIR$/src/main/java/alex/tdi/test/AdapterTest.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/alex/tdi/utils/OkHttpHelper.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/alex/tdi/Adapter.class" afterPath="$PROJECT_DIR$/target/classes/alex/tdi/Adapter.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/alex/tdi/dto/AccountDTO.class" afterPath="$PROJECT_DIR$/target/classes/alex/tdi/dto/AccountDTO.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/alex/tdi/dto/ResponseDTO.class" afterPath="$PROJECT_DIR$/target/classes/alex/tdi/dto/ResponseDTO.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/alex/tdi/dto/User.class" afterPath="$PROJECT_DIR$/target/classes/alex/tdi/dto/User.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/alex/tdi/test/AdapterTest.class" afterPath="$PROJECT_DIR$/target/classes/alex/tdi/test/AdapterTest.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/alex/tdi/utils/OkHttpHelper$1.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/alex/tdi/utils/OkHttpHelper.class" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -25,9 +46,11 @@
       <file leaf-file-name="AdapterTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/test/AdapterTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="680">
-              <caret line="44" column="51" lean-forward="false" selection-start-line="44" selection-start-column="51" selection-end-line="44" selection-end-column="51" />
-              <folding />
+            <state relative-caret-position="765">
+              <caret line="45" column="46" lean-forward="false" selection-start-line="45" selection-start-column="46" selection-end-line="45" selection-end-column="46" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -35,9 +58,27 @@
       <file leaf-file-name="Adapter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/Adapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="116" column="26" lean-forward="false" selection-start-line="116" selection-start-column="26" selection-end-line="116" selection-end-column="26" />
-              <folding />
+            <state relative-caret-position="237">
+              <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1347#1572#0" expanded="true" />
+                <element signature="e#1571#1572#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DataDogUrl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/DataDogUrl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="14" column="5" lean-forward="false" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#260#261#0" expanded="true" />
+                <element signature="e#293#294#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -65,6 +106,9 @@
       <find>disab§</find>
       <find>try</find>
       <find>try {</find>
+      <find>chan</find>
+      <find>modify</find>
+      <find>Okio</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -78,14 +122,15 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/alex/tdi/dto/UserDTO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/alex/tdi/dto/User.java" />
         <option value="$PROJECT_DIR$/src/main/java/alex/tdi/dto/MessageDTO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/alex/tdi/dto/ResponseDTO.java" />
         <option value="$PROJECT_DIR$/.gitgnore" />
         <option value="$PROJECT_DIR$/src/main/java/alex/tdi/dto/ResultDTO.java" />
         <option value="$PROJECT_DIR$/src/main/java/alex/tdi/dto/AccountDTO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/alex/tdi/dto/ResponseDTO.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/alex/tdi/DataDogUrl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/alex/tdi/dto/User.java" />
         <option value="$PROJECT_DIR$/src/main/java/alex/tdi/test/AdapterTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/alex/tdi/Adapter.java" />
       </list>
@@ -105,14 +150,14 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="260" />
-    <option name="y" value="20" />
+    <option name="x" value="460" />
+    <option name="y" value="324" />
     <option name="width" value="1400" />
     <option name="height" value="990" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
-    <navigator proportions="" version="1">
+    <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -125,7 +170,63 @@
       <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="AndroidView" />
+      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="TDIAdapter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TDIAdapter" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TDIAdapter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TDIAdapter" type="462c0819:PsiDirectoryNode" />
+              <item name="libraries" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TDIAdapter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TDIAdapter" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TDIAdapter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TDIAdapter" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TDIAdapter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TDIAdapter" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TDIAdapter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TDIAdapter" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tdi" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TDIAdapter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TDIAdapter" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tdi" type="462c0819:PsiDirectoryNode" />
+              <item name="dto" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
@@ -135,13 +236,17 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/TDIAdapter-Backup" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\alexa\IdeaProjects\TDIAdapter\libraries" />
+      <recent name="C:\Users\alexa\IdeaProjects\TDIAdapter" />
       <recent name="C:\Users\alexa\IdeaProjects\TDIAdapter\src\main\java\alex\tdi" />
       <recent name="C:\Users\alexa\IdeaProjects\TDIAdapter\src" />
-      <recent name="C:\Users\alexa\IdeaProjects\TDIAdapter" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\alexa\IdeaProjects\TDIAdapter\libraries" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -289,12 +394,15 @@
       <workItem from="1520925387593" duration="556000" />
       <workItem from="1520926540525" duration="1138000" />
       <workItem from="1520936663413" duration="1592000" />
-      <workItem from="1520943399588" duration="414000" />
+      <workItem from="1520943399588" duration="2927000" />
+      <workItem from="1520956060885" duration="45000" />
+      <workItem from="1521009579612" duration="6765000" />
+      <workItem from="1521017508122" duration="8227000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="65715000" />
+    <option name="totallyTimeSpent" value="83265000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -318,11 +426,11 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32979852" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32979852" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.184375" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1328125" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32979852" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -330,7 +438,7 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26193002" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26193002" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -346,42 +454,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="30" />
+      <option name="time" value="31" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/dto/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="17" lean-forward="false" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/dto/MessageDTO.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/dto/ResponseDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/libraries/moshi-1.5.0.jar!/com/squareup/moshi/CollectionJsonAdapter.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/libraries/moshi-1.5.0.jar!/com/squareup/moshi/MapJsonAdapter.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/libraries/moshi-1.5.0.jar!/com/squareup/moshi/ArrayJsonAdapter.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -564,13 +641,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="0" lean-forward="false" selection-start-line="3" selection-start-column="108" selection-end-line="25" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore" />
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
@@ -680,27 +750,84 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/dto/AccountDTO.java">
+    <entry file="jar://$PROJECT_DIR$/libraries/okio-1.13.0.jar!/META-INF/MANIFEST.MF">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/dto/ResponseDTO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
-          <caret line="8" column="28" lean-forward="false" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
+          <caret line="8" column="4" lean-forward="false" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/dto/AccountDTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="8" lean-forward="false" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/DataDogUrl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="5" lean-forward="false" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#260#261#0" expanded="true" />
+            <element signature="e#293#294#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/utils/OkHttpHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="14" lean-forward="false" selection-start-line="2" selection-start-column="14" selection-end-line="2" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/dto/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="8" lean-forward="false" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/test/AdapterTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="44" column="51" lean-forward="false" selection-start-line="44" selection-start-column="51" selection-end-line="44" selection-end-column="51" />
-          <folding />
+        <state relative-caret-position="765">
+          <caret line="45" column="46" lean-forward="false" selection-start-line="45" selection-start-column="46" selection-end-line="45" selection-end-column="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/Adapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="116" column="26" lean-forward="false" selection-start-line="116" selection-start-column="26" selection-end-line="116" selection-end-column="26" />
-          <folding />
+        <state relative-caret-position="237">
+          <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1347#1572#0" expanded="true" />
+            <element signature="e#1571#1572#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

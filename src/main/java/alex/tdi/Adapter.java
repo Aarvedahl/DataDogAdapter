@@ -3,29 +3,61 @@ package alex.tdi;
 import alex.tdi.dto.AccountDTO;
 import alex.tdi.dto.ResponseDTO;
 import alex.tdi.dto.ResultDTO;
-import alex.tdi.utils.OkHttpHelper;
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
-import okhttp3.*;
-import org.apache.log4j.Logger;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestFactory;
+import com.google.api.client.http.HttpRequestInitializer;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.JsonObjectParser;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
 
 import java.io.IOException;
 
 public class Adapter {
 
-    OkHttpClient client = OkHttpHelper.getSSLClient();
+   // OkHttpClient client = OkHttpHelper.getSSLClient();
 
-    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    final static Logger logger = Logger.getLogger(Adapter.class);
+   // public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+  //  final static Logger logger = Logger.getLogger(Adapter.class);
 
     // TODO En klass för ISIM Användaren
     // TODO Ev. att vi behöver en metod för att kunna restorea en användare
     // TODO Behöver vi en metod för att kunna tolka strängar och ta bort "" från varje argument?
     // Eventuellt att vi behöver inkludera authorizationheader för vidare authorization
 
+    static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
+    static final JsonFactory JSON_FACTORY = new JacksonFactory();
+
+    HttpRequestFactory requestFactory =
+            HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
+                @Override
+                public void initialize(HttpRequest request) {
+                    request.setParser(new JsonObjectParser(JSON_FACTORY));
+                }
+            });
+
+    public ResultDTO getAccount(AccountDTO account, String url, String api_key, String app_key) {
+        url += account.handle + "?";
+        url += "api_key=" + api_key;
+        url += "&application_key=" + app_key;
+
+        ResultDTO resultDTO = new ResultDTO();
+        DataDogUrl dogUrl = new DataDogUrl(url);
+        try {
+            HttpRequest request = requestFactory.buildGetRequest(dogUrl);
+            ResponseDTO responseDTO = request.execute().parseAs(ResponseDTO.class);
+            resultDTO.setResponseDTO(responseDTO);
+            return  resultDTO;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return resultDTO;
+        }
+    }
     // User
 
     // User add
+   /*
     public ResultDTO addAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
         // Base url = https://app.datadoghq.com/api/v1/user
         url += "?api_key=" + api_key;
@@ -48,12 +80,31 @@ public class Adapter {
         return result;
     }
 
+    public ResultDTO changeAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
+        url += account.handle + "?";
+        url += "api_key=" + api_key;
+        url += "&application_key=" + app_key;
+
+        ResultDTO result = new ResultDTO();
+        Moshi moshi = new Moshi.Builder().build();
+        JsonAdapter<AccountDTO> jsonAdapter = moshi.adapter(AccountDTO.class);
+        String jsonBody = jsonAdapter.toJson(account);
+
+        Request request = new Request.Builder()
+                .url(url)
+                .put(RequestBody.create(JSON, jsonBody))
+                .build();
+        result = makeRequest("Modify", request, result, reconnectAttemptsStr, reconnectTimeStr);
+        return result;
+    }
+
     public ResultDTO getAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
         url += account.handle + "?";
         url += "api_key=" + api_key;
         url += "&application_key=" + app_key;
 
         ResultDTO result = new ResultDTO();
+
 
         Request request = new Request.Builder()
                 .url(url)
@@ -65,6 +116,7 @@ public class Adapter {
         return result;
     }
 
+
     private ResultDTO handleResponse(String method, Response response, ResultDTO result, JsonAdapter jsonAdapter) throws IOException {
         String responseJSON = response.body().string();
         logger.debug(method + " Account response code=" + response.code());
@@ -73,8 +125,7 @@ public class Adapter {
             return failedReq(method, result, response, responseJSON);
         } else {
             // Get user info from user property within response JSON
-            ResponseDTO respobj = null;
-            respobj = (ResponseDTO) jsonAdapter.fromJson(responseJSON);
+            ResponseDTO respobj = (ResponseDTO) jsonAdapter.fromJson(responseJSON);
             return successReq(method, result, response, respobj, responseJSON);
         }
     }
@@ -152,15 +203,7 @@ public class Adapter {
         return result;
     }
 
-    public ResultDTO changeAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
-        url += account.handle + "?";
-        url += "api_key=" + api_key;
-        url += "&application_key=" + app_key;
 
-        ResultDTO result = new ResultDTO();
-        // Request request = new Request.Builder();
-        return result;
-    }
 
     // User modify
     public ResultDTO modifyAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
@@ -247,7 +290,6 @@ public class Adapter {
         return result;
     }
 
-
     // User Disable
     public ResultDTO disableAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
         ResultDTO result = new ResultDTO();
@@ -328,5 +370,7 @@ public class Adapter {
         }
         return result;
     }
+     */
+
 
 }
