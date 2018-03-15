@@ -12,6 +12,7 @@ import org.apache.http.HttpVersion;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
@@ -32,14 +33,14 @@ import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import java.io.StringWriter;
 import java.security.KeyStore;
 
+// TODO Verifiera att det fungerar som det ska på TDI samt dela upp i metoder
+// TODO Behöver antagligen även lägga över metoderna för http 429
 
 public class Adapter2 {
 
+    /*
     public void demoGetRESTAPI(AccountDTO account, String url, String api_key, String app_key) {
         url += account.handle + "?";
         url += "api_key=" + api_key;
@@ -117,7 +118,7 @@ public class Adapter2 {
         } catch (Exception e) {
             return new DefaultHttpClient();
         }
-    }
+    } */
 
     public ResultDTO get() {
         ResultDTO resultDTO = new ResultDTO();
@@ -172,14 +173,11 @@ public class Adapter2 {
         return resultDTO;
     }
 
+    /*
     public void post(AccountDTO accountDTO) {
 
         ResultDTO resultDTO = new ResultDTO();
         try {
-            SSLContextBuilder builder = new SSLContextBuilder();
-            builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
-            SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(builder.build());
-            CloseableHttpClient httpclient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
 
             //Define a postRequest request
             HttpPost postRequest = new HttpPost("https://app.datadoghq.com/api/v1/user?api_key=41c14834bf1243205b83846e98be8a64&application_key=8d3de17fa2755953a8e733553e418ddfcca5571e");
@@ -193,6 +191,10 @@ public class Adapter2 {
             StringEntity entity = new StringEntity(json, ContentType.APPLICATION_JSON);
             postRequest.setEntity(entity);
 
+            SSLContextBuilder builder = new SSLContextBuilder();
+            builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
+            SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(builder.build());
+            CloseableHttpClient httpclient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
 
             //Send the request; It will immediately return the response in HttpResponse object if any
             CloseableHttpResponse response = httpclient.execute(postRequest);
@@ -223,6 +225,7 @@ public class Adapter2 {
             System.out.println(respObj.user.name);
             System.out.println(respObj.user.access_role);
 
+
         } catch (Exception e) {
             System.out.println(e);
             e.printStackTrace();
@@ -234,6 +237,84 @@ public class Adapter2 {
         } finally {
             //Important: Close the connect
         }
+    } */
+
+    public ResultDTO addAccount(AccountDTO account, String url, String api_key, String app_key) {
+        url += "?api_key=" + api_key;
+        url += "&application_key=" + app_key;
+        ResultDTO resultDTO = new ResultDTO();
+        HttpPost postRequest = new HttpPost(url);
+
+        //Set the API media type in http content-type header
+        postRequest.addHeader("content-type", "application/json");
+
+        //Set the request post body
+        Gson gson = new Gson();
+        String json = gson.toJson(account);
+        StringEntity entity = new StringEntity(json, ContentType.APPLICATION_JSON);
+        postRequest.setEntity(entity);
+
+        return makeRequest(resultDTO, postRequest);
+    }
+
+    public ResultDTO getAccount(AccountDTO accountDTO, String url, String api_key, String app_key) {
+        url += accountDTO.handle + "?";
+        url += "api_key=" + api_key;
+        url += "&application_key=" + app_key;
+
+        ResultDTO result = new ResultDTO();
+        HttpGet httpGet = new HttpGet(url);
+
+        return makeRequest(result, httpGet);
+    }
+
+    private ResultDTO makeRequest(ResultDTO resultDTO, HttpUriRequest request) {
+
+        try {
+            Gson gson = new Gson();
+            SSLContextBuilder builder = new SSLContextBuilder();
+            builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
+            SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(builder.build());
+            CloseableHttpClient httpclient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
+
+            //Send the request; It will immediately return the response in HttpResponse object if any
+            CloseableHttpResponse response = httpclient.execute(request);
+
+            //verify the valid error code first
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode != 201 && statusCode != 200) {
+                throw new RuntimeException("Failed with HTTP error code : " + statusCode);
+            }
+
+            //Now pull back the response object
+            HttpEntity httpEntity = response.getEntity();
+            String apiOutput = EntityUtils.toString(httpEntity);
+            resultDTO.setSuccessful(true);
+            resultDTO.setResultcode(Integer.toString(statusCode));
+            resultDTO.setResultJSON(apiOutput);
+
+            //Lets see what we got from API
+            //System.out.println("Output from the API");
+            //System.out.println(apiOutput);
+            ResponseDTO respObj = gson.fromJson(apiOutput, ResponseDTO.class);
+            resultDTO.setResponseDTO(respObj);
+
+
+            /*Verify the populated object
+            System.out.println(respObj.user.handle);
+            System.out.println(respObj.user.name);
+            System.out.println(respObj.user.access_role); */
+        } catch (Exception e) {
+            System.out.println(e);
+            e.printStackTrace();
+            System.out.println(e.getLocalizedMessage());
+            resultDTO.setResultJSON(e.getLocalizedMessage());
+            resultDTO.setSuccessful(false);
+            resultDTO.setResultcode("999");
+
+        }
+
+        return resultDTO;
     }
 
 

@@ -1,16 +1,12 @@
 package alex.tdi;
 
+import alex.tdi.dto.ResultDTO;
 import org.apache.log4j.Logger;
 
 public class Adapter {
 
-
-    //java.security.NoSuchAlgorithmException SSLContext Default implementation not found
     final static Logger logger = Logger.getLogger(Adapter.class);
 
-    // TODO Bygg om metoderna alternativt få fixat SSL felet
-    // TODO En klass för ISIM Användaren
-    // TODO Ev. att vi behöver en metod för att kunna restorea en användare
     // Eventuellt att vi behöver inkludera authorizationheader för vidare authorization
 /*
     static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
@@ -176,6 +172,7 @@ public class Adapter {
         return result;
     }
 
+    */
     private ResultDTO makeRequest(String method, Request request, ResultDTO result, String reconnectAttemptsStr, String reconnectTimeStr) {
         boolean http_429 = true;
         int try_count = 1;
@@ -216,7 +213,7 @@ public class Adapter {
         return result;
     }
 
-
+/*
 
     // User modify
     public ResultDTO modifyAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {

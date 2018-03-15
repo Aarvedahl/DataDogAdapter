@@ -16,18 +16,23 @@ public class AdapterTest {
     public static void main(String[] args) {
         BasicConfigurator.configure();
         Adapter2 adapter2 = new Adapter2();
-       // testGet(adapter2);
+        testGet(adapter2);
 
-        testPost(adapter2);
+       // testPost(adapter2);
        // testGetAccount(adapter2);
-        //  testAddAccount(client);
+       //  testAddAccount(client);
        // testGetAccount(client);
-        //  testModifyAccount(client);
-        //  testDisableAccount(client);
+       //  testModifyAccount(client);
+       //  testDisableAccount(client);
     }
 
     private static void testGet(Adapter2 adapter2) {
-        adapter2.get();
+        AccountDTO account = new AccountDTO();
+        account.handle = "alex.a3@enfo.org";
+        String dogUrl = "http://app.datadoghq.com/api/v1/user/";
+        ResultDTO resultDTO = adapter2.getAccount(account, dogUrl, api_key, app_key);
+        System.out.println(resultDTO.getResponseDTO().user.access_role);
+        System.out.println(resultDTO.getResponseDTO().user.handle);
     }
 
     private static void testPost(Adapter2 adapter2) {
@@ -38,11 +43,11 @@ public class AdapterTest {
         account.email = "alex.a3@enfo.org";
         account.disabled = false;
 
-        adapter2.post(account);
+        String url = "https://app.datadoghq.com/api/v1/user";
+        adapter2.addAccount(account, url, api_key, app_key);
     }
 
     private static void testGetAccount(Adapter2 adapter2) {
-
         AccountDTO account = new AccountDTO();
         account.handle = "alex.a1@enfo.org";
         account.name = "Alex A1";
@@ -51,8 +56,8 @@ public class AdapterTest {
         account.disabled = false;
 
         String dogUrl = "http://app.datadoghq.com/api/v1/user/";
-        adapter2.demoGetRESTAPI(account, dogUrl, api_key, app_key);
-
+        //adapter2.demoGetRESTAPI(account, dogUrl, api_key, app_key);
+        adapter2.getAccount(account, dogUrl, api_key, app_key);
     }
 
      /*
