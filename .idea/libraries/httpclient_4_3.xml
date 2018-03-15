@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="httpclient-4.3">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libraries/httpclient-4.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libraries/gson-2.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

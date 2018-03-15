@@ -1,31 +1,18 @@
 package alex.tdi;
 
-import alex.tdi.dto.AccountDTO;
-import alex.tdi.dto.ResponseDTO;
-import alex.tdi.dto.ResultDTO;
-import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpRequestFactory;
-import com.google.api.client.http.HttpRequestInitializer;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.JsonObjectParser;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
-
-import java.io.IOException;
+import org.apache.log4j.Logger;
 
 public class Adapter {
 
-   // OkHttpClient client = OkHttpHelper.getSSLClient();
 
-   // public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-  //  final static Logger logger = Logger.getLogger(Adapter.class);
+    //java.security.NoSuchAlgorithmException SSLContext Default implementation not found
+    final static Logger logger = Logger.getLogger(Adapter.class);
 
+    // TODO Bygg om metoderna alternativt få fixat SSL felet
     // TODO En klass för ISIM Användaren
     // TODO Ev. att vi behöver en metod för att kunna restorea en användare
-    // TODO Behöver vi en metod för att kunna tolka strängar och ta bort "" från varje argument?
     // Eventuellt att vi behöver inkludera authorizationheader för vidare authorization
-
+/*
     static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
     static final JsonFactory JSON_FACTORY = new JacksonFactory();
 
@@ -43,17 +30,43 @@ public class Adapter {
         url += "&application_key=" + app_key;
 
         ResultDTO resultDTO = new ResultDTO();
-        DataDogUrl dogUrl = new DataDogUrl(url);
         try {
             HttpRequest request = requestFactory.buildGetRequest(dogUrl);
+            HttpResponse response = request.execute();
+            int code = response.getStatusCode();
+            ResponseDTO responseDTO = response.parseAs(ResponseDTO.class);
+            resultDTO.setResultcode(Integer.toString(code));
+            resultDTO.setResponseDTO(responseDTO);
+            resultDTO.setSuccessful(true);
+            return resultDTO;
+        } catch (IOException e) {
+            logger.error(e.getMessage());
+            logger.error(e.getLocalizedMessage());
+            resultDTO.setResultJSON(e.getLocalizedMessage());
+            resultDTO.setSuccessful(false);
+            return resultDTO;
+        }
+    }
+
+    public ResultDTO addAccount(AccountDTO account, String url, String api_key, String app_key) {
+        url += "?api_key=" + api_key;
+        url += "&application_key=" + app_key;
+
+        ResultDTO resultDTO = new ResultDTO();
+        try {
+            Object object = account;
+            HttpContent content = new JsonHttpContent(JSON_FACTORY, object);
+            HttpRequest request = requestFactory.buildPostRequest(dogUrl, content);
             ResponseDTO responseDTO = request.execute().parseAs(ResponseDTO.class);
             resultDTO.setResponseDTO(responseDTO);
-            return  resultDTO;
+            return resultDTO;
         } catch (IOException e) {
             e.printStackTrace();
             return resultDTO;
         }
     }
+
+
     // User
 
     // User add

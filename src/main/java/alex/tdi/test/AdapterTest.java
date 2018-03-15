@@ -1,9 +1,11 @@
 package alex.tdi.test;
 
 import alex.tdi.Adapter;
+import alex.tdi.Adapter2;
 import alex.tdi.dto.AccountDTO;
 import alex.tdi.dto.ResponseDTO;
 import alex.tdi.dto.ResultDTO;
+import org.apache.log4j.BasicConfigurator;
 
 public class AdapterTest {
 
@@ -12,17 +14,25 @@ public class AdapterTest {
     private static String app_key = "8d3de17fa2755953a8e733553e418ddfcca5571e";
 
     public static void main(String[] args) {
-   //     BasicConfigurator.configure();
+        BasicConfigurator.configure();
         Adapter client = new Adapter();
+        Adapter2 adapter2 = new Adapter2();
+        testGet(adapter2);
+       // testGetAccount(adapter2);
 
         //  testAddAccount(client);
-        testGetAccount(client);
+       // testGetAccount(client);
         //  testModifyAccount(client);
         //  testDisableAccount(client);
     }
 
-/*
-    private static void testAddAccount(Adapter client) {
+    private static void testGet(Adapter2 adapter2) {
+        adapter2.get();
+    }
+
+
+    private static void testGetAccount(Adapter2 adapter2) {
+
         AccountDTO account = new AccountDTO();
         account.handle = "alex.a1@enfo.org";
         account.name = "Alex A1";
@@ -30,20 +40,31 @@ public class AdapterTest {
         account.email = "alex.a1@enfo.org";
         account.disabled = false;
 
+        String dogUrl = "http://app.datadoghq.com/api/v1/user/";
+        adapter2.demoGetRESTAPI(account, dogUrl, api_key, app_key);
+
+    }
+
+     /*
+
+
+
+    private static void testAddAccount(Adapter client) {
+        AccountDTO account = new AccountDTO();
+        account.handle = "alex.a2@enfo.org";
+        account.name = "Alex A2";
+        account.access_role = "st";
+        account.email = "alex.a2@enfo.org";
+        account.disabled = false;
+
         String url = "https://app.datadoghq.com/api/v1/user";
-        ResultDTO result = client.addAccount(account, url, "4", "3", api_key, app_key);
-        System.out.println("add result=" + result.getResultcode());
+        ResultDTO result = client.addAccount(account, url, api_key, app_key);
         ResponseDTO respobj = (ResponseDTO) result.getResponseDTO();
-        System.out.println("new handle=" + respobj.user.handle);
+        System.out.println("New handle=" + respobj.user.handle);
         System.out.println("Name of the user =" + respobj.user.name);
-        System.out.println("result JSON=" + result.getResultJSON());
-    } */
+    }
 
 
-    // TODO Får UnsupportedClassVersionError från biblioteken, kolla efter versioner som stödjer Java 1.6 alt uppdatera JRE i TDI
-    // Alltså skapa samma test som detta fast i TDI
-
-    // TODO Hitta Jackson som stödjer Java 1.6
     private static void testGetAccount(Adapter client) {
         AccountDTO account = new AccountDTO();
         account.handle = "alex.a1@enfo.org";
@@ -52,13 +73,14 @@ public class AdapterTest {
         account.email = "alex.a1@enfo.org";
         account.disabled = false;
 
-        ResultDTO resultDTO = client.getAccount(account, "https://app.datadoghq.com/api/v1/user/", api_key, app_key);
+        String dogUrl = "http://app.datadoghq.com/api/v1/user/";
+        ResultDTO resultDTO = client.getAccount(account, dogUrl, api_key, app_key);
+        System.out.println("Get user result=" + resultDTO.getResultcode());
         ResponseDTO respobj = (ResponseDTO) resultDTO.getResponseDTO();
         System.out.println("handle of the user=" + respobj.user.handle);
         System.out.println("Email of the user=" + respobj.user.email);
     }
 
- /*
     private static void testGetAccount(Adapter client) {
         AccountDTO account = new AccountDTO();
         account.handle = "alex.a1@enfo.org";
