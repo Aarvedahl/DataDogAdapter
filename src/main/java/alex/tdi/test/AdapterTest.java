@@ -15,11 +15,11 @@ public class AdapterTest {
 
     public static void main(String[] args) {
         BasicConfigurator.configure();
-        Adapter client = new Adapter();
         Adapter2 adapter2 = new Adapter2();
-        testGet(adapter2);
-       // testGetAccount(adapter2);
+       // testGet(adapter2);
 
+        testPost(adapter2);
+       // testGetAccount(adapter2);
         //  testAddAccount(client);
        // testGetAccount(client);
         //  testModifyAccount(client);
@@ -30,6 +30,16 @@ public class AdapterTest {
         adapter2.get();
     }
 
+    private static void testPost(Adapter2 adapter2) {
+        AccountDTO account = new AccountDTO();
+        account.handle = "alex.a3@enfo.org";
+        account.name = "Alex A3";
+        account.access_role = "adm";
+        account.email = "alex.a3@enfo.org";
+        account.disabled = false;
+
+        adapter2.post(account);
+    }
 
     private static void testGetAccount(Adapter2 adapter2) {
 
@@ -46,9 +56,6 @@ public class AdapterTest {
     }
 
      /*
-
-
-
     private static void testAddAccount(Adapter client) {
         AccountDTO account = new AccountDTO();
         account.handle = "alex.a2@enfo.org";

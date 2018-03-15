@@ -3,6 +3,7 @@ package alex.tdi;
 import alex.tdi.dto.AccountDTO;
 import alex.tdi.dto.ResponseDTO;
 import alex.tdi.dto.ResultDTO;
+import alex.tdi.dto.User;
 import alex.tdi.utils.MySSLSocketFactory;
 import com.google.gson.Gson;
 import org.apache.http.HttpEntity;
@@ -10,6 +11,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
@@ -18,6 +20,8 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContextBuilder;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -28,6 +32,9 @@ import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import java.io.StringWriter;
 import java.security.KeyStore;
 
 
@@ -41,8 +48,7 @@ public class Adapter2 {
         ResultDTO resultDTO = new ResultDTO();
 
         DefaultHttpClient httpClient = getNewHttpClient();
-        try
-        {
+        try {
             //Define a HttpGet request; You can choose between HttpPost, HttpDelete or HttpPut also.
             HttpGet getRequest = new HttpGet(url);
 
@@ -72,7 +78,7 @@ public class Adapter2 {
             System.out.println(apiOutput); //<user id="10"><firstName>demo</firstName><lastName>user</lastName></user>
 
             Gson gson = new Gson();
-            ResponseDTO respObj = gson.fromJson(apiOutput,ResponseDTO.class);
+            ResponseDTO respObj = gson.fromJson(apiOutput, ResponseDTO.class);
             resultDTO.setResponseDTO(respObj);
 
 
@@ -148,7 +154,7 @@ public class Adapter2 {
             System.out.println(apiOutput); //<user id="10"><firstName>demo</firstName><lastName>user</lastName></user>
 
             Gson gson = new Gson();
-            ResponseDTO respObj = gson.fromJson(apiOutput,ResponseDTO.class);
+            ResponseDTO respObj = gson.fromJson(apiOutput, ResponseDTO.class);
             resultDTO.setResponseDTO(respObj);
 
 
@@ -156,8 +162,6 @@ public class Adapter2 {
             System.out.println(respObj.user.handle);
             System.out.println(respObj.user.name);
             System.out.println(respObj.user.access_role);
-
-
 
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
@@ -167,45 +171,70 @@ public class Adapter2 {
         }
         return resultDTO;
     }
-/*
-    public static OkHttpClient getSSLClient() {
+
+    public void post(AccountDTO accountDTO) {
+
+        ResultDTO resultDTO = new ResultDTO();
         try {
-            // Create a trust manager that does not validate certificate chains
-            final TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
-                @Override
-                public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) {
-                }
+            SSLContextBuilder builder = new SSLContextBuilder();
+            builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
+            SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(builder.build());
+            CloseableHttpClient httpclient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
 
-                @Override
-                public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) {
-                }
+            //Define a postRequest request
+            HttpPost postRequest = new HttpPost("https://app.datadoghq.com/api/v1/user?api_key=41c14834bf1243205b83846e98be8a64&application_key=8d3de17fa2755953a8e733553e418ddfcca5571e");
 
-                @Override
-                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                    return null;
-                }
-            } };
+            //Set the API media type in http content-type header
+            postRequest.addHeader("content-type", "application/json");
 
-            TrustManagerFactory trustManagerFactory = TrustManagerFactory
-                    .getInstance(TrustManagerFactory.getDefaultAlgorithm());
-            trustManagerFactory.init((KeyStore) null);
-            TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
-            if (trustManagers.length != 1 || !(trustManagers[0] instanceof X509TrustManager)) {
-                throw new IllegalStateException("Unexpected default trust managers:" + Arrays.toString(trustManagers));
+            //Set the request post body
+            Gson gson = new Gson();
+            String json = gson.toJson(accountDTO);
+            StringEntity entity = new StringEntity(json, ContentType.APPLICATION_JSON);
+            postRequest.setEntity(entity);
+
+
+            //Send the request; It will immediately return the response in HttpResponse object if any
+            CloseableHttpResponse response = httpclient.execute(postRequest);
+
+            //verify the valid error code first
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode != 201 && statusCode != 200) {
+                throw new RuntimeException("Failed with HTTP error code : " + statusCode);
             }
 
-            X509TrustManager trustManager = (X509TrustManager) trustManagers[0];
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
-            javax.net.ssl.SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+            //Now pull back the response object
+            HttpEntity httpEntity = response.getEntity();
+            String apiOutput = EntityUtils.toString(httpEntity);
+            resultDTO.setSuccessful(true);
+            resultDTO.setResultcode(Integer.toString(statusCode));
+            resultDTO.setResultJSON(apiOutput);
 
-            return new DefaultHttpClient(sslSocketFactory, trustManager);
-            OkHttpClient client = new OkHttpClient.Builder().sslSocketFactory(sslSocketFactory, trustManager).build();
-            return client;
+
+            //Lets see what we got from API
+            System.out.println("Output from the API");
+            System.out.println(apiOutput);
+            ResponseDTO respObj = gson.fromJson(apiOutput, ResponseDTO.class);
+            resultDTO.setResponseDTO(respObj);
+
+
+            //Verify the populated object
+            System.out.println(respObj.user.handle);
+            System.out.println(respObj.user.name);
+            System.out.println(respObj.user.access_role);
 
         } catch (Exception e) {
-            System.out.println("getSSLClient Exception:" + e);
-            throw new RuntimeException(e);
+            System.out.println(e);
+            e.printStackTrace();
+            System.out.println(e.getLocalizedMessage());
+            resultDTO.setResultJSON(e.getLocalizedMessage());
+            resultDTO.setSuccessful(false);
+            resultDTO.setResultcode("999");
+
+        } finally {
+            //Important: Close the connect
         }
-    } */
+    }
+
+
 }
