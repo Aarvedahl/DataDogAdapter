@@ -1,6 +1,6 @@
 package alex.tdi.test;
 
-import alex.tdi.Adapter2;
+import alex.tdi.Adapter;
 import alex.tdi.dto.AccountDTO;
 import alex.tdi.dto.ResultDTO;
 import org.apache.log4j.BasicConfigurator;
@@ -12,28 +12,28 @@ public class AdapterTest {
 
     public static void main(String[] args) {
         BasicConfigurator.configure();
-        Adapter2 adapter2 = new Adapter2();
-        testGet(adapter2);
+        Adapter adapter = new Adapter();
+        testGet(adapter);
 
-        //  testAdd(adapter2);
-        //testUpdate(adapter2);
-        // testDisable(adapter2);
-        //testRestore(adapter2);
+        // testAdd(adapter);
+        // testUpdate(adapter);
+        // testDisable(adapter);
+        // testRestore(adapter);
     }
 
-    private static void testGet(Adapter2 adapter2) {
+    private static void testGet(Adapter adapter) {
         AccountDTO account = new AccountDTO();
         account.handle = "alex.a3@enfo.org";
         String dogUrl = "http://app.datadoghq.com/api/v1/user/";
 
-        ResultDTO resultDTO = adapter2.getAccount(account, dogUrl, api_key, app_key);
+        ResultDTO resultDTO = adapter.getAccount(account, dogUrl, api_key, app_key);
         System.out.println("Access role:" + resultDTO.getResponseDTO().user.access_role);
         System.out.println("Handle of the user:" + resultDTO.getResponseDTO().user.handle);
         System.out.println("Name of the user:" + resultDTO.getResponseDTO().user.name);
     }
 
 
-    private static void testAdd(Adapter2 adapter2) {
+    private static void testAdd(Adapter adapter) {
         AccountDTO account = new AccountDTO();
         account.handle = "alex.a3@enfo.org";
         account.name = "Alex A31";
@@ -42,14 +42,14 @@ public class AdapterTest {
         account.disabled = false;
 
         String url = "https://app.datadoghq.com/api/v1/user";
-        ResultDTO resultDTO = adapter2.addAccount(account, url, api_key, app_key);
+        ResultDTO resultDTO = adapter.addAccount(account, url, api_key, app_key);
         System.out.println("Access role:" + resultDTO.getResponseDTO().user.access_role);
         System.out.println("Handle of the user:" + resultDTO.getResponseDTO().user.handle);
         System.out.println("Name of the user:" + resultDTO.getResponseDTO().user.name);
     }
 
 
-    private static void testUpdate(Adapter2 adapter2) {
+    private static void testUpdate(Adapter adapter) {
         AccountDTO account = new AccountDTO();
         account.handle = "alex.arvedahl@gmail.com";
         account.name = "Alex Aaa";
@@ -57,19 +57,19 @@ public class AdapterTest {
         account.email = "alex.arvedahl@gmail.com";
 
         String url = "https://app.datadoghq.com/api/v1/user/";
-        ResultDTO resultDTO = adapter2.updateAccount(account, url, api_key, app_key);
+        ResultDTO resultDTO = adapter.updateAccount(account, url, api_key, app_key);
         System.out.println("Updated access role:" + resultDTO.getResponseDTO().user.access_role);
         System.out.println("Updated handle of the user:" + resultDTO.getResponseDTO().user.handle);
         System.out.println("Updated name of the user:" + resultDTO.getResponseDTO().user.name);
     }
 
 
-    private static void testDisable(Adapter2 adapter2) {
+    private static void testDisable(Adapter adapter) {
         AccountDTO account = new AccountDTO();
         account.handle = "alex.a1@enfo.org";
 
         String url = "https://app.datadoghq.com/api/v1/user/";
-        ResultDTO resultDTO = adapter2.disableAccount(account, url, api_key, app_key);
+        ResultDTO resultDTO = adapter.disableAccount(account, url, api_key, app_key);
         if (resultDTO.getResponseDTO().message != null) {
             System.out.println("Get Message: " + resultDTO.getResponseDTO().message);
         } else {
@@ -78,13 +78,13 @@ public class AdapterTest {
     }
 
 
-    private static void testRestore(Adapter2 adapter2) {
+    private static void testRestore(Adapter adapter) {
         AccountDTO account = new AccountDTO();
         account.handle = "alex.a1@enfo.org";
         account.name = "Alex A1";
 
         String url = "https://app.datadoghq.com/api/v1/user/";
-        ResultDTO resultDTO = adapter2.updateAccount(account, url, api_key, app_key);
+        ResultDTO resultDTO = adapter.restoreAccount(account, url, api_key, app_key);
         System.out.println("Updated access role:" + resultDTO.getResponseDTO().user.access_role);
         System.out.println("Updated handle of the user:" + resultDTO.getResponseDTO().user.handle);
         System.out.println("Updated name of the user:" + resultDTO.getResponseDTO().user.name);

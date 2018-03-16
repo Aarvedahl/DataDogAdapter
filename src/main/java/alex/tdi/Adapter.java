@@ -1,385 +1,180 @@
 package alex.tdi;
 
+import alex.tdi.dto.AccountDTO;
+import alex.tdi.dto.ResponseDTO;
 import alex.tdi.dto.ResultDTO;
-import org.apache.log4j.Logger;
+import com.google.gson.Gson;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.*;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.SSLContextBuilder;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+
 
 public class Adapter {
+    /*
+    Få löst api nyckeln och dubbelkolla att allt fungerar, ta bort Adapter klassen sen
+    kolla sen med Mats vad som skall göras
+    */
 
-    final static Logger logger = Logger.getLogger(Adapter.class);
 
-    // Eventuellt att vi behöver inkludera authorizationheader för vidare authorization
-/*
-    static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
-    static final JsonFactory JSON_FACTORY = new JacksonFactory();
+    public ResultDTO restoreAccount(AccountDTO account, String url, String api_key, String app_key) {
+        account.disabled = false;
+        url += account.handle + "?";
+        url += "api_key=" + api_key;
+        url += "&application_key=" + app_key;
+        ResultDTO resultDTO = new ResultDTO();
+        HttpPut putRequest = new HttpPut(url);
 
-    HttpRequestFactory requestFactory =
-            HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
-                @Override
-                public void initialize(HttpRequest request) {
-                    request.setParser(new JsonObjectParser(JSON_FACTORY));
-                }
-            });
+        //Set the API media type in http Content-Type header
+        putRequest.addHeader("Content-Type", "application/json");
+
+        //Set the request post body
+        Gson gson = new Gson();
+        String json = gson.toJson(account);
+        StringEntity entity = new StringEntity(json, ContentType.APPLICATION_JSON);
+        putRequest.setEntity(entity);
+
+        return makeRequest(resultDTO, putRequest);
+    }
+
+    public ResultDTO disableAccount(AccountDTO account, String url, String api_key, String app_key) {
+        url += account.handle + "?";
+        url += "api_key=" + api_key;
+        url += "&application_key=" + app_key;
+        ResultDTO resultDTO = new ResultDTO();
+        HttpDelete deleteRequest = new HttpDelete(url);
+
+        return makeRequest(resultDTO, deleteRequest);
+    }
+
+    public ResultDTO updateAccount(AccountDTO account, String url, String api_key, String app_key) {
+        url += account.handle + "?";
+        url += "api_key=" + api_key;
+        url += "&application_key=" + app_key;
+        ResultDTO resultDTO = new ResultDTO();
+        HttpPut putRequest = new HttpPut(url);
+
+        //Set the API media type in http Content-Type header
+        putRequest.addHeader("Content-Type", "application/json");
+
+        //Set the request post body
+        Gson gson = new Gson();
+        String json = gson.toJson(account);
+        StringEntity entity = new StringEntity(json, ContentType.APPLICATION_JSON);
+        putRequest.setEntity(entity);
+
+        return makeRequest(resultDTO, putRequest);
+    }
+
+
+    public ResultDTO addAccount(AccountDTO account, String url, String api_key, String app_key) {
+        url += "?api_key=" + api_key;
+        url += "&application_key=" + app_key;
+        ResultDTO resultDTO = new ResultDTO();
+        HttpPost postRequest = new HttpPost(url);
+
+        //Set the API media type in http Content-Type header
+        postRequest.addHeader("Content-Type", "application/json");
+
+        //Set the request post body
+        Gson gson = new Gson();
+        String json = gson.toJson(account);
+        StringEntity entity = new StringEntity(json, ContentType.APPLICATION_JSON);
+        postRequest.setEntity(entity);
+
+        return makeRequest(resultDTO, postRequest);
+    }
+
 
     public ResultDTO getAccount(AccountDTO account, String url, String api_key, String app_key) {
         url += account.handle + "?";
         url += "api_key=" + api_key;
         url += "&application_key=" + app_key;
+        ResultDTO result = new ResultDTO();
+        HttpGet getRequest = new HttpGet(url);
 
-        ResultDTO resultDTO = new ResultDTO();
+        return makeRequest(result, getRequest);
+    }
+
+
+    private CloseableHttpClient getSSL() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
+        SSLContextBuilder builder = new SSLContextBuilder();
+        builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
+        SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(builder.build());
+        return HttpClients.custom().setSSLSocketFactory(sslsf).build();
+    }
+
+
+    private ResultDTO makeRequest(ResultDTO resultDTO, HttpUriRequest request) {
         try {
-            HttpRequest request = requestFactory.buildGetRequest(dogUrl);
-            HttpResponse response = request.execute();
-            int code = response.getStatusCode();
-            ResponseDTO responseDTO = response.parseAs(ResponseDTO.class);
-            resultDTO.setResultcode(Integer.toString(code));
-            resultDTO.setResponseDTO(responseDTO);
+            Gson gson = new Gson();
+            CloseableHttpResponse response = handleStatusCode(request);
+            int statusCode = response.getStatusLine().getStatusCode();
+
+            //Now receive the response object
+            HttpEntity httpEntity = response.getEntity();
+            String apiOutput = EntityUtils.toString(httpEntity);
+
+            //Set results from the API
+            ResponseDTO respObj = gson.fromJson(apiOutput, ResponseDTO.class);
+            resultDTO.setResponseDTO(respObj);
             resultDTO.setSuccessful(true);
-            return resultDTO;
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-            logger.error(e.getLocalizedMessage());
-            resultDTO.setResultJSON(e.getLocalizedMessage());
-            resultDTO.setSuccessful(false);
-            return resultDTO;
-        }
-    }
-
-    public ResultDTO addAccount(AccountDTO account, String url, String api_key, String app_key) {
-        url += "?api_key=" + api_key;
-        url += "&application_key=" + app_key;
-
-        ResultDTO resultDTO = new ResultDTO();
-        try {
-            Object object = account;
-            HttpContent content = new JsonHttpContent(JSON_FACTORY, object);
-            HttpRequest request = requestFactory.buildPostRequest(dogUrl, content);
-            ResponseDTO responseDTO = request.execute().parseAs(ResponseDTO.class);
-            resultDTO.setResponseDTO(responseDTO);
-            return resultDTO;
-        } catch (IOException e) {
+            resultDTO.setResultcode(Integer.toString(statusCode));
+            resultDTO.setResultJSON(apiOutput);
+        } catch (Exception e) {
             e.printStackTrace();
-            return resultDTO;
+            System.out.println(e.getLocalizedMessage());
+            resultDTO.setResultJSON("Error:" + e.getLocalizedMessage());
+            resultDTO.setSuccessful(false);
         }
+        return resultDTO;
     }
 
 
-    // User
-
-    // User add
-   /*
-    public ResultDTO addAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
-        // Base url = https://app.datadoghq.com/api/v1/user
-        url += "?api_key=" + api_key;
-        url += "&application_key=" + app_key;
-
-        ResultDTO result = new ResultDTO();
-        Moshi moshi = new Moshi.Builder().build();
-        JsonAdapter<AccountDTO> jsonAdapter = moshi.adapter(AccountDTO.class);
-        String jsonBody = jsonAdapter.toJson(account);
-
-        Request request = new Request.Builder()
-                .url(url)
-                .post(RequestBody.create(JSON, jsonBody))
-                //  .addHeader("Authorization", authorizationHeader)
-                //  .addHeader("Content-Type", "application/json")
-                //  .addHeader("Accept", "application/json")
-                //  .addHeader("Cache-Control", "no-cache")
-                .build();
-        result = makeRequest("Add", request, result, reconnectAttemptsStr, reconnectTimeStr);
-        return result;
-    }
-
-    public ResultDTO changeAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
-        url += account.handle + "?";
-        url += "api_key=" + api_key;
-        url += "&application_key=" + app_key;
-
-        ResultDTO result = new ResultDTO();
-        Moshi moshi = new Moshi.Builder().build();
-        JsonAdapter<AccountDTO> jsonAdapter = moshi.adapter(AccountDTO.class);
-        String jsonBody = jsonAdapter.toJson(account);
-
-        Request request = new Request.Builder()
-                .url(url)
-                .put(RequestBody.create(JSON, jsonBody))
-                .build();
-        result = makeRequest("Modify", request, result, reconnectAttemptsStr, reconnectTimeStr);
-        return result;
-    }
-
-    public ResultDTO getAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
-        url += account.handle + "?";
-        url += "api_key=" + api_key;
-        url += "&application_key=" + app_key;
-
-        ResultDTO result = new ResultDTO();
-
-
-        Request request = new Request.Builder()
-                .url(url)
-                .get()
-                .build();
-
-        result = makeRequest("Get", request, result, reconnectAttemptsStr, reconnectTimeStr);
-
-        return result;
-    }
-
-
-    private ResultDTO handleResponse(String method, Response response, ResultDTO result, JsonAdapter jsonAdapter) throws IOException {
-        String responseJSON = response.body().string();
-        logger.debug(method + " Account response code=" + response.code());
-        logger.debug(method + " Account response isSuccessful()=" + response.isSuccessful());
-        if (!response.isSuccessful()) {
-            return failedReq(method, result, response, responseJSON);
-        } else {
-            // Get user info from user property within response JSON
-            ResponseDTO respobj = (ResponseDTO) jsonAdapter.fromJson(responseJSON);
-            return successReq(method, result, response, respobj, responseJSON);
-        }
-    }
-
-    private int reconnectTime(String reconnectTimeStr) {
-        int reconnectTime = 1;
-        if (reconnectTimeStr != null && !reconnectTimeStr.equals(""))
-            reconnectTime = Integer.parseInt(reconnectTimeStr);
-        return reconnectTime;
-    }
-
-    private int reconnectAttempts(String reconnectAttemptsStr) {
-        int reconnectAttempts = 1;
-        if (reconnectAttemptsStr != null && !reconnectAttemptsStr.equals(""))
-            reconnectAttempts = Integer.parseInt(reconnectAttemptsStr);
-        return reconnectAttempts;
-    }
-
-    private ResultDTO successReq(String method, ResultDTO result, Response response, ResponseDTO respobj, String responseJSON) {
-        logger.debug(method + " account handle=" + respobj.user.handle);
-        logger.debug(method + " account response code=" + response.code());
-        result.setSuccessful(true);
-        result.setResultcode(Integer.toString(response.code()));
-        result.setResponseDTO(respobj);
-        result.setResultJSON(responseJSON);
-        return result;
-    }
-
-    private ResultDTO failedReq(String method, ResultDTO result, Response response, String responseJSON) {
-        result.setSuccessful(false);
-        result.setResultJSON(responseJSON);
-        result.setResultcode(Integer.toString(response.code()));
-        logger.error(method + " Account:Failed Request response code=" + Integer.toString(response.code()));
-        logger.error(method + " Account:Failed Request responseJSON=" + responseJSON);
-        return result;
-    }
-
-        private ResultDTO makeRequest(String method, Request request, ResultDTO result, String reconnectAttemptsStr, String reconnectTimeStr) {
-        boolean http_429 = true;
+    private CloseableHttpResponse handleStatusCode(HttpUriRequest request) throws InterruptedException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException {
         int try_count = 1;
-        Moshi moshi = new Moshi.Builder().build();
-        JsonAdapter<ResponseDTO> jsonAdapter = moshi.adapter(ResponseDTO.class);
+        boolean http_409 = false;
 
-        while (http_429) {
-            // Calling REST Service
-            logger.debug(method + " Account Request To Datadog");
-            try {
-                Response response = client.newCall(request).execute();
-                if (!Integer.toString(response.code()).equals("429")) {
-                    http_429 = false;
-                }
-                result = handleResponse(method, response, result, jsonAdapter);
-            } catch (Exception e) {
-                logger.error(method + " account exception=" + e);
-                result.setSuccessful(false);
-                result.setResultcode(e.getMessage().toString());
-                result.setResultJSON(e.getLocalizedMessage());
-                http_429 = false;
+        //Send the request; It will immediately return the response in HttpResponse object if any
+        CloseableHttpResponse response = getSSL().execute(request);
+
+        int statusCode = response.getStatusLine().getStatusCode();
+        if(statusCode == 408 || statusCode == 409) {
+            http_409 = true;
+        }
+
+        // If status code is 408 or 409, sleep for 1 sec and try again
+        while(http_409) {
+            if(statusCode != 408 && statusCode != 409) {
+                break;
             }
-
+            if(try_count >= 3) {
+                break;
+            }
+            Thread.sleep(1000);
+            response = getSSL().execute(request);
+            statusCode = response.getStatusLine().getStatusCode();
             try_count++;
-            if (http_429 && try_count > reconnectAttempts(reconnectAttemptsStr)) {
-                http_429 = false;
-            }
-            if (http_429) {
-                try {
-                    logger.warn(method + " account HTTP 429, wait and retry");
-                    // wait for reconnectTime seconds
-                    Thread.sleep(reconnectTime(reconnectTimeStr) * 1000); // sleep for reconnectTime seconds
-                } catch (InterruptedException e) {
-                    logger.warn(method + " account HTTP 429, wait, got interrupted!");
-                }
+        }
+
+        //If there is not a valid status code, throw exception
+        if (statusCode != 201 && statusCode != 200) {
+            if(!request.getMethod().equals("DELETE") && statusCode != 400) {
+                throw new RuntimeException("Failed with HTTP error code : " + statusCode);
             }
         }
-        return result;
+        return response;
     }
-
-
-
-    // User modify
-    public ResultDTO modifyAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
-        ResultDTO result = new ResultDTO();
-
-        url += account.handle + "?";
-        url += "api_key=" + api_key;
-        url += "&application_key=" + app_key;
-
-        int reconnectAttempts = 1;
-        int reconnectTime = 1;
-        if (reconnectAttemptsStr != null && !reconnectAttemptsStr.equals(""))
-            reconnectAttempts = Integer.parseInt(reconnectAttemptsStr);
-        if (reconnectTimeStr != null && !reconnectTimeStr.equals(""))
-            reconnectTime = Integer.parseInt(reconnectTimeStr);
-
-        boolean keep_going = true;
-        int try_count = 1;
-
-        Moshi moshi = new Moshi.Builder().build();
-        JsonAdapter<AccountDTO> jsonAdapter = moshi.adapter(AccountDTO.class);
-        JsonAdapter<ResponseDTO> jsonAdapter2 = moshi.adapter(ResponseDTO.class);
-
-        String jsonBody = jsonAdapter.toJson(account);
-        logger.debug("Modify Account JSON To Datadog=" + jsonBody);
-
-        Request request = new Request.Builder()
-                .url(url)
-                .put(RequestBody.create(JSON, jsonBody))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .addHeader("Cache-Control", "no-cache")
-                .build();
-
-        while (keep_going) {
-            // REST call
-            try {
-                Response response = client.newCall(request).execute();
-                String responseJSON = response.body().string();
-                if (!response.isSuccessful()) {
-                    String code = Integer.toString(response.code());
-                    if (!code.equals("429"))
-                        keep_going = false;
-                    result.setSuccessful(false);
-                    result.setResultJSON(responseJSON);
-                    result.setResultcode(Integer.toString(response.code()));
-                    logger.error("Modify Account:Failed Request Response Code=" + Integer.toString(response.code()));
-                    logger.error("Modify Account:Failed Request JSON Response = " + responseJSON);
-                } else {
-                    // Get user info from user property within response JSON
-                    logger.debug("Modify account response code=" + response.code());
-                    logger.debug("Modify account response isSuccessful()=" + response.isSuccessful());
-                    ResponseDTO respobj = jsonAdapter2.fromJson(responseJSON);
-                    logger.debug("Modify account handle=" + respobj.user.handle);
-                    logger.debug("Modify account response code=" + response.code());
-                    result.setSuccessful(true);
-                    result.setResultcode(Integer.toString(response.code()));
-                    result.setResponseDTO(respobj);
-                    result.setResultJSON(responseJSON);
-                    keep_going = false;
-                }
-            } catch (Exception e) {
-                logger.error("Modify account exception=" + e);
-                result.setSuccessful(false);
-                result.setResultcode(e.getMessage().toString());
-                result.setResultJSON(e.getLocalizedMessage());
-                keep_going = false;
-            }
-
-            try_count++;
-            if (keep_going && try_count > reconnectAttempts) {
-                keep_going = false;
-            }
-            if (keep_going) {
-                try {
-                    logger.warn("Modify account HTTP 429, wait and retry");
-                    // wait for reconnectTime seconds
-                    Thread.sleep(reconnectTime * 1000); // sleep for reconnectTime seconds
-                } catch (InterruptedException e) {
-                    logger.warn("Modify account HTTP 429, wait, got interrupted!");
-                }
-            }
-        }
-        return result;
-    }
-
-    // User Disable
-    public ResultDTO disableAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
-        ResultDTO result = new ResultDTO();
-        account.disabled = true;
-        url += account.handle + "?";
-        url += "api_key=" + api_key;
-        url += "&application_key=" + app_key;
-
-        int reconnectAttempts = 1;
-        int reconnectTime = 1;
-        if (reconnectAttemptsStr != null && !reconnectAttemptsStr.equals(""))
-            reconnectAttempts = Integer.parseInt(reconnectAttemptsStr);
-        if (reconnectTimeStr != null && !reconnectTimeStr.equals(""))
-            reconnectTime = Integer.parseInt(reconnectTimeStr);
-
-        boolean keep_going = true;
-        int try_count = 1;
-
-        Moshi moshi = new Moshi.Builder().build();
-        JsonAdapter<ResponseDTO> jsonAdapter2 = moshi.adapter(ResponseDTO.class);
-
-        Request request = new Request.Builder()
-                .url(url)
-                .delete()
-                .addHeader("Accept", "application/json")
-                .addHeader("Cache-Control", "no-cache")
-                .build();
-
-        while (keep_going) {
-            // REST call
-            logger.debug("Disable Account Handle To Datadog=" + account.handle);
-            try {
-                Response response = client.newCall(request).execute();
-                String responseJSON = response.body().string();
-                if (!response.isSuccessful()) {
-                    String code = Integer.toString(response.code());
-                    if (!code.equals("429"))
-                        keep_going = false;
-                    result.setSuccessful(false);
-                    result.setResultJSON(responseJSON);
-                    result.setResultcode(Integer.toString(response.code()));
-                    logger.error("Disable Account:Failed Request Response Code=" + Integer.toString(response.code()));
-                    logger.error("Disable Account:Failed Request JSON Response = " + responseJSON);
-                } else {
-                    // Get message from response JSON
-                    logger.debug("Disable account response code=" + response.code());
-                    logger.debug("Disable account response isSuccessful()=" + response.isSuccessful());
-                    ResponseDTO respobj = jsonAdapter2.fromJson(responseJSON);
-                    logger.debug("Disable account message=" + respobj.message);
-                    logger.debug("Disable account response code=" + response.code());
-                    result.setSuccessful(true);
-                    result.setResultcode(Integer.toString(response.code()));
-                    result.setResponseDTO(respobj);
-                    result.setResultJSON(responseJSON);
-                    keep_going = false;
-                }
-            } catch (Exception e) {
-                logger.error("Disable account exception=" + e);
-                result.setSuccessful(false);
-                result.setResultcode(e.getMessage().toString());
-                result.setResultJSON(e.getLocalizedMessage());
-                keep_going = false;
-            }
-
-            try_count++;
-            if (keep_going && try_count > reconnectAttempts) {
-                keep_going = false;
-            }
-            if (keep_going) {
-                try {
-                    logger.warn("Disable account HTTP 429, wait and retry");
-                    // wait for reconnectTime seconds
-                    Thread.sleep(reconnectTime * 1000); // sleep for reconnectTime seconds
-                } catch (InterruptedException e) {
-                    logger.warn("Disable account HTTP 429, wait, got interrupted!");
-                }
-            }
-        }
-        return result;
-    }
-     */
-
 
 }

@@ -11,6 +11,5 @@ public class User {
     public String access_role;
     public boolean verified;
     public String email;
-
     public String icon;
 }
