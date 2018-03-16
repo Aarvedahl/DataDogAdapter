@@ -15,6 +15,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
+import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -108,21 +109,12 @@ public class Adapter2 {
         return httpclient;
     }
 
-    
+
     private ResultDTO makeRequest(ResultDTO resultDTO, HttpUriRequest request) {
         try {
             Gson gson = new Gson();
-
-            //Send the request; It will immediately return the response in HttpResponse object if any
-            CloseableHttpResponse response = getSSL().execute(request);
-
-            //Verify valid response code first
+            CloseableHttpResponse response = handleStatusCode(request);
             int statusCode = response.getStatusLine().getStatusCode();
-            if (statusCode != 201 && statusCode != 200) {
-                if(request.getMethod() != "DELETE" && statusCode != 400) {
-                    throw new RuntimeException("Failed with HTTP error code : " + statusCode);
-                }
-            }
 
             //Now receive the response object
             HttpEntity httpEntity = response.getEntity();
@@ -139,9 +131,45 @@ public class Adapter2 {
             System.out.println(e.getLocalizedMessage());
             resultDTO.setResultJSON(e.getLocalizedMessage());
             resultDTO.setSuccessful(false);
-            resultDTO.setResultcode("999");
         }
         return resultDTO;
+    }
+
+
+    private CloseableHttpResponse handleStatusCode(HttpUriRequest request) throws InterruptedException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException {
+        int try_count = 1;
+        boolean http_409 = false;
+
+        //Send the request; It will immediately return the response in HttpResponse object if any
+        CloseableHttpResponse response = getSSL().execute(request);
+
+        //Verify valid response code first
+        int statusCode = response.getStatusLine().getStatusCode();
+        if(statusCode == 408 || statusCode == 409) {
+            http_409 = true;
+        }
+
+        // If status code is 408 or 409, sleep for 1 sec and try again
+        while(http_409) {
+            if(statusCode != 408 && statusCode != 409) {
+                break;
+            }
+            if(try_count >= 3) {
+                break;
+            }
+            Thread.sleep(1000);
+            response = getSSL().execute(request);
+            statusCode = response.getStatusLine().getStatusCode();
+            try_count++;
+        }
+
+        //If there is not a valid status code, throw exception
+        if (statusCode != 201 && statusCode != 200) {
+            if(request.getMethod() != "DELETE" && statusCode != 400) {
+                throw new RuntimeException("Failed with HTTP error code : " + statusCode);
+            }
+        }
+        return response;
     }
 
 }

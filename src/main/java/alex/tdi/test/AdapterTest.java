@@ -13,11 +13,12 @@ public class AdapterTest {
     public static void main(String[] args) {
         BasicConfigurator.configure();
         Adapter2 adapter2 = new Adapter2();
-       // testGet(adapter2);
-       // testAdd(adapter2);
-       // testUpdate(adapter2);
-        testDisable(adapter2);
-        testRestore(adapter2);
+        testGet(adapter2);
+
+        //  testAdd(adapter2);
+        //testUpdate(adapter2);
+        // testDisable(adapter2);
+        //testRestore(adapter2);
     }
 
     private static void testGet(Adapter2 adapter2) {
@@ -35,7 +36,7 @@ public class AdapterTest {
     private static void testAdd(Adapter2 adapter2) {
         AccountDTO account = new AccountDTO();
         account.handle = "alex.a3@enfo.org";
-        account.name = "Alex A3";
+        account.name = "Alex A31";
         account.access_role = "adm";
         account.email = "alex.a3@enfo.org";
         account.disabled = false;
@@ -45,16 +46,15 @@ public class AdapterTest {
         System.out.println("Access role:" + resultDTO.getResponseDTO().user.access_role);
         System.out.println("Handle of the user:" + resultDTO.getResponseDTO().user.handle);
         System.out.println("Name of the user:" + resultDTO.getResponseDTO().user.name);
-
     }
 
 
     private static void testUpdate(Adapter2 adapter2) {
         AccountDTO account = new AccountDTO();
-        account.handle = "alex.a3@enfo.org";
-        account.name = "Hajsd Jaoj";
+        account.handle = "alex.arvedahl@gmail.com";
+        account.name = "Alex Aaa";
         account.access_role = "st";
-        account.email = "alex.a3@enfo.org";
+        account.email = "alex.arvedahl@gmail.com";
 
         String url = "https://app.datadoghq.com/api/v1/user/";
         ResultDTO resultDTO = adapter2.updateAccount(account, url, api_key, app_key);
@@ -70,7 +70,7 @@ public class AdapterTest {
 
         String url = "https://app.datadoghq.com/api/v1/user/";
         ResultDTO resultDTO = adapter2.disableAccount(account, url, api_key, app_key);
-        if(resultDTO.getResponseDTO().message != null) {
+        if (resultDTO.getResponseDTO().message != null) {
             System.out.println("Get Message: " + resultDTO.getResponseDTO().message);
         } else {
             System.out.println("Error message: " + resultDTO.getResponseDTO().errors.get(0));
