@@ -3,40 +3,24 @@ package alex.tdi;
 import alex.tdi.dto.AccountDTO;
 import alex.tdi.dto.ResponseDTO;
 import alex.tdi.dto.ResultDTO;
-import alex.tdi.dto.User;
-import alex.tdi.utils.MySSLSocketFactory;
 import com.google.gson.Gson;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpVersion;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.conn.ClientConnectionManager;
-import org.apache.http.conn.scheme.PlainSocketFactory;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.client.methods.*;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContextBuilder;
-import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
-import org.apache.http.params.HttpProtocolParams;
-import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
-import java.security.KeyStore;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 
-// TODO Verifiera att det fungerar som det ska på TDI samt dela upp i metoder
-// TODO Behöver antagligen även lägga över metoderna för http 429
+//Post och Get fungerar som det skall i TDI
+// TODO Inspektera SCIM adaptern och kolla hur dess DTO
 
 public class Adapter2 {
 
@@ -118,7 +102,7 @@ public class Adapter2 {
         } catch (Exception e) {
             return new DefaultHttpClient();
         }
-    } */
+    }
 
     public ResultDTO get() {
         ResultDTO resultDTO = new ResultDTO();
@@ -173,7 +157,7 @@ public class Adapter2 {
         return resultDTO;
     }
 
-    /*
+
     public void post(AccountDTO accountDTO) {
 
         ResultDTO resultDTO = new ResultDTO();
@@ -239,6 +223,54 @@ public class Adapter2 {
         }
     } */
 
+    public ResultDTO restoreAccount(AccountDTO account, String url, String api_key, String app_key) {
+        account.disabled = false;
+        url += account.handle + "?";
+        url += "api_key=" + api_key;
+        url += "&application_key=" + app_key;
+        ResultDTO resultDTO = new ResultDTO();
+        HttpPut putRequest = new HttpPut(url);
+
+        //Set the API media type in http content-type header
+        putRequest.addHeader("content-type", "application/json");
+        //Set the request post body
+        Gson gson = new Gson();
+        String json = gson.toJson(account);
+        StringEntity entity = new StringEntity(json, ContentType.APPLICATION_JSON);
+        putRequest.setEntity(entity);
+
+        return makeRequest(resultDTO, putRequest);
+    }
+
+    public ResultDTO disableAccount(AccountDTO account, String url, String api_key, String app_key) {
+        url += account.handle + "?";
+        url += "api_key=" + api_key;
+        url += "&application_key=" + app_key;
+        ResultDTO resultDTO = new ResultDTO();
+        HttpDelete deleteRequest = new HttpDelete(url);
+
+        return makeRequest(resultDTO, deleteRequest);
+    }
+
+    public ResultDTO updateAccount(AccountDTO account, String url, String api_key, String app_key) {
+        url += account.handle + "?";
+        url += "api_key=" + api_key;
+        url += "&application_key=" + app_key;
+        ResultDTO resultDTO = new ResultDTO();
+        HttpPut putRequest = new HttpPut(url);
+
+        //Set the API media type in http content-type header
+        putRequest.addHeader("content-type", "application/json");
+        //Set the request post body
+        Gson gson = new Gson();
+        String json = gson.toJson(account);
+        StringEntity entity = new StringEntity(json, ContentType.APPLICATION_JSON);
+        putRequest.setEntity(entity);
+
+        return makeRequest(resultDTO, putRequest);
+    }
+
+
     public ResultDTO addAccount(AccountDTO account, String url, String api_key, String app_key) {
         url += "?api_key=" + api_key;
         url += "&application_key=" + app_key;
@@ -247,7 +279,6 @@ public class Adapter2 {
 
         //Set the API media type in http content-type header
         postRequest.addHeader("content-type", "application/json");
-
         //Set the request post body
         Gson gson = new Gson();
         String json = gson.toJson(account);
@@ -257,65 +288,60 @@ public class Adapter2 {
         return makeRequest(resultDTO, postRequest);
     }
 
-    public ResultDTO getAccount(AccountDTO accountDTO, String url, String api_key, String app_key) {
-        url += accountDTO.handle + "?";
+    // Put och delete kvar samt restore account
+    public ResultDTO getAccount(AccountDTO account, String url, String api_key, String app_key) {
+        url += account.handle + "?";
         url += "api_key=" + api_key;
         url += "&application_key=" + app_key;
-
         ResultDTO result = new ResultDTO();
-        HttpGet httpGet = new HttpGet(url);
+        HttpGet getRequest = new HttpGet(url);
 
-        return makeRequest(result, httpGet);
+        return makeRequest(result, getRequest);
     }
 
-    private ResultDTO makeRequest(ResultDTO resultDTO, HttpUriRequest request) {
 
+    private CloseableHttpClient getSSL() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
+        SSLContextBuilder builder = new SSLContextBuilder();
+        builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
+        SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(builder.build());
+        CloseableHttpClient httpclient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
+        return httpclient;
+    }
+
+
+    private ResultDTO makeRequest(ResultDTO resultDTO, HttpUriRequest request) {
         try {
             Gson gson = new Gson();
-            SSLContextBuilder builder = new SSLContextBuilder();
-            builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
-            SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(builder.build());
-            CloseableHttpClient httpclient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
 
             //Send the request; It will immediately return the response in HttpResponse object if any
-            CloseableHttpResponse response = httpclient.execute(request);
+            CloseableHttpResponse response = getSSL().execute(request);
 
-            //verify the valid error code first
+            //Verify valid response code first
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode != 201 && statusCode != 200) {
-                throw new RuntimeException("Failed with HTTP error code : " + statusCode);
+                if(request.getMethod() != "DELETE" && statusCode != 400) {
+                    throw new RuntimeException("Failed with HTTP error code : " + statusCode);
+                }
             }
 
             //Now pull back the response object
             HttpEntity httpEntity = response.getEntity();
             String apiOutput = EntityUtils.toString(httpEntity);
+
+            //Results from the API
+            ResponseDTO respObj = gson.fromJson(apiOutput, ResponseDTO.class);
+            resultDTO.setResponseDTO(respObj);
             resultDTO.setSuccessful(true);
             resultDTO.setResultcode(Integer.toString(statusCode));
             resultDTO.setResultJSON(apiOutput);
-
-            //Lets see what we got from API
-            //System.out.println("Output from the API");
-            //System.out.println(apiOutput);
-            ResponseDTO respObj = gson.fromJson(apiOutput, ResponseDTO.class);
-            resultDTO.setResponseDTO(respObj);
-
-
-            /*Verify the populated object
-            System.out.println(respObj.user.handle);
-            System.out.println(respObj.user.name);
-            System.out.println(respObj.user.access_role); */
         } catch (Exception e) {
-            System.out.println(e);
             e.printStackTrace();
             System.out.println(e.getLocalizedMessage());
             resultDTO.setResultJSON(e.getLocalizedMessage());
             resultDTO.setSuccessful(false);
             resultDTO.setResultcode("999");
-
         }
-
         return resultDTO;
     }
-
 
 }

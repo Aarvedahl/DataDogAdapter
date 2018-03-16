@@ -172,8 +172,7 @@ public class Adapter {
         return result;
     }
 
-    */
-    private ResultDTO makeRequest(String method, Request request, ResultDTO result, String reconnectAttemptsStr, String reconnectTimeStr) {
+        private ResultDTO makeRequest(String method, Request request, ResultDTO result, String reconnectAttemptsStr, String reconnectTimeStr) {
         boolean http_429 = true;
         int try_count = 1;
         Moshi moshi = new Moshi.Builder().build();
@@ -213,7 +212,7 @@ public class Adapter {
         return result;
     }
 
-/*
+
 
     // User modify
     public ResultDTO modifyAccount(AccountDTO account, String url, String reconnectAttemptsStr, String reconnectTimeStr, String api_key, String app_key) {
