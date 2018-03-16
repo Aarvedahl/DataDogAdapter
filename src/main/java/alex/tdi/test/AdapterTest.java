@@ -7,7 +7,6 @@ import org.apache.log4j.BasicConfigurator;
 
 public class AdapterTest {
 
-
     private static String api_key = "9e4f84af430650a9780421d1841b8d8f";
     private static String app_key = "8d3de17fa2755953a8e733553e418ddfcca5571e";
 
@@ -17,10 +16,8 @@ public class AdapterTest {
        // testGet(adapter2);
        // testAdd(adapter2);
        // testUpdate(adapter2);
-       // testDisable(adapter2);
+        testDisable(adapter2);
         testRestore(adapter2);
-
-
     }
 
     private static void testGet(Adapter2 adapter2) {
@@ -33,6 +30,7 @@ public class AdapterTest {
         System.out.println("Handle of the user:" + resultDTO.getResponseDTO().user.handle);
         System.out.println("Name of the user:" + resultDTO.getResponseDTO().user.name);
     }
+
 
     private static void testAdd(Adapter2 adapter2) {
         AccountDTO account = new AccountDTO();
@@ -49,6 +47,7 @@ public class AdapterTest {
         System.out.println("Name of the user:" + resultDTO.getResponseDTO().user.name);
 
     }
+
 
     private static void testUpdate(Adapter2 adapter2) {
         AccountDTO account = new AccountDTO();
@@ -91,5 +90,5 @@ public class AdapterTest {
         System.out.println("Updated name of the user:" + resultDTO.getResponseDTO().user.name);
         System.out.println("User disabled:" + resultDTO.getResponseDTO().user.disabled);
     }
-    
+
 }
