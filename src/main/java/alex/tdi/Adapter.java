@@ -20,13 +20,7 @@ import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 
-
 public class Adapter {
-    /*
-    Få löst api nyckeln och dubbelkolla att allt fungerar, ta bort Adapter klassen sen
-    kolla sen med Mats vad som skall göras
-    */
-
 
     public ResultDTO restoreAccount(AccountDTO account, String url, String api_key, String app_key) {
         account.disabled = false;
@@ -77,7 +71,6 @@ public class Adapter {
         return makeRequest(resultDTO, putRequest);
     }
 
-
     public ResultDTO addAccount(AccountDTO account, String url, String api_key, String app_key) {
         url += "?api_key=" + api_key;
         url += "&application_key=" + app_key;
@@ -96,7 +89,6 @@ public class Adapter {
         return makeRequest(resultDTO, postRequest);
     }
 
-
     public ResultDTO getAccount(AccountDTO account, String url, String api_key, String app_key) {
         url += account.handle + "?";
         url += "api_key=" + api_key;
@@ -107,14 +99,12 @@ public class Adapter {
         return makeRequest(result, getRequest);
     }
 
-
     private CloseableHttpClient getSSL() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
         SSLContextBuilder builder = new SSLContextBuilder();
         builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
         SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(builder.build());
         return HttpClients.custom().setSSLSocketFactory(sslsf).build();
     }
-
 
     private ResultDTO makeRequest(ResultDTO resultDTO, HttpUriRequest request) {
         try {
@@ -141,7 +131,6 @@ public class Adapter {
         return resultDTO;
     }
 
-
     private CloseableHttpResponse handleStatusCode(HttpUriRequest request) throws InterruptedException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException {
         int try_count = 1;
         boolean http_409 = false;
@@ -150,16 +139,16 @@ public class Adapter {
         CloseableHttpResponse response = getSSL().execute(request);
 
         int statusCode = response.getStatusLine().getStatusCode();
-        if(statusCode == 408 || statusCode == 409) {
+        if (statusCode == 408 || statusCode == 409) {
             http_409 = true;
         }
 
         // If status code is 408 or 409, sleep for 1 sec and try again
-        while(http_409) {
-            if(statusCode != 408 && statusCode != 409) {
+        while (http_409) {
+            if (statusCode != 408 && statusCode != 409) {
                 break;
             }
-            if(try_count >= 3) {
+            if (try_count >= 3) {
                 break;
             }
             Thread.sleep(1000);
@@ -170,7 +159,7 @@ public class Adapter {
 
         //If there is not a valid status code, throw exception
         if (statusCode != 201 && statusCode != 200) {
-            if(!request.getMethod().equals("DELETE") && statusCode != 400) {
+            if (!request.getMethod().equals("DELETE") && statusCode != 400) {
                 throw new RuntimeException("Failed with HTTP error code : " + statusCode);
             }
         }

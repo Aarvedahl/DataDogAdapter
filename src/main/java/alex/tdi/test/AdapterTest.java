@@ -13,20 +13,19 @@ public class AdapterTest {
     public static void main(String[] args) {
         BasicConfigurator.configure();
         Adapter adapter = new Adapter();
-        testGet(adapter);
-
-        // testAdd(adapter);
-        // testUpdate(adapter);
-        // testDisable(adapter);
-        // testRestore(adapter);
+       // testGet(adapter);
+       // testAdd(adapter);
+         testUpdate(adapter);
+         testDisable(adapter);
+         testRestore(adapter);
     }
 
     private static void testGet(Adapter adapter) {
         AccountDTO account = new AccountDTO();
         account.handle = "alex.a3@enfo.org";
-        String dogUrl = "http://app.datadoghq.com/api/v1/user/";
+        String url = "https://app.datadoghq.com/api/v1/user/";
 
-        ResultDTO resultDTO = adapter.getAccount(account, dogUrl, api_key, app_key);
+        ResultDTO resultDTO = adapter.getAccount(account, url, api_key, app_key);
         System.out.println("Access role:" + resultDTO.getResponseDTO().user.access_role);
         System.out.println("Handle of the user:" + resultDTO.getResponseDTO().user.handle);
         System.out.println("Name of the user:" + resultDTO.getResponseDTO().user.name);
@@ -51,10 +50,10 @@ public class AdapterTest {
 
     private static void testUpdate(Adapter adapter) {
         AccountDTO account = new AccountDTO();
-        account.handle = "alex.arvedahl@gmail.com";
+        account.handle = "alex.a3@enfo.org";
         account.name = "Alex Aaa";
         account.access_role = "st";
-        account.email = "alex.arvedahl@gmail.com";
+        account.email = "alex.a3@enfo.org";
 
         String url = "https://app.datadoghq.com/api/v1/user/";
         ResultDTO resultDTO = adapter.updateAccount(account, url, api_key, app_key);
