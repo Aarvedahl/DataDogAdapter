@@ -5,6 +5,7 @@ import alex.tdi.dto.ResponseDTO;
 import alex.tdi.dto.ResultDTO;
 import com.google.gson.Gson;
 import org.apache.http.HttpEntity;
+import org.apache.http.MethodNotSupportedException;
 import org.apache.http.client.methods.*;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContextBuilder;
@@ -21,6 +22,8 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 
 public class Adapter {
+
+    // Ett script i varje AL för att dump work entry
 
     public ResultDTO restoreAccount(AccountDTO account, String url, String api_key, String app_key) {
         account.disabled = false;
@@ -97,6 +100,11 @@ public class Adapter {
         HttpGet getRequest = new HttpGet(url);
 
         return makeRequest(result, getRequest);
+    }
+
+    public ResultDTO deleteAccount(AccountDTO account, String url, String api_key, String app_key) throws MethodNotSupportedException {
+        ResultDTO resultDTO = new ResultDTO();
+        throw new MethodNotSupportedException("Delete operation is not supported");
     }
 
     private CloseableHttpClient getSSL() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {

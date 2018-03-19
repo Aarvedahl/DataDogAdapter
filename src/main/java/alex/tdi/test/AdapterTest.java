@@ -3,6 +3,7 @@ package alex.tdi.test;
 import alex.tdi.Adapter;
 import alex.tdi.dto.AccountDTO;
 import alex.tdi.dto.ResultDTO;
+import org.apache.http.MethodNotSupportedException;
 import org.apache.log4j.BasicConfigurator;
 
 public class AdapterTest {
@@ -13,11 +14,28 @@ public class AdapterTest {
     public static void main(String[] args) {
         BasicConfigurator.configure();
         Adapter adapter = new Adapter();
+        testDelete(adapter);
        // testGet(adapter);
        // testAdd(adapter);
-         testUpdate(adapter);
-         testDisable(adapter);
-         testRestore(adapter);
+       // testUpdate(adapter);
+       //  testDisable(adapter);
+       //  testRestore(adapter);
+    }
+
+    private static void testDelete(Adapter adapter) {
+        AccountDTO account = new AccountDTO();
+        account.handle = "alex.a3@enfo.org";
+        account.name = "Alex A31";
+        String url = "https://app.datadoghq.com/api/v1/user/";
+
+        ResultDTO resultDTO = null;
+        try {
+            resultDTO = adapter.deleteAccount(account, url, api_key, app_key);
+        } catch (MethodNotSupportedException e) {
+            System.out.println(e.getLocalizedMessage());
+            e.printStackTrace();
+        }
+        System.out.println("Name of the user:" + resultDTO.getResponseDTO().user.name);
     }
 
     private static void testGet(Adapter adapter) {
@@ -30,7 +48,6 @@ public class AdapterTest {
         System.out.println("Handle of the user:" + resultDTO.getResponseDTO().user.handle);
         System.out.println("Name of the user:" + resultDTO.getResponseDTO().user.name);
     }
-
 
     private static void testAdd(Adapter adapter) {
         AccountDTO account = new AccountDTO();
@@ -47,7 +64,6 @@ public class AdapterTest {
         System.out.println("Name of the user:" + resultDTO.getResponseDTO().user.name);
     }
 
-
     private static void testUpdate(Adapter adapter) {
         AccountDTO account = new AccountDTO();
         account.handle = "alex.a3@enfo.org";
@@ -62,7 +78,6 @@ public class AdapterTest {
         System.out.println("Updated name of the user:" + resultDTO.getResponseDTO().user.name);
     }
 
-
     private static void testDisable(Adapter adapter) {
         AccountDTO account = new AccountDTO();
         account.handle = "alex.a1@enfo.org";
@@ -75,7 +90,6 @@ public class AdapterTest {
             System.out.println("Error message: " + resultDTO.getResponseDTO().errors.get(0));
         }
     }
-
 
     private static void testRestore(Adapter adapter) {
         AccountDTO account = new AccountDTO();
