@@ -23,8 +23,6 @@ import java.security.NoSuchAlgorithmException;
 
 public class Adapter {
 
-    // Ett script i varje AL för att dump work entry
-
     public ResultDTO restoreAccount(AccountDTO account, String url, String api_key, String app_key) {
         account.disabled = false;
         url += account.handle + "?";
