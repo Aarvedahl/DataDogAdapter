@@ -6,6 +6,8 @@ import alex.tdi.dto.ResultDTO;
 import org.apache.http.MethodNotSupportedException;
 import org.apache.log4j.BasicConfigurator;
 
+import java.net.URL;
+
 public class AdapterTest {
 
     private static String api_key = "9e4f84af430650a9780421d1841b8d8f";
@@ -14,8 +16,12 @@ public class AdapterTest {
     public static void main(String[] args) {
         BasicConfigurator.configure();
         Adapter adapter = new Adapter();
-        testDelete(adapter);
-       // testGet(adapter);
+       // testDelete(adapter);
+        testGet(adapter);
+       // ClassLoader classLoader = Adapter.class.getClassLoader();
+       // URL resource = classLoader.getResource("org/apache/http/message/BasicLineFormatter.class");
+       // System.out.println("---------------------------------------------------");
+       // System.out.println(resource);
        // testAdd(adapter);
        // testUpdate(adapter);
        //  testDisable(adapter);
