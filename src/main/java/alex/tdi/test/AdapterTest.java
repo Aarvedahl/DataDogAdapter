@@ -18,10 +18,6 @@ public class AdapterTest {
         Adapter adapter = new Adapter();
        // testDelete(adapter);
         testGet(adapter);
-       // ClassLoader classLoader = Adapter.class.getClassLoader();
-       // URL resource = classLoader.getResource("org/apache/http/message/BasicLineFormatter.class");
-       // System.out.println("---------------------------------------------------");
-       // System.out.println(resource);
        // testAdd(adapter);
        // testUpdate(adapter);
        //  testDisable(adapter);

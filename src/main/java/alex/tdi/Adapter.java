@@ -3,6 +3,7 @@ package alex.tdi;
 import alex.tdi.dto.AccountDTO;
 import alex.tdi.dto.ResponseDTO;
 import alex.tdi.dto.ResultDTO;
+import alex.tdi.utils.MySSLSocketFactory;
 import com.google.gson.Gson;
 import org.apache.http.HttpEntity;
 import org.apache.http.MethodNotSupportedException;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
 
 public class Adapter {
 
@@ -137,12 +139,19 @@ public class Adapter {
         return resultDTO;
     }
 
-    private CloseableHttpResponse handleStatusCode(HttpUriRequest request) throws InterruptedException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException {
+    private CloseableHttpResponse handleStatusCode(HttpUriRequest request) throws InterruptedException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException, UnrecoverableKeyException {
         int try_count = 1;
         boolean http_409 = false;
+        SSLContextBuilder builder = new SSLContextBuilder();
+        builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
+        SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(builder.build());
+        CloseableHttpClient httpclient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
+
+        CloseableHttpResponse response = httpclient.execute(request);
+
 
         //Send the request; It will immediately return the response in HttpResponse object if any
-        CloseableHttpResponse response = getSSL().execute(request);
+        //CloseableHttpResponse response = getSSL().execute(request);
 
         int statusCode = response.getStatusLine().getStatusCode();
         if (statusCode == 408 || statusCode == 409) {
