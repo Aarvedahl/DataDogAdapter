@@ -3,7 +3,6 @@ package alex.tdi;
 import alex.tdi.dto.AccountDTO;
 import alex.tdi.dto.ResponseDTO;
 import alex.tdi.dto.ResultDTO;
-import alex.tdi.utils.MySSLSocketFactory;
 import com.google.gson.Gson;
 import org.apache.http.HttpEntity;
 import org.apache.http.MethodNotSupportedException;
