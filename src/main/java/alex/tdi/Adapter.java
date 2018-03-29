@@ -141,16 +141,9 @@ public class Adapter {
     private CloseableHttpResponse handleStatusCode(HttpUriRequest request) throws InterruptedException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException, UnrecoverableKeyException {
         int try_count = 1;
         boolean http_409 = false;
-        SSLContextBuilder builder = new SSLContextBuilder();
-        builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
-        SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(builder.build());
-        CloseableHttpClient httpclient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
-
-        CloseableHttpResponse response = httpclient.execute(request);
-
 
         //Send the request; It will immediately return the response in HttpResponse object if any
-        //CloseableHttpResponse response = getSSL().execute(request);
+        CloseableHttpResponse response = getSSL().execute(request);
 
         int statusCode = response.getStatusLine().getStatusCode();
         if (statusCode == 408 || statusCode == 409) {
