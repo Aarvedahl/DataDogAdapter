@@ -138,7 +138,7 @@ public class Adapter {
         return resultDTO;
     }
 
-    private CloseableHttpResponse handleStatusCode(HttpUriRequest request) throws InterruptedException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException, UnrecoverableKeyException {
+    private CloseableHttpResponse handleStatusCode(HttpUriRequest request) throws InterruptedException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException {
         int try_count = 1;
         boolean http_409 = false;
 
