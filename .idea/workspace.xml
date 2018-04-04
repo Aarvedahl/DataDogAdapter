@@ -7,9 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1cdcbb39-72ad-41df-bbb7-2fa9224207de" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Uppsats.md" beforeDir="false" afterPath="$PROJECT_DIR$/Uppsats.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/alex/tdi/Adapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/alex/tdi/Adapter.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -38,8 +36,8 @@
         <entry file="file://$PROJECT_DIR$/Uppsats.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="676">
-                <caret line="75" column="75" selection-start-line="75" selection-start-column="75" selection-end-line="75" selection-end-column="75" />
+              <first_editor relative-caret-position="694">
+                <caret line="86" column="65" lean-forward="true" selection-start-line="86" selection-start-column="65" selection-end-line="86" selection-end-column="65" />
               </first_editor>
               <second_editor />
             </state>
@@ -393,12 +391,12 @@
       <workItem from="1522672874949" duration="153000" />
       <workItem from="1522734334111" duration="13269000" />
       <workItem from="1522822529786" duration="15847000" />
-      <workItem from="1522843078154" duration="3532000" />
+      <workItem from="1522843078154" duration="5222000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="185248000" />
+    <option name="totallyTimeSpent" value="186938000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -719,8 +717,8 @@
     <entry file="file://$PROJECT_DIR$/Uppsats.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="676">
-            <caret line="75" column="75" selection-start-line="75" selection-start-column="75" selection-end-line="75" selection-end-column="75" />
+          <first_editor relative-caret-position="694">
+            <caret line="86" column="65" lean-forward="true" selection-start-line="86" selection-start-column="65" selection-end-line="86" selection-end-column="65" />
           </first_editor>
           <second_editor />
         </state>
