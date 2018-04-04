@@ -11,4 +11,6 @@ public class ResponseDTO{
     public String message;
 
     public List<String> errors = new ArrayList<String>();
+
+    public List<User> users = new ArrayList<User>();
 }

@@ -3,6 +3,7 @@ package alex.tdi;
 import alex.tdi.dto.AccountDTO;
 import alex.tdi.dto.ResponseDTO;
 import alex.tdi.dto.ResultDTO;
+import alex.tdi.dto.User;
 import com.google.gson.Gson;
 import org.apache.http.HttpEntity;
 import org.apache.http.MethodNotSupportedException;
@@ -20,9 +21,11 @@ import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
+import java.util.ArrayList;
 
 public class Adapter {
+
+    // Search Account, en GET om inget account hittas. Skicka med en tom lista annars skicka med det kontot som matchar i en lista
 
     public ResultDTO restoreAccount(AccountDTO account, String url, String api_key, String app_key) {
         account.disabled = false;
@@ -89,6 +92,27 @@ public class Adapter {
         postRequest.setEntity(entity);
 
         return makeRequest(resultDTO, postRequest);
+    }
+
+
+    public ResultDTO searchAccount(AccountDTO account, String url, String api_key, String app_key) {
+        url += account.handle + "?";
+        url += "api_key=" + api_key;
+        url += "&application_key=" + app_key;
+        ResultDTO result = new ResultDTO();
+        HttpGet getRequest = new HttpGet(url);
+
+        ResultDTO resultDTO = makeRequest(result, getRequest);
+        if (!resultDTO.isSuccessful()) {
+            resultDTO.setResponseDTO(new ResponseDTO());
+            resultDTO.getResponseDTO().users = new ArrayList<User>();
+        } else {
+            User user = resultDTO.getResponseDTO().user;
+            resultDTO.getResponseDTO().users.add(0, user);
+            resultDTO.getResponseDTO().user = null;
+        }
+
+        return resultDTO;
     }
 
     public ResultDTO getAccount(AccountDTO account, String url, String api_key, String app_key) {
