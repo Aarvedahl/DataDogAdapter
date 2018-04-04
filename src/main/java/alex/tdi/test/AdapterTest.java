@@ -3,12 +3,9 @@ package alex.tdi.test;
 import alex.tdi.Adapter;
 import alex.tdi.dto.AccountDTO;
 import alex.tdi.dto.ResultDTO;
-import alex.tdi.dto.User;
 import org.apache.http.MethodNotSupportedException;
 import org.apache.log4j.BasicConfigurator;
 
-import java.net.URL;
-import java.util.ArrayList;
 
 public class AdapterTest {
 
@@ -29,7 +26,7 @@ public class AdapterTest {
 
     private static void testSearch(Adapter adapter) {
         AccountDTO account = new AccountDTO();
-        account.handle = "alex.a3@enfo.orgs";
+        account.handle = "alex.a3@enfo.org";
         String url = "https://app.datadoghq.com/api/v1/user/";
 
         ResultDTO resultDTO = adapter.searchAccount(account, url, api_key, app_key);
@@ -39,6 +36,7 @@ public class AdapterTest {
         } else {
             System.out.println("Name of the user in list: " + resultDTO.getResponseDTO().users.get(0).name);
         }
+
     }
 
     private static void testDelete(Adapter adapter) {

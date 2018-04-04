@@ -25,8 +25,7 @@ import java.util.ArrayList;
 
 public class Adapter {
 
-    // Search Account, en GET om inget account hittas. Skicka med en tom lista annars skicka med det kontot som matchar i en lista
-
+    
     public ResultDTO restoreAccount(AccountDTO account, String url, String api_key, String app_key) {
         account.disabled = false;
         url += account.handle + "?";
