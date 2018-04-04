@@ -18,6 +18,9 @@ följande operationerna:
 - Visa information om en användare
 
 
+Global service desk hantera konton åt användare (Återförsäljare och andra anställa på Husqvarna)
+
+
 Själva syftet med produkten är att låta främst supporttekniker hantera konton på målsystemet 
 åt användare i IBM Security Identity Manager.  Eftersom just detta målsystemet DataDog inte 
 hade stöd för någon av de existerande adapterna så var jag tvungen att bygga en egen adapter
@@ -49,6 +52,28 @@ historik över förändringar (motiv, förklaring)
 #### Bakgrund och förklaring av begrepp
 
 
+
+##### Lista på teknologier
+
+- Java SE
+- IBM Tivoli Directory Integrator
+- IBM Adapter Development Tool
+- JavaScript
+
+Lista på de bibliotek jag har använt:
+
+- Apache Commons Logging
+- Google Gson
+- Apache HttpClient
+- Jackson Core
+- Log4j
+
+Tanken var först att använda biblioteket OkHttp som är ett ganska välkänd bibliotek för att 
+göra http request från Java klasser, samt att det används även i en av de nuvarande adapter.
+Efter jag hade testat en del av mina metoder i IBM Tivoli Directory Integrator så visade det sig att den körde Java 1.6 vilket gjorde att man inte kunde köra jar filer som var kompilerade med något nyare Java.
+Detta tvingande mig då att antingen skriva egna Http anrop eller att använda ett bibliotek, då jag visste att detta var ett ganska ambiöst projekt bestämde jag mig för att leta efter ett bibliotek. 
+Efter jag hade läst igenom dokumentationen för Apache Http Client så tyckte jag att det verkade både hyfsat enkelt att använda och för att det var att utbudet utav http bibliotek som hade 
+stöd för Java 1.6 var begränsad så bestämde jag mig för Apache Http Client.
 
 
 #### lista på teknologier

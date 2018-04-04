@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class Adapter {
 
-    
+
     public ResultDTO restoreAccount(AccountDTO account, String url, String api_key, String app_key) {
         account.disabled = false;
         url += account.handle + "?";
@@ -93,7 +93,6 @@ public class Adapter {
         return makeRequest(resultDTO, postRequest);
     }
 
-
     public ResultDTO searchAccount(AccountDTO account, String url, String api_key, String app_key) {
         url += account.handle + "?";
         url += "api_key=" + api_key;
@@ -125,7 +124,6 @@ public class Adapter {
     }
 
     public ResultDTO deleteAccount(AccountDTO account, String url, String api_key, String app_key) throws MethodNotSupportedException {
-        ResultDTO resultDTO = new ResultDTO();
         throw new MethodNotSupportedException("Delete operation is not supported");
     }
 
