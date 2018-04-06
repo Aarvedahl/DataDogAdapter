@@ -15,13 +15,13 @@ public class AdapterTest {
     public static void main(String[] args) {
         BasicConfigurator.configure();
         Adapter adapter = new Adapter();
-        testSearch(adapter);
-       // testDelete(adapter);
-       // testGet(adapter);
-       // testAdd(adapter);
-       // testUpdate(adapter);
-       //  testDisable(adapter);
-       //  testRestore(adapter);
+        // testSearch(adapter);
+        // testDelete(adapter);
+        //   testGet(adapter);
+        //  testAdd(adapter);
+        //  testUpdate(adapter);
+        //  testDisable(adapter);
+        //  testRestore(adapter);
     }
 
     private static void testSearch(Adapter adapter) {
@@ -72,7 +72,6 @@ public class AdapterTest {
         account.name = "Alex A31";
         account.access_role = "adm";
         account.email = "alex.a3@enfo.org";
-        account.disabled = false;
 
         String url = "https://app.datadoghq.com/api/v1/user";
         ResultDTO resultDTO = adapter.addAccount(account, url, api_key, app_key);

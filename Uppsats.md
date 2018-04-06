@@ -52,14 +52,20 @@ historik över förändringar (motiv, förklaring)
 #### Bakgrund och förklaring av begrepp
 
 RMI
-
+ISIM
 
 ##### Lista på teknologier
 
 - Java SE
+
 - IBM Tivoli Directory Integrator
+its a way to transfer data from different systems. You have a lot of control over how to take in the data, modify it, and then output it. 
+For instance, you can take in a csv file from a folder on a server, and then transfer that into a database via a web service.
+
 - IBM Adapter Development Tool
+
 - JavaScript
+
 
 Lista på de bibliotek jag har använt:
 
@@ -81,6 +87,9 @@ With log4j it is possible to enable logging at runtime without modifying the app
 The log4j package is designed so that these statements can remain in shipped code without incurring a heavy performance cost. Logging behavior can be controlled by editing a configuration file, without touching the application binary. 
 
 
+
+
+
 Java SE
 För att bygga en adapter så krvädes det att antingen så skrev jag flera java-klasser som kompileras till en enda jar fil som sedan IBM Tivoli Directory Integrator skulle använda och anropa metoder. Det andra alternativet var att 
 jag kunde skriva ren JavaScript direkt inuti IBM Adapter Development Tool. Då jag känner mig mest bekväm och det programmeringspråk som jag har vid hjärtat är Java så var detta ingen större fundering, utan jag visste direkt 
@@ -89,10 +98,15 @@ i Java om man skulle jämföra mot JavaScript.
 
 
 IBM Tivoli Directory Integrator
-
+Då detta är ett system som används för att överföra information mellan två system/filer antingen manuellt eller automatiskt, så är detta helt klart det lättaste sättet att ta informationen från användare i IBM Security Identity Manager och föra över till DataDog 
+enligt min handledare. Jag har även gjort lite research och detta är det lättaste sättet, det andra sättet som skulle vara aktuellt är att använda WebService anrop direkt in i IBM Security Identity Manager. 
+Eftersom vi inte modifierar informationen utav användaren i dagsläget utan bara skickar över den direkt som den är skriven, så använder jag långt ifrån alla funktioner i IBM Tivoli Directory Integrator. Tack vare detta system 
+så har man bra möjligheter att utöka integrationen i framtiden. Detta är något är ett system som jag inte kände till innan så har jag lärt mig detta med hjälp av några andra som jobbar på företaget och att jag gjorde ett 
+exempel på IBMs hemsida så gav detta mig goda grunder för att utveckla min adapter.
 
 
 IBM Adapter Development Tool
+Som man hör 
 
 
 JavaScript

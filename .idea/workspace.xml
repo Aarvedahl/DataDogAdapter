@@ -9,6 +9,9 @@
     <list default="true" id="1cdcbb39-72ad-41df-bbb7-2fa9224207de" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Uppsats.md" beforeDir="false" afterPath="$PROJECT_DIR$/Uppsats.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/TDIAdapter_jar/TDIAdapter.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/TDIAdapter_jar/TDIAdapter.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/alex/tdi/test/AdapterTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/alex/tdi/test/AdapterTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/alex/tdi/test/AdapterTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/alex/tdi/test/AdapterTest.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -27,8 +30,17 @@
       <file leaf-file-name="Adapter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/Adapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="14">
-              <caret line="52" column="46" lean-forward="true" selection-start-line="52" selection-start-column="46" selection-end-line="52" selection-end-column="46" />
+            <state relative-caret-position="18">
+              <caret line="76" selection-start-line="76" selection-end-line="76" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ResponseDTO.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/dto/ResponseDTO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="234">
+              <caret line="14" column="52" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
             </state>
           </provider>
         </entry>
@@ -37,8 +49,8 @@
         <entry file="file://$PROJECT_DIR$/Uppsats.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="712">
-                <caret line="91" lean-forward="true" selection-start-line="91" selection-end-line="91" />
+              <first_editor relative-caret-position="532">
+                <caret line="108" column="12" selection-start-line="108" selection-start-column="12" selection-end-line="108" selection-end-column="12" />
               </first_editor>
               <second_editor />
             </state>
@@ -48,8 +60,8 @@
       <file leaf-file-name="AdapterTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/test/AdapterTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="36">
-              <caret line="2" selection-start-line="2" selection-end-line="2" />
+            <state relative-caret-position="1170">
+              <caret line="69" column="46" selection-start-line="69" selection-start-column="46" selection-end-line="69" selection-end-column="46" />
             </state>
           </provider>
         </entry>
@@ -65,7 +77,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>add re</find>
       <find>ResultVO</find>
       <find>respon</find>
       <find>jsonada</find>
@@ -95,6 +106,7 @@
       <find>false</find>
       <find>delete</find>
       <find>Json§</find>
+      <find>disable</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -119,8 +131,8 @@
         <option value="$PROJECT_DIR$/src/main/java/alex/tdi/utils/MySSLSocketFactory.java" />
         <option value="$PROJECT_DIR$/Rapport.md" />
         <option value="$PROJECT_DIR$/src/main/java/alex/tdi/dto/ResponseDTO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/alex/tdi/test/AdapterTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/alex/tdi/Adapter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/alex/tdi/test/AdapterTest.java" />
         <option value="$PROJECT_DIR$/Uppsats.md" />
       </list>
     </option>
@@ -151,6 +163,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -192,13 +205,21 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="tdi" type="462c0819:PsiDirectoryNode" />
+              <item name="dto" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TDIAdapter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TDIAdapter" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tdi" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="AndroidView" />
     </panes>
   </component>
@@ -380,12 +401,13 @@
       <workItem from="1522843078154" duration="5998000" />
       <workItem from="1522863825839" duration="738000" />
       <workItem from="1522908986247" duration="10238000" />
-      <workItem from="1522995111465" duration="1762000" />
+      <workItem from="1522995111465" duration="4429000" />
+      <workItem from="1523017441588" duration="1861000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="200452000" />
+    <option name="totallyTimeSpent" value="204980000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -582,13 +604,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/dto/ResponseDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="14" column="52" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/libraries/httpcore-4.3.jar!/org/apache/http/message/HeaderGroup.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -673,13 +688,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/test/AdapterTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -695,18 +703,32 @@
       </provider>
     </entry>
     <entry file="jar://$PROJECT_DIR$/libraries/jackson-core-2.0.0.jar!/com/fasterxml/jackson/core/JsonFactory.class" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/test/AdapterTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1170">
+          <caret line="69" column="46" selection-start-line="69" selection-start-column="46" selection-end-line="69" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/dto/ResponseDTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="14" column="52" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/Adapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14">
-          <caret line="52" column="46" lean-forward="true" selection-start-line="52" selection-start-column="46" selection-end-line="52" selection-end-column="46" />
+        <state relative-caret-position="18">
+          <caret line="76" selection-start-line="76" selection-end-line="76" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Uppsats.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="712">
-            <caret line="91" lean-forward="true" selection-start-line="91" selection-end-line="91" />
+          <first_editor relative-caret-position="532">
+            <caret line="108" column="12" selection-start-line="108" selection-start-column="12" selection-end-line="108" selection-end-column="12" />
           </first_editor>
           <second_editor />
         </state>
