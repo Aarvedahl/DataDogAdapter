@@ -51,6 +51,7 @@ historik över förändringar (motiv, förklaring)
 
 #### Bakgrund och förklaring av begrepp
 
+RMI
 
 
 ##### Lista på teknologier
@@ -78,6 +79,23 @@ Det kan också användas för att konvertera en JSON-sträng till ett motsvarand
 Log4j is a fast and flexible framework for logging application debugging messages.
 With log4j it is possible to enable logging at runtime without modifying the application binary. 
 The log4j package is designed so that these statements can remain in shipped code without incurring a heavy performance cost. Logging behavior can be controlled by editing a configuration file, without touching the application binary. 
+
+
+Java SE
+För att bygga en adapter så krvädes det att antingen så skrev jag flera java-klasser som kompileras till en enda jar fil som sedan IBM Tivoli Directory Integrator skulle använda och anropa metoder. Det andra alternativet var att 
+jag kunde skriva ren JavaScript direkt inuti IBM Adapter Development Tool. Då jag känner mig mest bekväm och det programmeringspråk som jag har vid hjärtat är Java så var detta ingen större fundering, utan jag visste direkt 
+att jag ville skriva java-klasser till en jar fil. En annan sak som jag tycker underlättar vid själva kodningen är hur mycket enklare det är att lista ut fel, min erfarenhet är att det är lättare och tydligare att hitta just vad som är fel 
+i Java om man skulle jämföra mot JavaScript.
+
+
+IBM Tivoli Directory Integrator
+
+
+
+IBM Adapter Development Tool
+
+
+JavaScript
 
 
 Apache HttpComponents
@@ -125,6 +143,7 @@ Kanske svårt att länka till tidigare mini projekt, men man kan ta en bild på 
 
 ####Arkitektur
 Akritekturen i detta projektet, var inte det lättaste. 
+Då jag aldrig har byggt något liknande var detta en utmaning. 
 
 #### Arkitektur 
 klassdiagram
