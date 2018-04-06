@@ -106,10 +106,19 @@ exempel på IBMs hemsida så gav detta mig goda grunder för att utveckla min ad
 
 
 IBM Adapter Development Tool
-Som man hör 
+Som man hör på namnet så är detta ett verktyg för att utveckla adaptrar, som är byggt på IBM Tivoli Directory Integrator. Här har man många av de möjligheter att modifiera information och objekt som finns i IBM Tivoli Directory Integrator. 
+Det som detta främst används till är först att göra scheman för de attribut som behövs lagras i den aktuella databasen. Efter det så gör man forms där man specificeras vilka attribut som skall finnas med i de formulär som användaren 
+fyller i när man skapar ett nytt konto som kopplas ihop med rätt attribut i respektive scheme. När det är gjort så mappar man vad som skall göras vid respektive operation, vilka attribut som skall ändras etc. 
+Varför jag just valde detta, var för att det andra alternativet är att skapa subklasser till en superklass som IBM har byggt. Det är förstås något som man också kan göra, men eftersom mina arkitekt handledare hade en idé om 
+den övergripande strukturen i IBM Adapter Development Tool samt att en av de nuvarande adaptrarna är byggda i detta verktyget. Det gjorde att jag såg absolut ingen anledning att välja det andra alternativet. 
+Detta var inte det lättaste att lära sig, då det inte stöds utav IBM längre så det finns dåligt med dokumentation samt att arkitekterna visste inte heller hur det fungerade helt. Det tvingade mig att bryta loss en adapter som redan används och sedan 
+försöka läsa mig till vad som händer. 
 
 
 JavaScript
+Javascript är det språk som används inuti IBM Tivoli Directory Integrator och IBM Adapter Development Tool, dock så kompileras den Javascripten till Java i runtime. Det finns faktiskt inga andra alternativ att skriva script i de systemen. 
+Javascripten behövs då för att anropa rätt Java metod vid rätt operation.
+
 
 
 Apache HttpComponents
@@ -138,7 +147,6 @@ Apache Commons Logging
 Detta är ett loggnings bibliotek som fungerar som en bro mellan Apache HttpComponents och olika loggnings implementationer. Ett bibliotek som använder commons loggings API kan användas vid vilken loggnings implementation vid runtime.
 Det har support och stödjer en del populära loggnings implementationer. Detta kan bli avaktiverat vid behov men då det var aktiverat när jag implemeterade Apache HttpComponents, så såg jag ingen anledning att avaktiverade med tanke på den 
 funktionaliteten som erbjöds. Commons Loggning ger dig detaljerad information (beroende på vilken lognivå du väljer) som jag har märkt underlättar enormt vid felsökning och debug. 
-"Kanske visa ett exempel på den loggningen"
 Jag kommer ihåg att det var ett antal gånger under utvecklingen av adaptern som saker inte alltid fungerade som de skulle. Tack vare detta bibilioteket så kunde jag snabbt se om isåfall vad som gick fel vid HTTP anropet, 
 eller om det var något som jag gjorde före/efter HTTP anropet. 
 
