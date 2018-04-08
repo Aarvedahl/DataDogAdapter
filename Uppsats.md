@@ -117,7 +117,7 @@ försöka läsa mig till vad som händer.
 
 JavaScript
 Javascript är det språk som används inuti IBM Tivoli Directory Integrator och IBM Adapter Development Tool, dock så kompileras den Javascripten till Java i runtime. Det finns faktiskt inga andra alternativ att skriva script i de systemen. 
-Javascripten behövs då för att anropa rätt Java metod vid rätt operation.
+Javascripten behövs då för att anropa rätt Java metod vid rätt operation. Jag har inte behövt att lära mig någon extra Javascript inför detta projektet.
 
 
 
@@ -164,8 +164,21 @@ Kanske svårt att länka till tidigare mini projekt, men man kan ta en bild på 
 
 
 ####Arkitektur
-Akritekturen i detta projektet, var inte det lättaste. 
-Då jag aldrig har byggt något liknande var detta en utmaning. 
+Då jag aldrig har byggt något liknande var detta en utmaning, det som var svårt var att man inte riktigt hade något att utgå ifrån.
+Jag fick hjälp första veckan av arkitekten som ritade upp hur allt skulle hänga ihop, vilket verktyg som han tyckte skulle användas var. 
+Arkitekturen på Javaklasser har jag haft eget ansvar för. Min tanke var att ha ett antal DTO objekt som ska mappas rätt vid varje JSON anrop oavsett om det är till eller från DataDog. Sedan så har jag en Adapter klass som sköter all "kommunikation" 
+och tar hand om både att göra http anrop till DataDog men också att ta hand om det skulle bli fel.
+För att hantera de operationer som inte DataDog hade stöd för så fick jag skapa ett Exception som jag namngav till MethodNotSupported. I dagsläget så var detta bara aktuellt för när man ville ta bort användare i IBM Security Identity Manager då 
+det inte fanns något stöd på DataDogs API för just detta. 
+Jag har visserligen inte använt mig utav några design patterns vad jag känner till, antagligen för detta var ett annorlunda program och inget som jag var van vid. 
+Utan idén och koncept som jag ville skulle genomsyra projektet var att skriva programmet i små metoder som är lätta att läsa samt att det skall vara simpelt att bygga ut vid behov.
+
+
+Nu i efterhand, så skulle jag antagligen strukturerat det på ett annorlunda sätt. Eftersom min adapter klass sköter all kommunikation och tar emot anrop så om jag skulle detta projektet igen så hade jag istället gjort så att det blir en klass 
+som bara har hand om att ta emot anropen och sedan har jag en klass som tar hand om att skicka http anrop till DataDog. Vinsten i detta skulle varit att det blir både lättare att läsa koden och gå igenom vad det är som händer vid de olika anropen 
+och att det blir lättare att bygga ut den vid behov.
+
+
 
 #### Arkitektur 
 klassdiagram
