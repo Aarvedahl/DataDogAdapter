@@ -166,12 +166,25 @@ Kanske svårt att länka till tidigare mini projekt, men man kan ta en bild på 
 ####Arkitektur
 Då jag aldrig har byggt något liknande var detta en utmaning, det som var svårt var att man inte riktigt hade något att utgå ifrån.
 Jag fick hjälp första veckan av arkitekten som ritade upp hur allt skulle hänga ihop, vilket verktyg som han tyckte skulle användas var. 
+
 Arkitekturen på Javaklasser har jag haft eget ansvar för. Min tanke var att ha ett antal DTO objekt som ska mappas rätt vid varje JSON anrop oavsett om det är till eller från DataDog. Sedan så har jag en Adapter klass som sköter all "kommunikation" 
 och tar hand om både att göra http anrop till DataDog men också att ta hand om det skulle bli fel.
 För att hantera de operationer som inte DataDog hade stöd för så fick jag skapa ett Exception som jag namngav till MethodNotSupported. I dagsläget så var detta bara aktuellt för när man ville ta bort användare i IBM Security Identity Manager då 
-det inte fanns något stöd på DataDogs API för just detta. 
-Jag har visserligen inte använt mig utav några design patterns vad jag känner till, antagligen för detta var ett annorlunda program och inget som jag var van vid. 
+det inte fanns något stöd på DataDogs API för just detta.  Jag har visserligen inte använt mig utav några design patterns vad jag känner till, antagligen för detta var ett annorlunda program och inget som jag var van vid. 
 Utan idén och koncept som jag ville skulle genomsyra projektet var att skriva programmet i små metoder som är lätta att läsa samt att det skall vara simpelt att bygga ut vid behov.
+
+Attrubuten på de DTO klasserna bestämdes genom att undersöka och se hur de JSON objekten är strukturerade för att matcha och mappa responsen på HTTP anropen. För att detta skulle bli korrekt och för att Google Gson mappa rätt värde med det attribut 
+så krävdes både samma namn på attributen och på klasserna. 
+Sättet jag har valt att strukturera metoderna i min adapter klass, var helt enkelt att jag hade en metod för varje operation som skulle göras till API:et. 
+För att återanvända så mycket utav samma kod som möjligt så har jag en metod som heter makeRequest som tar emot en HTTP request samt ett ResultDTO objekt som i sin tur returnerar 
+alla värden som http anropet returnernar. Detta sker med hjälp av ResponseDTO attributet i ResultDTO, ResponseDTO håller i sin tur sedan alla värden från själva objektet i anropet.
+Det första som makeRequest gör att skicka anropet och sedan anropar den metoden handleStatusCode som hanterar status koden på anropet. Om status koden skulle vara 408 eller 409 så försöker vi ett par gånger till för att se om det lyckas 
+och om det inte finns en korrekt status kod så kastar vi ett exception och anropet misslyckas där med. 
+
+HandleStatusCode använder också en annan speciell metod, nämnligen getSSL. Detta var en metod som krävdes för att göra anrop ifrån IBM Tivoli Directory Integrator. 
+Det som denna metoden gör är att validera SSL certifikatet, genom att se så att det SSL certifikatet på DataDog stämmer överens med det som finns i truststore. Då jag har satt det till null 
+betyder det att alla SSL certifikat kommer att valideras, och detta är inget att rekommendera om man ska använda i produktions miljöer då det finns risk att informationen i http anropet 
+går igenom en tredje part.
 
 
 Nu i efterhand, så skulle jag antagligen strukturerat det på ett annorlunda sätt. Eftersom min adapter klass sköter all kommunikation och tar emot anrop så om jag skulle detta projektet igen så hade jag istället gjort så att det blir en klass 
