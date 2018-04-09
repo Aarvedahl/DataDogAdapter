@@ -197,3 +197,55 @@ och att det blir lättare att bygga ut den vid behov.
 klassdiagram
 motiv
 design patterns andra koncept/idéer
+
+#### Tidrapport
+
+##### Ursprunglig Plan
+Hur har jag tänkt att gå tillväga med adaptern.
+Första veckan har jag planerat att läsa på om hur TDI fungerar samt Datadog's API. Detta kommer ge mig inblick hur jag ska göra ett upplägg över projektet. 
+Jag har även tänkt att läsa på och förstå den nuvarande SCIM adaptern för att få en förståelse på hur min adapter kommer se ut.
+
+Andra veckan är planen bekanta mig med TDI och göra något exempel. 
+Efter det är planen att fortsätta med adaptern och börja att göra/ta emot API anrop från adaptern. Detta skall ske med hjälp utav tester i Java.
+
+Tredje veckan är att testa om jag kan komma åt de javaklasser som jag själv har skrivit. Antagligen kommer det inte ske felfritt utan kommer behöva lägga en del tid på detta.
+När jag väl kommer åt de javaklasser inifrån en script-nod som jag skriver själv kan jag börja med enklare TDI jobb. T.ex att jag läser in från en CSV-fil och sedan lägger till de i Datadog.
+
+Fjärde veckan är tanken att när väl det fungerar bra med kopplingen mellan javaklasser och TDI. Så ska jag testa att koppla ISIM och TDI, samt fortsätta färdigställa javaklasserna.
+
+Femte veckan ska jag färdigställa kopplingen mellan ISIM och TDI samt javaklasserna.
+
+Och de sista två veckor ska spenderas till att skriva rapporten.
+
+
+##### Senast Reviderad
+Hur har jag tänkt att gå tillväga med adaptern.
+Första veckan har jag planerat att läsa på om hur TDI fungerar samt Datadog's API. Detta kommer ge mig inblick hur jag ska göra ett upplägg över projektet. 
+Jag har även tänkt att läsa på och förstå den nuvarande SCIM adaptern för att få en förståelse på hur min adapter kommer se ut. Gör även ett exempel i TDI.
+
+Andra veckan är planen att skriva det mesta på java klasserna, göra tester för att se till så metoderna gör anrop till DataDog 
+
+Tredje veckan är planen att avsluta och bli färdig med java klasserna, bygg om så java klasserna och biblioteken har stöd för Java 1.6.
+I slutet av veckan är tanken att läsa in information från en CSV fil och sidan anropa metoderna så t.ex användare läggs till i DataDog
+
+Fjärde veckan är planen att läsa på om ADT och hur man skapar en adapter profil
+
+Femte veckan är planen att skapa en adapter profil så att det finns rätt värden och attribut i den och börja skriva lite JavaScript.
+
+Sjätte veckan skall adapter profilen avslutas och javascripten ska bli färdig. Undersökning hur man kan importera den in i IBM Security Identity Manager.
+Börja och skriv de 2-3 första delarna i uppsatsen.
+
+Sjunde veckan skall adapter profilen importeras och uppsatsen ska avslutas.
+
+
+
+##### Reflektion
+
+Reflektion varför det blev så stora förändringar i tidsplanen
+
+
+####tidrapport
+   ursprungliga planen
+   senaste reviderade
+   reflektion kring varför du ändrade planen
+
