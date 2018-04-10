@@ -271,7 +271,43 @@ För att sammanfatta detta kort, så skulle jag säga att jag var lite pessimisi
 
 
 ##### Loggbok
+   issue tracker, buggar
+   vad har du lärt dig?
+   
 
+Första veckan: Läser på om Datadogs API för att se vilka metoder jag kan anropa samt hur ISIM adaptrar fungerar. Efter det började jag tänka på designen på adaptern, vilken klasser och attribut som behövs. När jag hade gjort detta så började jag 
+lära mig mer om hur TDI fungerar eftersom jag var säker på att detta var ett system som jag behövde använda. Sedan så hade jag möte angående upplägget för min adapter och gå igenom koden för en nuvarande adapter. Jag gjorde även ett exempel 
+i TDI och testade lite olika saker. Exemeplet gick ut på att man tar innehållet från en csv fil som finns och lägger in det i en xml fil.
+
+
+Andra veckan: Började med att bygga min adapter och skapa tester för att se att de fungerar. Kopplade även en test java klass mot TDI för att se så det fungerade, började med get user och modify account operationerna.
+
+
+Tredje veckan: I början av veckan så fick jag klart modify Account, sitter med att tester och refacotring av metoder. I måndags eftermiddag trodde jag att jag var färdig 
+med en större del av java klasserna, när jag sedan testade i tisdags visade det sig att TDI hade Java 6 och jag hade utvecklat för Java 8, vilket gjorde det omöjligt för TDI att köra mina Javaklasser 
+samt de bibliotek jag har använt. Veckan har spenderas med att skriva om en del av klasserna samt att hitta nya bibliotek som hade stöd för Java 6.  På torsdagen så fortsatte jag 
+bygga om mina Java klasser och fixar ett SSL fel jag fick när jag gjorde http anrop, lyckas göra GET request från TDI. Detta var för att det fanns inget giltligt SSL certifikat i TDI vilket gjorde att den inte 
+kunde göra HTTP anrop. På fredagen blev det färdigt efter jag fick skriva om alla metoder, testning och felhantering idag, så java klasserna fungerar nu i TDI.
+
+
+Fjärde veckan: Var lite strul att försöka få igång ADT (Adapter Development Tool) med TDI när det väl fungerade så sitter jag och läser om hur det fungerar. Går också 
+igenom ett exempel på en Adapter profil och testar att göra en egen adapter profil. När jag sedan skulle exportera projektet till en jar fil så stötte jag på problem i ADT. Missmatch mellan 32 bit JRE i ADT och 64 bit JRE i TDI.
+
+
+Femte veckan: Fick en fungerande VMWare Image till ADT då jag inte lyckades installera det själv, så kollar igenom ännu ett exempel och tar anteckningar på hur det är strukturerat.
+Började sedan på en adapter profil och sen fick konfigurera TDI på den nya imagen för att dubbelkolla så att operationerna fungerade som de skall. Nästan hela onsdagen gick åt 
+att konfigurera ett SSL certifikat till TDI och få det att fungera. På torsdagen så sitter och undersöker mer i detalj hur den nuvarande profilen är uppbyggd och fortsätter bygga scheman på min profil.
+
+
+Sjätte veckan: Arbetet med produkten är i stort sett avslutat, skrev över min kod för de andra operationerna från TDI till ADT så att adapter profilen ska fungera.
+Samt påbörjat med inledningen och bakgrunden i rapporten. Efter det så utvecklade stöd för de två sista operationerna(Reconcile Accounts and reconile support data only) först i mina java klasser sedan i ADT.
+Detta gjordes med hjälp utav att söka efter användare och lägga in dem i en lista. Efter det började jag med listna på teknologier på rapporten. Sedan så fick jag lägga till i ADT att om HTTP requesterna lyckas 
+så skall det även visas och ett värde som skall sättas till Successful. Sätter även upp en ny dev-miljö för att testa att installera adaptern. Fick också ordna mer felhantering, så att orsak och statuskod syns.
+Fortsatte sedan med att skriva listan med teknologier på rapporten. I slutet av veckan så läser mycket om hur man installerar en adapter och hur man importerar en adapter profil.
+
+
+Sjunde veckan: Försöker avsluta allting, både rapporten och det sista på installationen. Det som kvarstår på installationen är att jag behöver sätta upp en fungerande dev miljö så att ISIM och TDI ska kunna kommunicera. 
+Efter det borde det bara vara att lägga in jar filerna i TDI och importera profilen till ISIM.
 
 
 ####resultat (retrospect)
@@ -282,3 +318,6 @@ För att sammanfatta detta kort, så skulle jag säga att jag var lite pessimisi
     arkitektur / design patterns (vidareutveckla)
     "hade jag haft mer tid hade jag….”
 
+
+##### Retrospect
+Det som jag tar med mig ifrån detta projekt är mycket blandade intryck. 
