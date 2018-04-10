@@ -53,6 +53,7 @@ historik över förändringar (motiv, förklaring)
 
 RMI
 ISIM
+TDI
 
 ##### Lista på teknologier
 
@@ -243,9 +244,39 @@ Sjunde veckan skall adapter profilen importeras och uppsatsen ska avslutas.
 
 Reflektion varför det blev så stora förändringar i tidsplanen
 
+Anledningen till varför jag ändrade planen, den första förändringen var att jag gjorde i ett exempel i TDI första veckan istället för andra. Det var väl främst för att jag märkte att det jag fick en bra förståelse för hur TDI fungerade snabbare 
+än vad jag hade tänkt mig. Och då var det lika bra att göra ett exempel för att fördjupa min förståelse. Den ursprungliga planen var att göra mer testning med mina java klasser och TDI innan jag färdigställde dem. 
+Sen så märkte jag att det var mycket kod som kunde användas flera gånger, vilket gjorde att det gick mycket snabbare och enklare att få färdig java klasserna. 
+
+Det blev ganska stora förändringar i tidsplanen gällande tredje veckan. Tanken var att koppla från TDI och lägga till de i DataDog. Det blev väl så man det var mycket krångel att få det att fungera. Saken var den att måndagen tänkte jag 
+börja skriva script direkt in i TDI för att anropa mina Java klasser. Tyvärr blev det inte så enkelt, utan jag fick java.lang.UnsupportedClassVersionError vilket gjorde att jag fick bygga om en större del utav java klasser så att de hade stöd för java 1.6, 
+det som var jobbigast var att behöva hitta nya bibliotek som hade stöd för java 1.6 och fick det att fungera. Men det fungerade på fredagen av den tredje veckan.
+
+Det fjärde veckan blev ungefär som jag hade tänkt mig, att påbörja kopplingen mellan ISIM och TDI. När jag påbörjade projektet visste jag inte hur detta skulle gå till. Så den fjärde veckan blev mest att läsa om hur man skapar en Adapter profil så 
+att ISIM har stöd för adaptern och känner igen värderna samt vet vad som ska hända vid varje operation. Femte veckan blev inte alls som jag hade tänkt mig, som du kan se i tidsplanen så jag hade tänkt mig att färdigställa installationen utav adaptern. 
+Tyvärr så hade jag varit för optimisktiskt angående installationen, så under den femte veckan så hann jag bara ett börja skriva in adapter profilen. Under sjätte och sjunde veckan blev även det förändringar, orsaken till varför är för att jag inte är riktigt färdig med installation. Javascripten blev färdig ganska snabbt, så det som är svårast är själva installation utav adaptern och importen utav 
+adapter profilen. Rapporten har givetvis prioritet, och när jag har tid över så fortsätter jag att installera adaptern.
+
+
 
 ####tidrapport
    ursprungliga planen
    senaste reviderade
    reflektion kring varför du ändrade planen
+
+
+
+
+
+##### Loggbok
+
+
+
+####resultat (retrospect)
+   vad tar du med dig från projetet? vad hade du gjort annorlunda om du skulle göra om samma projekt?
+    produkten
+    tidsplan / projektets utförande
+    teknologier
+    arkitektur / design patterns (vidareutveckla)
+    "hade jag haft mer tid hade jag….”
 
