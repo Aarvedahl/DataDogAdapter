@@ -254,10 +254,12 @@ det som var jobbigast var att behöva hitta nya bibliotek som hade stöd för ja
 
 Det fjärde veckan blev ungefär som jag hade tänkt mig, att påbörja kopplingen mellan ISIM och TDI. När jag påbörjade projektet visste jag inte hur detta skulle gå till. Så den fjärde veckan blev mest att läsa om hur man skapar en Adapter profil så 
 att ISIM har stöd för adaptern och känner igen värderna samt vet vad som ska hända vid varje operation. Femte veckan blev inte alls som jag hade tänkt mig, som du kan se i tidsplanen så jag hade tänkt mig att färdigställa installationen utav adaptern. 
-Tyvärr så hade jag varit för optimisktiskt angående installationen, så under den femte veckan så hann jag bara ett börja skriva in adapter profilen. Under sjätte och sjunde veckan blev även det förändringar, orsaken till varför är för att jag inte är riktigt färdig med installation. Javascripten blev färdig ganska snabbt, så det som är svårast är själva installation utav adaptern och importen utav 
-adapter profilen. Rapporten har givetvis prioritet, och när jag har tid över så fortsätter jag att installera adaptern.
+Tyvärr så hade jag varit för optimisktiskt angående installationen, så under den femte veckan så hann jag bara ett börja skriva in adapter profilen. Under sjätte och sjunde veckan blev även det förändringar, orsaken till varför är för att jag inte är riktigt 
+färdig med installation. Javascripten blev färdig ganska snabbt, så det som är svårast är själva installation utav adaptern och importen utav  adapter profilen. Rapporten har givetvis prioritet, och när jag har tid över så fortsätter jag att installera adaptern.
 
-
+För att sammanfatta detta kort, så skulle jag säga att jag var lite pessimisitks gällande att skriva java klasserna och trodde att det skulle ta längre tid än vad det egentligen gjorde. Medans jag var optimisktiskt och trodde att det andra skulle gå mycket snabbare 
+än vad det har gjort. I tidigare projekt har jag haft samma tendens, jag har alltid varit pessimistiskt gällande min kodning och tror alltid att det tar längre tid än vad det har gjort, och samma optimism när det har varit rörande andra saker. Så det är nog tid att 
+ändra på detta,
 
 ####tidrapport
    ursprungliga planen
