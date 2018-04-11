@@ -199,6 +199,13 @@ klassdiagram
 motiv
 design patterns andra koncept/idéer
 
+
+####tidrapport
+   ursprungliga planen
+   senaste reviderade
+   reflektion kring varför du ändrade planen
+
+
 #### Tidrapport
 
 ##### Ursprunglig Plan
@@ -261,19 +268,11 @@ För att sammanfatta detta kort, så skulle jag säga att jag var lite pessimisi
 än vad det har gjort. I tidigare projekt har jag haft samma tendens, jag har alltid varit pessimistiskt gällande min kodning och tror alltid att det tar längre tid än vad det har gjort, och samma optimism när det har varit rörande andra saker. Så det är nog tid att 
 ändra på detta,
 
-####tidrapport
-   ursprungliga planen
-   senaste reviderade
-   reflektion kring varför du ändrade planen
-
-
-
-
-
-##### Loggbok
+##### loggbok, kort vecka för vecka
    issue tracker, buggar
    vad har du lärt dig?
    
+#### Loggbok   
 
 Första veckan: Läser på om Datadogs API för att se vilka metoder jag kan anropa samt hur ISIM adaptrar fungerar. Efter det började jag tänka på designen på adaptern, vilken klasser och attribut som behövs. När jag hade gjort detta så började jag 
 lära mig mer om hur TDI fungerar eftersom jag var säker på att detta var ett system som jag behövde använda. Sedan så hade jag möte angående upplägget för min adapter och gå igenom koden för en nuvarande adapter. Jag gjorde även ett exempel 
@@ -320,4 +319,18 @@ Efter det borde det bara vara att lägga in jar filerna i TDI och importera prof
 
 
 ##### Retrospect
-Det som jag tar med mig ifrån detta projekt är mycket blandade intryck. 
+Om jag skulle gjort samma projekt en gång till. Vad hade jag gjort då? Hade jag valt samma produkt? 
+
+Jag tycker att detta har varit ett mycket lärorikt projekt. Jag har fått en mycket bredare kunskap, däribland hur man skapar SSL certifikat och en djupare nätverk/server kunskap. 
+Det som jag tycker var riktigt bra med detta examensarbete var att det är så ovanligt jämfört med andra saker som vi har gjort i skolan. 
+Eftersom det som vi har gjort i skolan har varit en hel del att man skapar en fullstack applikation där man hämtar/lagrar saker i en databas. Och har programmen varit struktuerade på ungefär samma sätt 
+med tanke på att applikationer har varit lika varje gång, det som har skjilt som åt är antingen att man inkluderar en ny teknologi i varje projekt alternativt att det är ett annat innehåll i applikationen. 
+Och det var det som jag tycker har varit riktigt bra med denna produkten, att det var både en helt ny sorts produkt som jag inte har utvecklat förut samt en hel del nya teknologier. 
+Man fick liksom tänka på ett annat sätt jämfört med vad man har gjort tidigare, för att jag visste ärligt talat inte riktigt hur produkten skulle se ut när jag började med examensarbetet. 
+Om jag skulle gjort samma produkt en gång till? Så är svaret nej, jag hade inte gjort samma produkt en gång till. Anledningen till detta är för att det har varit en hel del andra saker runt omkring som jag 
+har behövt lära mig istället för bli en bättre kodare. En ytterligare anledning till detta är för att produkten enligt mig inte är speciellt spännande. Från tidigare erfarenheter så vet jag att om man tycker att något är spännande och det är 
+något som man har en passion för så vet jag att det blir bättre resultat. Sen är det svårt att säga om dessa andra sakerna kommer att vara användbara i framtiden. Jag är definitivt inte missnöjd med mitt examensarbete 
+men det är som sagt ingen produkt som jag skulle vilja utveckla igen. 
+
+Min tidsplan
+
