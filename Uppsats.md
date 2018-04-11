@@ -2,6 +2,10 @@
 #### Adapter mellan IBM Security Identity Manager och Datadog
 Sammanfattning?
 
+// Scheman eller Schemes?
+// Fixa teknologier och förklaring av begrepp
+// byt ut dev miljö till utvecklings miljö
+// Fixa Klassdiagram och bryt isär längre stycken
 
 
 Idag så använder Husqvarna ett användargränsnitt (IBM Security Identity Manager) för att 
@@ -54,6 +58,7 @@ historik över förändringar (motiv, förklaring)
 RMI
 ISIM
 TDI
+SCIM
 
 ##### Lista på teknologier
 
@@ -75,7 +80,7 @@ When writing a library it is very useful to log information. However there are m
 Apache Commons Logging is a Java-based logging utility and a programming model for logging and for other toolkits. It provides APIs, log implementations, and wrapper implementations over some other tools
 
 - Apache Http Components
-The Apache HttpComponents™ project is responsible for creating and maintaining a toolset of low level Java components focused on HTTP and associated protocols.
+The Apache HttpComponents™ project is responsible for creating and maintaining a toolset of low level Java components focused on HTTP and associated protocols. Fyll ut mer här
 
 
 - Google Gson
@@ -118,7 +123,7 @@ försöka läsa mig till vad som händer.
 
 JavaScript
 Javascript är det språk som används inuti IBM Tivoli Directory Integrator och IBM Adapter Development Tool, dock så kompileras den Javascripten till Java i runtime. Det finns faktiskt inga andra alternativ att skriva script i de systemen. 
-Javascripten behövs då för att anropa rätt Java metod vid rätt operation. Jag har inte behövt att lära mig någon extra Javascript inför detta projektet.
+Javascripten behövs då för att skriva skript vad som ska hända vid varje operation, om man t.ex bara ska anropa metoder eller vilka värden som ska passas in till metoderna etc. Jag har inte behövt att lära mig någon extra Javascript inför detta projektet.
 
 
 
@@ -333,4 +338,68 @@ något som man har en passion för så vet jag att det blir bättre resultat. Se
 men det är som sagt ingen produkt som jag skulle vilja utveckla igen. 
 
 Min tidsplan
+Jag visste från början när jag gjorde tidsplanen att den var ganska optimistisk när det gällande installation utav adaptern, och ganska pessimistiskt gällande kodningen. 
+Nu i efterhand blir man förvånad, över hur jag gjorde tidsplanen. Då jag har kodat innan och det var det som jag trodde skulle ta längst tid. Och installationen som jag inte hade gjort innan 
+inte skulle ta speciellt lång tid. Det som jag tror påverkade detta och orsakade detta var för att jag kollade på den nuvarande SCIM adapter och då vid första anblick så såg den mycket mer avancerad ut. 
+Detta var för att SCIM schemes (de objekt som skickas ut vid en request till API:et) innehåller mycket nestade objekt och listor. Medan DataDog's API:er kräver enkla objekt i jämförelse så 
+tog kodningen mindre tid än vad jag hade räknat med. Det som jag skulle säga främst drog ut på installationen utav adaptern var att både hur och att man skulle skapa en adapter profil. 
+Överlag så är jag nöjd med hur utförande blev, även fast det har varit stressigt stundvis. Jag vet faktiskt inte om jag skulle ändrat något vad gäller tidsplanen om jag skulle gjort samma produkt igen. 
+Då det är en stor produkt och mycket som behövs att göras/läsas på eftersom det är lite föråldrade system så är dokumentationen ibland svår att få tag i. 
+Det som jag tror främst segande ner mitt utförande var att jag inte hade tänkt på att dubbelkolla vilken version utav java som TDI använder. Eftersom det tog mig 
+ungefär fyra dagar att bygga om större delar utav applikationen för att den skulle ha stöd för Java 1.6.
+
+
+Teknologier
+Det finns helt klart ett begränsat utbud av teknologier när man ska utveckla adaptrar för IBM Security Identity Manager. Ett alternativ som jag har övervägt om jag skulle göra detta projektet ytterliggare en gång skulle som sagt 
+vara att skapa subklasser till en superklass som IBM har byggt. Fördelen med detta är att slipper i så fall skapa en adapter profil i ADT. Så det går antagligen snabbare att utveckla om man gör på detta sättet. 
+Nackdelen med detta skulle vara att det blir så dolt. Man skulle ha svårt och se vad som händer vid varje operation om man behöver felsöka. Det som är bra att använda TDI för att testa operationerna innan man lägger in 
+dem i ADT, är att man kan debugga eller använda loggningen för att se felmeddelande och vara säker på vilken/vilka metoder som anropas. Eftersom de andra teknologierna förutom biblioteken jag har använt 
+går inte att byta ut så ser jag ingen idé att diskutera detta. Men jag tycker det har varit ganska trevliga teknologier att jobba med. ADT har helt klart varit den svåraste då den inte längre stöds av IBM vilken gör det svårt att 
+se hur den fungerar. De bibliotek som jag har använt är jag väldigt nöjd med. Google Gson, här var dokumentationen bra och tydlig där det även fanns bra exempel som visade hur det fungerade. Jag betivlar dock att jag kommer ha 
+användingen av den i framtiden. Då det ända den gör är att konverta JSON objekt till strängar och tvärtom. Denna funktionen finns redan inbyggd i de större biblioteken som Java 1.8 stöder, såsom Spring och JAX-RS. 
+Apache Commons Logging, är också enligt mig ett ypperligt bibliotek som verkligen kan förändra vardagen. Då man får så detaljerad loggning om precis alla HTTP anrop som den skickar, gör den väldigt enkel och bra att 
+felsöka med. Det alternativet till denna skulle vara att om requesten misslyckas, så skriver man i catch blocket och får logga ut sakerna manuellt såsom statuskod, felmeddelande, vilken typ av header som används. 
+Log4j, är även det ett bibliotek som jag är väldigt nöjd med. Det gör loggning mycket lättare, om man behöver ändra var loggningen skall ske (till konsolen, fil eller kommandotolken) eller om man vill ändra nivån på loggning 
+så sker detta i en properties fil. Fördelen med att ha logg-inställningarna i log4j.properties är att vill flytta loggnings inställningarna från en utvecklings miljö till en produktionsmiljö så är detta simpelt. Även här fanns det 
+bra och tydlig information om biblioteket, hur det ska användas och hur man ändrar inställningar. Apache Http Components, är det biblioteket som har hand om att skicka http anrop till DataDog's API. Jag tycker detta 
+har varit ett väldigt bra bibliotek. Det var inte så svårt att göra http anrop och man kan följa flödet tydligt. Nackdelen med detta tyckte jag var att det var mycket svårt att hitta dokumentation och exemepel. 
+Det fanns en del dokumentation på deras hemsida men inget bra exempel för att komma igång snabbt. Jag hittade faktiskt endast ett till alternativ till detta "Google Http Client". Det som gjorde att jag valde detta 
+var för att även om det inte fanns så mycket dokumentation så fanns det någon iallafall. Det gjorde det tyvärr inte på Google Http Client. Till Apache Http Components fanns det även en hel del hjälp på Stack Overflow 
+och det var där som jag hittade exempel på hur man gjorde anropen. Det andra alternativet som fanns, var att skriva rena http anrop direkt in i Java. Nackdelarna med detta är både att det tar ett tag för att få det att 
+fungera fullständigt så man inte har någon minnesläcka. Den andra nackdelen är att det är inte det enklaste. Det är en sak att skriva http anrop när det inte blir något felmeddelande. Men det är en helt annan sak 
+att kunna hantera varenda meddelande om något skulle gå fel. Så därför kände jag direkt att jag väljer Apache Http Components. Fördelen med detta är även att då kan man använda Apache Commons Loggning, 
+som är somsagt ett fantastiskt loggning bibliotek och har faktiskt hjälp mig ett flertal gånger att lokalisera vad som är fel.
+
+
+Arkitektur / Design patterns (vidareutveckla)
+Tanken med arkitekturen var att skriva så generellt som möjligt då jag vet att en sån här adapter behövs för fler API, och då är tanken att man ska kunna återanvända stora delar från denna kod. 
+Själva arkitekturen bygger på att hålla det så lättläst och att små metoder som bara gör en sak. Om man uppnår detta så har man kod som går att skriva om om/när det behövs, en annan fördel 
+är att koden blir lättare att testa. Då en metod endast gör en enda sak så, har man bara en sak att testa för varje metod. Gentemot om man skulle ha haft en metod som gjorde flera saker så hade det 
+varit mycket svårare att testa och att se vad som går fel. Detta tycker jag att jag har uppfyllt till i det stora hela. Det finns en metod som jag skulle ha valt att skriva om, och det är handleStatusCode. 
+Just den metoden gör visserligen bara en sak, tar hand om statuskoden för responsen. Det som gör det svårt enligt min uppfattning är att man har den while loopen som körs ifall status koden skulle vara 408 
+eller 409. 
+
+Som jag har tidigare nämnt det som jag skulle gjort annorlunda är att, idagsläget så har jag en adapter klass som hanterar både att ta emot metod anrop ifrån TDI och sedan så hanterar den och vet 
+precis vad som skall göras vid varje metod anrop. Om jag istället hade skrivet så jag har logiken(skickar http anrop till DataDog) och en klass emot TDI som tar metod anropen och kallar på klassen 
+med logik. Detta skulle vara väldigt användbart om man vill bygga en adapter mot något annat system såsom en webservice. Då kan man återanvända logiken som finns och bara byta ut det som finns i 
+klassen som tar metod anrop från TDI och gör om det till en Controller klass. 
+
+Ytterliggare en arkitektur förändring jag skulle valt att göra är att om man kollar på attributen på User och AccountDTO så 
+ser man att det är många attribut som de har gemensamt. Det är aldrig bra att upprepa vad man har skrivit så för att förhindra detta så hade jag valt att skapa en superklass som de klasserna ärver ifrån. 
+Dock så är det viktigt att notera att man ska inte skapa superklasser bara för att några värden delar på ett par attribut. Utan det som är viktigt är att den klasserna som vill ärva ifrån superklassen är 
+utav samma typ. Vad jag menar med detta är om man har till exempel två klasser User och Article. Båda dessa klasserna delar en stor del attribut, men eftersom de inte riktigt hör ihop så är det 
+en dum idé att skapa en superklass som de båda ärver ifrån. Om man däremot hade haft de två klasserna User och Administrator så kunde man gjort User till en superklass som sedan ärver ifrån, 
+tack vare detta så kommer Administrator göra allt som User kan vilket är fallet i många situationer.
+
+En sak som skulle vara aktuell att förändra, är huvida metoden getSSL borde vara i en egen klass och att den är en statisk metod. Då den inte använder något annat från adapter klassen så är detta möjligt.
+Fördelen att bryta ut den till en egen klass det som är bra om man skulle bryta ut denna till en egen klass är om vill bygga ut projektet och lägga till funktioner i ytterliggare en klass. T.ex att samma användare 
+ska även läggas till i ett annat API så kan man då använda den ssl metoden. Om den ssl metoden däremot skulle ha varit kvar i adapter klassen så hade man behövt skapa ett objekt av den innan man kan anropa 
+den såvida den inte blir en statiskt som den är. För att sammanfatta, om jag skulle gjort detta produkten en gång till så hade jag valt att skriva ssl metoden i en egen klass som en statisk metod. 
+
+Överlag är jag dock ganska nöjd med arkitekturen med tanke på de förutsättningar jag hade, att det var en helt ny typ av produkt som jag inte hade någon tidigare erfarenhet utav att utveckla. 
+Men som sagt om jag skulle dessa fyra förändringar om jag skulle ha gjort detta produkten en gång till. Anledningen till detta är för att då kommer det bli helt enkelt renare och finare kod att läsa. 
+Det kommer även att bli lättare att felsöka och skriva tester för metoderna. Så man har faktiskt lärt sig en hel del tack vare att skriva en annorlunda produkt. 
+
+
+"hade jag haft mer tid hade jag….”
 
