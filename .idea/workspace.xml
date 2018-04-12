@@ -46,8 +46,8 @@
         <entry file="file://$PROJECT_DIR$/Uppsats.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="698">
-                <caret line="400" column="161" selection-start-line="400" selection-start-column="161" selection-end-line="400" selection-end-column="161" />
+              <first_editor relative-caret-position="108">
+                <caret line="6" column="29" selection-start-line="6" selection-start-column="29" selection-end-line="6" selection-end-column="29" />
               </first_editor>
               <second_editor />
             </state>
@@ -57,8 +57,8 @@
       <file leaf-file-name="Adapter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/Adapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1058">
-              <caret line="134" column="5" lean-forward="true" selection-start-line="134" selection-start-column="5" selection-end-line="134" selection-end-column="5" />
+            <state relative-caret-position="2412">
+              <caret line="134" column="5" selection-start-line="134" selection-start-column="5" selection-end-line="134" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -83,7 +83,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>jsonada</find>
       <find>JSON</find>
       <find>JSONAdapter</find>
       <find>user</find>
@@ -113,6 +112,7 @@
       <find>makeRe</find>
       <find>handle</find>
       <find>sub</find>
+      <find>rmi</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -169,8 +169,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -217,6 +215,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -231,15 +231,15 @@
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\alexa\IdeaProjects\TDIAdapter" />
+      <recent name="C:\Users\alexa\IdeaProjects\TDIAdapter\libraries" />
+      <recent name="C:\Users\alexa\IdeaProjects\TDIAdapter\src" />
+      <recent name="C:\Users\alexa\IdeaProjects\TDIAdapter\src\main\java\alex\tdi" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\alexa\IdeaProjects\TDIAdapter" />
       <recent name="C:\Users\alexa\IdeaProjects\TDIAdapter\libraries" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\alexa\IdeaProjects\TDIAdapter\libraries" />
-      <recent name="C:\Users\alexa\IdeaProjects\TDIAdapter\src" />
-      <recent name="C:\Users\alexa\IdeaProjects\TDIAdapter" />
-      <recent name="C:\Users\alexa\IdeaProjects\TDIAdapter\src\main\java\alex\tdi" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -405,12 +405,14 @@
       <workItem from="1523254669517" duration="11460000" />
       <workItem from="1523339230860" duration="14099000" />
       <workItem from="1523429011141" duration="14649000" />
-      <workItem from="1523470538224" duration="1815000" />
+      <workItem from="1523470538224" duration="1833000" />
+      <workItem from="1523513801510" duration="738000" />
+      <workItem from="1523535209333" duration="5096000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="250926000" />
+    <option name="totallyTimeSpent" value="256778000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -438,7 +440,7 @@
       <window_info anchor="bottom" id="Terminal" order="3" />
       <window_info id="Capture Tool" order="0" />
       <window_info id="Designer" order="1" />
-      <window_info active="true" content_ui="combo" id="Project" order="4" sideWeight="0.49628845" visible="true" weight="0.15520833" />
+      <window_info active="true" content_ui="combo" id="Project" order="4" sideWeight="0.49628845" visible="true" weight="0.13489583" />
       <window_info anchor="right" id="Database" order="2" />
       <window_info id="Learn" order="7" />
       <window_info id="Structure" order="5" side_tool="true" weight="0.25" />
@@ -722,16 +724,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/Adapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1058">
-          <caret line="134" column="5" lean-forward="true" selection-start-line="134" selection-start-column="5" selection-end-line="134" selection-end-column="5" />
+        <state relative-caret-position="2412">
+          <caret line="134" column="5" selection-start-line="134" selection-start-column="5" selection-end-line="134" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Uppsats.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="698">
-            <caret line="400" column="161" selection-start-line="400" selection-start-column="161" selection-end-line="400" selection-end-column="161" />
+          <first_editor relative-caret-position="108">
+            <caret line="6" column="29" selection-start-line="6" selection-start-column="29" selection-end-line="6" selection-end-column="29" />
           </first_editor>
           <second_editor />
         </state>
