@@ -68,6 +68,9 @@ Eftersom vi inte modifierar informationen utav användaren i dagsläget utan bar
 så har man bra möjligheter att utöka integrationen i framtiden. Detta är något är ett system som jag inte kände till innan så har jag lärt mig detta med hjälp av några andra som jobbar på företaget och att jag gjorde ett 
 exempel på IBMs hemsida så gav detta mig goda grunder för att utveckla min adapter.
 
+En syn på exempelt som jag gjorde:
+![alt text](csv2xml.png)
+
 
 - IBM Adapter Development Tool
    - Som man hör på namnet så är detta ett verktyg för att utveckla adaptrar, som är byggt på IBM Tivoli Directory Integrator. Här har man många av de möjligheter att modifiera information och objekt som finns i IBM Tivoli Directory Integrator. 
