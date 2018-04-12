@@ -4,12 +4,11 @@
 // Scheman eller Schemes?
 // byt ut dev miljö till utvecklings miljö
 // Läs igenom så ingeting låter dumt
-// Fixa readme till projektet
 
 ## Inledning utförlig beskrivning av produkten
 
 ### Idé - Förklaring till användandet, varför?
-Idag så använder Husqvarna ett användargränsnitt (IBM Security Identity Manager) för att göra deras hantering utav användare för olika plattformar/målsystem. Och för att de ville 
+Idag så använder Husqvarna ett användargränsnitt (IBM Security Identity Manager) för att göra deras hantering utav användare för olika plattformar/målsystem. För att de ville 
 och kände behovet utav att utöka detta och hantera användare för ett nytt målsystem. Till detta behövdes då en adapter för att kunna hantera användare på det nya målsystemet DataDog.
 
 ### Mål
