@@ -1,8 +1,6 @@
 # Adapter till IBM Security Identity Manager
 #### En adapter mellan IBM Security Identity Manager och Datadog för hantering av användare
 
-// Scheman eller Schemes?
-// byt ut dev miljö till utvecklings miljö
 // Läs igenom så ingeting låter dumt
 
 ## Inledning utförlig beskrivning av produkten
@@ -76,7 +74,7 @@ En syn på exempelt som jag gjorde:
 Profiler som byggs med hjälp av detta kommer att att använda sig utav IBM Tivoli Directory Integrator för att utföra det som adaptern är menad för. Syftet med att bygga en profil som sedan exporteras är att detta är 
 ett sätt för andra system att ta del utav de funktioner som IBM Tivoli Directory Integrator har att erbjuda.
 
-   - Det som detta främst används till är först att göra scheman för de attribut som behövs lagras i den aktuella databasen. Efter det så gör man forms där man specificeras vilka attribut som skall finnas med i de formulär som användaren 
+   - Det som detta främst används till är först att göra schemes för de attribut som behövs lagras i den aktuella databasen. Efter det så gör man forms där man specificeras vilka attribut som skall finnas med i de formulär som användaren 
 fyller i när man skapar ett nytt konto som kopplas ihop med rätt attribut i respektive scheme. När det är gjort så mappar man vad som skall göras vid respektive operation, vilka attribut som skall ändras etc. 
 Varför jag just valde detta, var för att det andra alternativet är att skapa subklasser till en superklass som IBM har byggt. Det är förstås något som man också kan göra, men eftersom mina arkitekt handledare hade en idé om 
 den övergripande strukturen i IBM Adapter Development Tool samt att en av de nuvarande adaptrarna är byggda i detta verktyget. Det gjorde att jag såg absolut ingen anledning att välja det andra alternativet. 
@@ -194,8 +192,8 @@ accountDTO.access_role = access_role;
 accountDTO.email = email;
 
 url = "https://app.datadoghq.com/api/v1/user/";
-api_key = "9e4f84af430650a9780421d1841b8d8f";
-app_key = "8d3de17fa2755953a8e733553e418ddfcca5571e";
+api_key = $APIKEY;
+app_key = $APPKEY;
 
 result = adapter.disableAccount(accountDTO, url, api_key, app_key);
 
@@ -307,19 +305,19 @@ Gjorde först lite tester för att se ut hur allt var uppbyggd. Jag läste även
 #### Femte veckan 
 Fick en fungerande VMWare Image till ADT då jag inte lyckades installera det själv, så kollar igenom ännu ett exempel och tar anteckningar på hur det är strukturerat.
 Började sedan på en adapter profil och sen fick konfigurera TDI på den nya imagen för att dubbelkolla så att operationerna fungerade som de skall. Nästan hela onsdagen gick åt 
-att konfigurera ett SSL certifikat till TDI och få det att fungera. På torsdagen så sitter och undersöker mer i detalj hur den nuvarande profilen är uppbyggd och fortsätter bygga scheman på min profil.
+att konfigurera ett SSL certifikat till TDI och få det att fungera. På torsdagen så sitter och undersöker mer i detalj hur den nuvarande profilen är uppbyggd och fortsätter bygga schemes på min profil.
 
 
 #### Sjätte veckan 
 Arbetet med produkten är i stort sett avslutat, skrev över min kod för de andra operationerna från TDI till ADT så att adapter profilen ska fungera.
 Samt påbörjat med inledningen och bakgrunden i rapporten. Efter det så utvecklade stöd för de två sista operationerna(Reconcile Accounts and reconile support data only) först i mina java klasser sedan i ADT.
 Detta gjordes med hjälp utav att söka efter användare och lägga in dem i en lista. Efter det började jag med listna på teknologier på rapporten. Sedan så fick jag lägga till i ADT att om HTTP requesterna lyckas 
-så skall det även visas och ett värde som skall sättas till Successful. Sätter även upp en ny dev-miljö för att testa att installera adaptern. Fick också ordna mer felhantering, så att orsak och statuskod syns.
+så skall det även visas och ett värde som skall sättas till Successful. Sätter även upp en ny utvecklingsmiljö för att testa att installera adaptern. Fick också ordna mer felhantering, så att orsak och statuskod syns.
 Fortsatte sedan med att skriva listan med teknologier på rapporten. I slutet av veckan så läser mycket om hur man installerar en adapter och hur man importerar en adapter profil.
 
 
 #### Sjunde veckan 
-Försöker avsluta allting, både rapporten och det sista på installationen. Det som kvarstår på installationen är att jag behöver sätta upp en fungerande dev miljö så att ISIM och TDI ska kunna kommunicera. 
+Försöker avsluta allting, både rapporten och det sista på installationen. Det som kvarstår på installationen är att jag behöver sätta upp en fungerande utvecklingsmiljö så att ISIM och TDI ska kunna kommunicera. 
 Efter det borde det bara vara att lägga in jar filerna i TDI och importera profilen till ISIM.
 
 
@@ -407,5 +405,6 @@ Men som sagt om jag skulle dessa fyra förändringar om jag skulle ha gjort dett
 Det kommer även att bli lättare att felsöka och skriva tester för metoderna. Så man har faktiskt lärt sig en hel del tack vare att skriva en annorlunda produkt. 
 
 
-###"hade jag haft mer tid hade jag….”
-
+### "hade jag haft mer tid hade jag….”
+Om jag hade haft mer tid i detta projektet så hade jag löst det problemet _CTGIMD114E An internal error occurred. The JNDI Context parameter is missing._ som jag får när jag försöker skapa en service 
+till adaptern i IBM Security Identity Manager. Jag har verkligen ingen idé vad felet beror på idagsläget, 

@@ -7,7 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1cdcbb39-72ad-41df-bbb7-2fa9224207de" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Uppsats.md" beforeDir="false" afterPath="$PROJECT_DIR$/Uppsats.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -27,13 +27,13 @@
       <file leaf-file-name="AccountDTO.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/dto/AccountDTO.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
+            <state>
               <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="User.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/dto/User.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="54">
@@ -42,12 +42,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
+      <file leaf-file-name="Uppsats.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Uppsats.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="324">
-                <caret line="18" column="25" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
+              <first_editor relative-caret-position="551">
+                <caret line="195" column="18" lean-forward="true" selection-start-line="195" selection-start-column="18" selection-end-line="195" selection-end-column="18" />
               </first_editor>
               <second_editor />
             </state>
@@ -66,7 +66,7 @@
       <file leaf-file-name="AdapterTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/test/AdapterTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1170">
+            <state relative-caret-position="1242">
               <caret line="69" column="46" selection-start-line="69" selection-start-column="46" selection-end-line="69" selection-end-column="46" />
             </state>
           </provider>
@@ -83,14 +83,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>JSONAdapter</find>
-      <find>user</find>
-      <find>todo</find>
-      <find>Syst</find>
-      <find>disab§</find>
-      <find>try</find>
-      <find>try {</find>
-      <find>chan</find>
       <find>modify</find>
       <find>Okio</find>
       <find>makeRequest</find>
@@ -113,6 +105,14 @@
       <find>sub</find>
       <find>rmi</find>
       <find>``</find>
+      <find>dev mi</find>
+      <find>dev-mi</find>
+      <find>scheme</find>
+      <find>scheman</find>
+      <find>diagram</find>
+      <find>dev</find>
+      <find>dev</find>
+      <find>api_</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -139,8 +139,8 @@
         <option value="$PROJECT_DIR$/src/main/java/alex/tdi/dto/ResponseDTO.java" />
         <option value="$PROJECT_DIR$/src/main/java/alex/tdi/Adapter.java" />
         <option value="$PROJECT_DIR$/src/main/java/alex/tdi/test/AdapterTest.java" />
-        <option value="$PROJECT_DIR$/Uppsats.md" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/Uppsats.md" />
       </list>
     </option>
   </component>
@@ -216,8 +216,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
       <pane id="PackagesPane" />
+      <pane id="AndroidView" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -408,12 +408,13 @@
       <workItem from="1523429011141" duration="14649000" />
       <workItem from="1523470538224" duration="1833000" />
       <workItem from="1523513801510" duration="738000" />
-      <workItem from="1523535209333" duration="7489000" />
+      <workItem from="1523535209333" duration="8602000" />
+      <workItem from="1523600120265" duration="6395000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="259171000" />
+    <option name="totallyTimeSpent" value="266679000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -680,7 +681,7 @@
     <entry file="jar://$PROJECT_DIR$/libraries/jackson-core-2.0.0.jar!/com/fasterxml/jackson/core/JsonFactory.class" />
     <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/test/AdapterTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1170">
+        <state relative-caret-position="1242">
           <caret line="69" column="46" selection-start-line="69" selection-start-column="46" selection-end-line="69" selection-end-column="46" />
         </state>
       </provider>
@@ -701,7 +702,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/alex/tdi/dto/AccountDTO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
+        <state>
           <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
         </state>
       </provider>
@@ -713,11 +714,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="90">
+            <caret line="5" column="31" lean-forward="true" selection-start-line="5" selection-start-column="31" selection-end-line="5" selection-end-column="31" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Uppsats.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="269">
-            <caret line="181" column="42" lean-forward="true" selection-start-line="181" selection-start-column="42" selection-end-line="181" selection-end-column="42" />
+          <first_editor relative-caret-position="551">
+            <caret line="195" column="18" lean-forward="true" selection-start-line="195" selection-start-column="18" selection-end-line="195" selection-end-column="18" />
           </first_editor>
           <second_editor />
         </state>
@@ -727,16 +738,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
           <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="324">
-            <caret line="18" column="25" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
-          </first_editor>
-          <second_editor />
         </state>
       </provider>
     </entry>
